@@ -3,8 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation, Pagination, Autoplay } from "swiper";
-import Image from "next/image";
-import banner1 from "../assets/images/bg-islamic-poshak.jpg";
+import banner1 from "../../assets/images/bg-islamic-poshak.jpg";
 import banner2 from "../../assets/images/banner2.jpg";
 import banner3 from "../../assets/images/banner3.jpg";
 import banner4 from "../../assets/images/banner4.jpg";
@@ -15,7 +14,7 @@ export default function Banner() {
   return (
     <div>
       <div>
-        <Image className="h-[600px] object-cover" src={banner1} alt=""></Image>
+        <img className="h-[600px] object-cover" src={banner1} alt=""></img>
 
         {/* <Swiper
           slidesPerView={1}

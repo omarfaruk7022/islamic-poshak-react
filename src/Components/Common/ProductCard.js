@@ -1,11 +1,13 @@
-import auth from "@/firebase.init";
+
 
 import React from "react";
-import { format } from "date-fns";
+
 import { useAuthState } from "react-firebase-hooks/auth";
 import { FaCartPlus } from "react-icons/fa";
 import swal from "sweetalert";
 import { Link } from "react-router-dom";
+import auth from "../../firebase.init";
+import { format } from "date-fns";
 
 export default function ProductsCard(product) {
   const { _id, name, image, price, description } = product.product;
