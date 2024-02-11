@@ -30,7 +30,7 @@ export default function Borka() {
         <h1>{error}</h1>
       ) : null}
 
-      <div className="flex flex-wrap lg:px-36 px-0 gap-3">
+      <div className="flex flex-wrap px-0 lg:px-36  gap-3 justify-center ">
         {data?.data
           .filter((product) => product.category === "Borka")
 

@@ -11,11 +11,13 @@ import MobileNav from "./MobileNav";
 import { Link } from "react-router-dom";
 import Cart from "../Home/Cart";
 import auth from "../../firebase.init";
+import MobileTopNav from "./MobileTopNav";
 
 export default function Navbar() {
   const [user] = useAuthState(auth);
   const [visibleRight, setVisibleRight] = useState(false);
   const [visibleNav, setVisibleNav] = useState(false);
+  const [visibleTopNav, setVisibleTopNav] = useState(false);
   const [cartData, setCartData] = useState();
 
   const email = user?.email;
@@ -58,7 +60,7 @@ export default function Navbar() {
       <div>
         <header
           aria-label="Site Header  "
-          className="w-full bg-white shadow-lg dark:bg-[#001C30]  "
+          className="w-full bg-white shadow-lg   "
         >
           <div className="mx-auto flex h-20 max-w-screen-2xl items-center justify-between sm:px-6 lg:px-8  ">
             <div className="flex items-center gap-4 ">
@@ -91,16 +93,12 @@ export default function Navbar() {
                   <MobileNav />
                 </Sidebar>
               </div>
-
-              <Link to="/">
-                <img src={logo} className="h-28 w-28" alt="logo" priority></img>
-              </Link>
             </div>
 
             <div className="flex flex-1 items-center justify-end gap-8 ">
               <nav
                 aria-label="Site Nav"
-                className="hidden lg:flex lg:gap-4 lg:text-xs lg:font-bold lg:uppercase lg:tracking-wide lg:text-gray-700 dark:text-gray-300"
+                className="hidden lg:flex lg:gap-4 lg:text-xs lg:font-bold lg:uppercase lg:tracking-wide lg:text-gray-700 "
               >
                 <Link
                   to="/"
@@ -126,6 +124,7 @@ export default function Navbar() {
                 >
                   All products
                 </Link>
+
                 {user && (
                   <Link
                     to="/dashboard"
@@ -150,7 +149,7 @@ export default function Navbar() {
                     Login / Register
                   </Link>
                 )}
-
+                
                 <div class="flex flex-1 items-center justify-between gap-8 sm:justify-end">
                   <div class="flex gap-4">
                     {/* <div className="bg-white dark:bg-[#263449] hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-400 m-auto dark:rounded-md">
@@ -166,7 +165,7 @@ export default function Navbar() {
                           className="mb-4"
                           onClick={() => setVisibleRight(true)}
                         >
-                          <AiOutlineShoppingCart className="text-[30px] absolute bg-white dark:bg-[#263449]   transition-all p-1 rounded-md shadow-md" />
+                          <AiOutlineShoppingCart className="text-[30px] absolute bg-white   transition-all p-1 rounded-md shadow-md" />
                           <span class="whitespace-nowrap rounded-full bg-green-100 px-1.5 py-0.5 text-sm text-green-700 relative left-5 bottom-1">
                             {cartProducts?.length}
                           </span>
@@ -203,6 +202,37 @@ export default function Navbar() {
                   )}
                 </div>
               </nav>
+              <div className="flex items-center gap-4 ">
+                  <button
+                    type="button"
+                    className="p-2 lg:hidden"
+                    onClick={() => setVisibleTopNav(true)}
+                  >
+                    <svg
+                      className="h-6 w-6"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M4 6h16M4 12h16M4 18h16"
+                      />
+                    </svg>
+                  </button>
+                  <div>
+                    <Sidebar
+                      position="right"
+                      visible={visibleTopNav}
+                      onHide={() => setVisibleTopNav(false)}
+                    >
+                      <MobileTopNav />
+                    </Sidebar>
+                  </div>
+                </div>
             </div>
           </div>
         </header>

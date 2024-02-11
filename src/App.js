@@ -15,6 +15,8 @@ import AllUsers from "./Pages/Dashboard/AllUsers";
 import DashboardLayout from "./Components/Layouts/DashboadLayout";
 import MyProfile from "./Pages/Dashboard/MyProfile";
 import MyOrders from "./Pages/Dashboard/MyOrders";
+import AddProduct from "./Pages/Dashboard/AddProduct";
+import ManageProducts from "./Pages/Dashboard/ManageProducts";
 
 function App() {
   return (
@@ -50,6 +52,22 @@ function App() {
             element={
               <DashboardLayout>
                 <AllUsers />
+              </DashboardLayout>
+            }
+          />
+          <Route
+            path="add-product"
+            element={
+              <DashboardLayout>
+                <AddProduct />
+              </DashboardLayout>
+            }
+          />
+          <Route
+            path="manage-products"
+            element={
+              <DashboardLayout>
+                <ManageProducts />
               </DashboardLayout>
             }
           />

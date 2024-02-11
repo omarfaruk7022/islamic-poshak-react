@@ -14,7 +14,7 @@ import { FaUsers } from "react-icons/fa";
 import { IoSettings } from "react-icons/io5";
 import { useQuery } from "@tanstack/react-query";
 
-export default function MobileNav() {
+export default function MobileTopNav() {
   const [user, loading] = useAuthState(auth);
   const email = user?.email;
 
@@ -50,47 +50,45 @@ export default function MobileNav() {
                   </Link>
                 </div>
                 <Link
-                  to="/dashboard"
+                  to="/"
                   className="flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900    transition-all  "
                 >
                   <MdSpaceDashboard className="text-[20px]" />
-                  <span className="text-sm font-medium"> Dashboard </span>
+                  <span className="text-sm font-medium"> Home </span>
                 </Link>
-                {data?.data[0]?.role === "admin" && (
-                  <>
-                    <Link
-                      to="/dashboard/add-product"
-                      className="flex items-center gap-2 rounded-lg px-2 py-2   text-gray-900  hover:bg-gray-200  transition-all "
-                    >
-                      <MdLibraryAdd className="text-[20px]" />
-                      <span className="text-sm font-medium"> Add Product </span>
-                    </Link>
 
-                    <Link
-                      to="/dashboard/manage-products"
-                      className="flex items-center gap-2 rounded-lg px-2 py-2   text-gray-900  hover:bg-gray-200  transition-all "
-                    >
-                      <IoSettings className="text-[20px]" />
-                      <span className="text-sm font-medium">
-                        {" "}
-                        Manage Product{" "}
-                      </span>
-                    </Link>
-                    <Link
-                      to="/dashboard/all-users"
-                      className="flex items-center gap-2 rounded-lg px-2 py-2   text-gray-900  hover:bg-gray-200  transition-all "
-                    >
-                      <FaUsers className="text-[20px]" />
-                      <span className="text-sm font-medium"> All Users </span>
-                    </Link>
-                    <Link
-                      to="/dashboard/allOrders"
-                      className="flex items-center gap-2 rounded-lg px-2 py-2   text-gray-900  hover:bg-gray-200  transition-all "
-                    >
-                      <HiShoppingBag className="text-[20px]" />
-                      <span className="text-sm font-medium"> All Orders </span>
-                    </Link>
-                  </>
+                <Link
+                  to="/borka"
+                  className="flex items-center gap-2 rounded-lg px-2 py-2   text-gray-900  hover:bg-gray-200  transition-all "
+                >
+                  <MdLibraryAdd className="text-[20px]" />
+                  <span className="text-sm font-medium"> Borka </span>
+                </Link>
+
+                <Link
+                  to="/hijab"
+                  className="flex items-center gap-2 rounded-lg px-2 py-2   text-gray-900  hover:bg-gray-200  transition-all "
+                >
+                  <IoSettings className="text-[20px]" />
+                  <span className="text-sm font-medium"> Hijab </span>
+                </Link>
+                <Link
+                  to="/all-products"
+                  className="flex items-center gap-2 rounded-lg px-2 py-2   text-gray-900  hover:bg-gray-200  transition-all "
+                >
+                  <FaUsers className="text-[20px]" />
+                  <span className="text-sm font-medium"> All products </span>
+                </Link>
+                {user ? (
+                  <Link
+                    to="/dashboard"
+                    className="flex items-center gap-2 rounded-lg px-2 py-2   text-gray-900  hover:bg-gray-200  transition-all "
+                  >
+                    <HiShoppingBag className="text-[20px]" />
+                    <span className="text-sm font-medium"> Dashboard </span>
+                  </Link>
+                ) : (
+                  ""
                 )}
 
                 {user ? (

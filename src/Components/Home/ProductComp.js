@@ -30,7 +30,7 @@ export default function ProductsComp() {
         <h1>{error}</h1>
       ) : null}
 
-      <div className="grid grid-cols-1 gap-3  md:grid-cols-3 lg:grid-cols-6 px-0 lg:px-36">
+      <div className="grid grid-cols-2 gap-3  md:grid-cols-3 lg:grid-cols-6 px-0 lg:px-36">
         {data?.data
           .filter((product) => product.category === "Borka")
           ?.slice(0, 8)

@@ -65,18 +65,18 @@ export default function ProductsCard(product) {
 
           <div className="flex justify-between pt-3 px-2 border-t-2">
             <div>
-              <h1 className="text-gray-800 dark:text-white font-bold text-lg">
+              <h1 className="text-gray-800  font-bold text-lg">
                 {name}
               </h1>
             </div>
-            <p className="text-gray-800 dark:text-white font-bold text-sm">
+            <p className="text-gray-800  font-bold text-sm">
               {price}৳
             </p>
           </div>
         </Link>
         <div className="flex justify-between p-2">
           <p
-            className="text-gray-800 dark:text-white font-bold text-[12px]"
+            className="text-gray-800  font-bold text-[12px]"
             style={{
               display: "-webkit-box",
               WebkitLineClamp: 2,

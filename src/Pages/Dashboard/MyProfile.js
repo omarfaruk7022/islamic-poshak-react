@@ -32,7 +32,7 @@ export default function MyProfile() {
       {user && userInfo ? (
         <>
           <div className="h-[500px]">
-            <div className="bg-white dark:bg-black shadow-xl p-5 m-5 rounded-md">
+            <div className="bg-white  shadow-xl p-5 m-5 rounded-md">
               <p>{userInfo?.data[0]?.username}</p>
             </div>
           </div>

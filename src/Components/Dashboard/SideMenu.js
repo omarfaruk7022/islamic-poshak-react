@@ -37,7 +37,7 @@ export default function SideMenu() {
           <nav aria-label="Main Nav" className="mt-6 flex flex-col space-y-1 ">
             <Link
               to="/dashboard"
-              className="flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  hover:bg-gray-200  transition-all dark:text-gray-300 dark:hover:hover:bg-black"
+              className="flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900    transition-all  "
             >
               <MdSpaceDashboard className="text-[20px]" />
               <span className="text-sm font-medium"> Dashboard </span>
@@ -46,30 +46,30 @@ export default function SideMenu() {
             {data?.data[0]?.role === "admin" && (
               <>
                 <Link
-                  to="/dashboard/addProduct"
-                  className="flex items-center gap-2 rounded-lg px-2 py-2   text-gray-900  hover:bg-gray-200  transition-all dark:text-gray-300 dark:hover:hover:bg-black"
+                  to="/dashboard/add-product"
+                  className="flex items-center gap-2 rounded-lg px-2 py-2   text-gray-900  hover:bg-gray-200  transition-all "
                 >
                   <MdLibraryAdd className="text-[20px]" />
                   <span className="text-sm font-medium"> Add Product </span>
                 </Link>
 
                 <Link
-                  to="/dashboard/manageProduct"
-                  className="flex items-center gap-2 rounded-lg px-2 py-2   text-gray-900  hover:bg-gray-200  transition-all dark:text-gray-300 dark:hover:hover:bg-black"
+                  to="/dashboard/manage-products"
+                  className="flex items-center gap-2 rounded-lg px-2 py-2   text-gray-900  hover:bg-gray-200  transition-all "
                 >
                   <IoSettings className="text-[20px]" />
                   <span className="text-sm font-medium"> Manage Product </span>
                 </Link>
                 <Link
                   to="/dashboard/all-users"
-                  className="flex items-center gap-2 rounded-lg px-2 py-2   text-gray-900  hover:bg-gray-200  transition-all dark:text-gray-300 dark:hover:hover:bg-black"
+                  className="flex items-center gap-2 rounded-lg px-2 py-2   text-gray-900  hover:bg-gray-200  transition-all "
                 >
                   <FaUsers className="text-[20px]" />
                   <span className="text-sm font-medium"> All Users </span>
                 </Link>
                 <Link
                   to="/dashboard/allOrders"
-                  className="flex items-center gap-2 rounded-lg px-2 py-2   text-gray-900  hover:bg-gray-200  transition-all dark:text-gray-300 dark:hover:hover:bg-black"
+                  className="flex items-center gap-2 rounded-lg px-2 py-2   text-gray-900  hover:bg-gray-200  transition-all "
                 >
                   <HiShoppingBag className="text-[20px]" />
                   <span className="text-sm font-medium"> All Orders </span>
@@ -79,21 +79,21 @@ export default function SideMenu() {
 
             <Link
               to="/dashboard/my-profile"
-              className="flex items-center gap-2 rounded-lg px-2 py-2   text-gray-900  hover:bg-gray-200  transition-all dark:text-gray-300 dark:hover:hover:bg-black"
+              className="flex items-center gap-2 rounded-lg px-2 py-2   text-gray-900  hover:bg-gray-200  transition-all "
             >
               <RiAccountPinCircleFill className="text-[20px]" />
               <span className="text-sm font-medium"> My Profile </span>
             </Link>
             <Link
               to="/dashboard/my-orders"
-              className="flex items-center gap-2 rounded-lg px-2 py-2   text-gray-900  hover:bg-gray-200  transition-all dark:text-gray-300 dark:hover:hover:bg-black"
+              className="flex items-center gap-2 rounded-lg px-2 py-2   text-gray-900  hover:bg-gray-200  transition-all "
             >
               <RiAccountPinCircleFill className="text-[20px]" />
               <span className="text-sm font-medium"> My Orders </span>
             </Link>
 
             <details className="group [&_summary::-webkit-details-marker]:hidden">
-              <summary className="flex cursor-pointer items-center justify-between rounded-lg px-2 py-2  text-gray-900  hover:bg-gray-200  transition-all dark:text-gray-300 dark:hover:hover:bg-black ">
+              <summary className="flex cursor-pointer items-center justify-between rounded-lg px-2 py-2  text-gray-900  hover:bg-gray-200  transition-all  ">
                 <div className="flex items-center gap-2">
                   <MdManageAccounts className="text-[20px]" />
                   <span className="text-sm font-medium"> Account </span>
@@ -116,18 +116,18 @@ export default function SideMenu() {
               </summary>
 
               <nav aria-label="Account Nav" className="mt-2 flex flex-col px-2">
-                <Link
+                {/* <Link
                   to="#"
-                  className="flex items-center gap-2 rounded-lg px-4 py-2  text-gray-900  hover:bg-gray-200  transition-all dark:text-gray-300 dark:hover:hover:bg-black"
+                  className="flex items-center gap-2 rounded-lg px-4 py-2  text-gray-900  hover:bg-gray-200  transition-all "
                 >
                   <MdSecurity className="text-[20px]" />
                   <span className="text-sm font-medium"> Security </span>
-                </Link>
+                </Link> */}
 
                 <button
                   onClick={handleSignOut}
                   type="submit"
-                  className="flex w-full items-center gap-2 rounded-lg px-4 py-2   text-gray-900  hover:bg-gray-200  transition-all dark:text-gray-300 dark:hover:hover:bg-black"
+                  className="flex w-full items-center gap-2 rounded-lg px-4 py-2   text-gray-900  hover:bg-gray-200  transition-all "
                 >
                   <HiOutlineLogout className="text-[20px]" />
 
