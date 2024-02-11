@@ -7,6 +7,14 @@ import Home from "./Pages/Home";
 import NotFound from "./Components/Common/NotFound";
 import Login from "./Pages/Login";
 import Hijab from "./Components/Home/Hijab";
+import Borka from "./Components/Home/Borka";
+import RequireAuth from "./Auth/RequireAuth";
+import Signup from "./Pages/Signup";
+import Dashboard from "./Pages/Dashboard/Dashboard";
+import AllUsers from "./Pages/Dashboard/AllUsers";
+import DashboardLayout from "./Components/Layouts/DashboadLayout";
+import MyProfile from "./Pages/Dashboard/MyProfile";
+import MyOrders from "./Pages/Dashboard/MyOrders";
 
 function App() {
   return (
@@ -16,9 +24,68 @@ function App() {
         {/* Add your routes here */}
         <Route path="/" element={<Home />} />
         <Route path="*" element={<NotFound />} />
-        
+
         <Route path="/login" element={<Login />} />
-        <Route path="/hijab" element={<Hijab />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route
+          path="/hijab"
+          element={
+            <RequireAuth>
+              <Hijab />
+            </RequireAuth>
+          }
+        />
+        <Route path="/borka" element={<Borka />} />
+        <Route path="dashboard">
+          <Route
+            index
+            element={
+              <DashboardLayout>
+                <Dashboard />
+              </DashboardLayout>
+            }
+          />
+          <Route
+            path="all-users"
+            element={
+              <DashboardLayout>
+                <AllUsers />
+              </DashboardLayout>
+            }
+          />
+          <Route
+            path="my-profile"
+            element={
+              <DashboardLayout>
+                <MyProfile />
+              </DashboardLayout>
+            }
+          />
+          <Route
+            path="my-orders"
+            element={
+              <DashboardLayout>
+                <MyOrders />
+              </DashboardLayout>
+            }
+          />
+        </Route>
+        {/* <Route
+          path="/dashboard/all-users"
+          element={
+            <DashboardLayout>
+              <AllUsers />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path="/dashboard/my-profile"
+          element={
+            <DashboardLayout>
+              <MyProfile />
+            </DashboardLayout>
+          }
+        /> */}
       </Routes>
     </div>
   );
