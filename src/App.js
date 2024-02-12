@@ -17,6 +17,7 @@ import MyProfile from "./Pages/Dashboard/MyProfile";
 import MyOrders from "./Pages/Dashboard/MyOrders";
 import AddProduct from "./Pages/Dashboard/AddProduct";
 import ManageProducts from "./Pages/Dashboard/ManageProducts";
+import ViewCart from "./Pages/ViewCart";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
 
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/viewCart" element={<ViewCart />} />
         <Route
           path="/hijab"
           element={

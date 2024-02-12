@@ -3,14 +3,11 @@ import { useQuery } from "@tanstack/react-query";
 import Loader from "../Common/Loader";
 import ProductsCard from "../Common/ProductCard";
 
-
 export default function Hijab() {
   const { isLoading, error, data } = useQuery({
     queryKey: ["products"],
     queryFn: () =>
-      fetch("https://frantic-crab-cape.cyclic.app/api/product").then((res) =>
-        res.json()
-      ),
+      fetch("http://localhost:5000/api/product").then((res) => res.json()),
   });
   console.log("data", data?.data);
   return (

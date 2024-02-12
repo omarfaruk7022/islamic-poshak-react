@@ -1,5 +1,3 @@
-
-
 import React from "react";
 
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -38,7 +36,7 @@ export default function ProductsCard(product) {
     // };
 
     console.log(data);
-    fetch("https://frantic-crab-cape.cyclic.app/api/cart", {
+    fetch("http://localhost:5000/api/cart", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -65,13 +63,9 @@ export default function ProductsCard(product) {
 
           <div className="flex justify-between pt-3 px-2 border-t-2">
             <div>
-              <h1 className="text-gray-800  font-bold text-lg">
-                {name}
-              </h1>
+              <h1 className="text-gray-800  font-bold text-lg">{name}</h1>
             </div>
-            <p className="text-gray-800  font-bold text-sm">
-              {price}৳
-            </p>
+            <p className="text-gray-800  font-bold text-sm">{price}৳</p>
           </div>
         </Link>
         <div className="flex justify-between p-2">

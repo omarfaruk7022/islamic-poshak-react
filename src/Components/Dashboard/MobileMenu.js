@@ -24,9 +24,9 @@ export default function MobileMenu() {
 
   const { isLoading, error, data } = useQuery({
     queryFn: () =>
-      fetch(
-        `https://frantic-crab-cape.cyclic.app/api/users/email/${email}`
-      ).then((res) => res.json()),
+      fetch(`http://localhost:5000/api/users/email/${email}`).then((res) =>
+        res.json()
+      ),
   });
   return (
     <div className="flex h-screen flex-col justify-between bg-white dark:bg-black ">
@@ -46,7 +46,7 @@ export default function MobileMenu() {
                 className="flex items-center gap-2 rounded-lg px-2 py-2   text-gray-900  hover:bg-gray-200  transition-all "
               >
                 <MdOutlineSpaceDashboard className="text-[20px]" />
-                <span className="text-sm font-medium"> Add  Product </span>
+                <span className="text-sm font-medium"> Add Product </span>
               </Link>
 
               <Link

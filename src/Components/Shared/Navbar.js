@@ -28,9 +28,9 @@ export default function Navbar() {
   const usersQuery = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch(
-        `https://frantic-crab-cape.cyclic.app/api/users/email/${email}`
-      ).then((res) => res.json()),
+      fetch(`http://localhost:5000/api/users/email/${email}`).then((res) =>
+        res.json()
+      ),
   });
   const userInfo = usersQuery.data?.data[0];
   const refetch = () => {
@@ -45,8 +45,8 @@ export default function Navbar() {
   const cartQuery = useQuery({
     queryKey: ["cart"],
     queryFn: () =>
-      fetch(`https://frantic-crab-cape.cyclic.app/api/cart/${email}`).then(
-        (res) => res.json()
+      fetch(`http://localhost:5000/api/cart/${email}`).then((res) =>
+        res.json()
       ),
   });
   const cartRefetch = () => {
@@ -149,7 +149,7 @@ export default function Navbar() {
                     Login / Register
                   </Link>
                 )}
-                
+
                 <div class="flex flex-1 items-center justify-between gap-8 sm:justify-end">
                   <div class="flex gap-4">
                     {/* <div className="bg-white dark:bg-[#263449] hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-400 m-auto dark:rounded-md">
@@ -203,36 +203,36 @@ export default function Navbar() {
                 </div>
               </nav>
               <div className="flex items-center gap-4 ">
-                  <button
-                    type="button"
-                    className="p-2 lg:hidden"
-                    onClick={() => setVisibleTopNav(true)}
+                <button
+                  type="button"
+                  className="p-2 lg:hidden"
+                  onClick={() => setVisibleTopNav(true)}
+                >
+                  <svg
+                    className="h-6 w-6"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
                   >
-                    <svg
-                      className="h-6 w-6"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M4 6h16M4 12h16M4 18h16"
-                      />
-                    </svg>
-                  </button>
-                  <div>
-                    <Sidebar
-                      position="right"
-                      visible={visibleTopNav}
-                      onHide={() => setVisibleTopNav(false)}
-                    >
-                      <MobileTopNav />
-                    </Sidebar>
-                  </div>
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M4 6h16M4 12h16M4 18h16"
+                    />
+                  </svg>
+                </button>
+                <div>
+                  <Sidebar
+                    position="right"
+                    visible={visibleTopNav}
+                    onHide={() => setVisibleTopNav(false)}
+                  >
+                    <MobileTopNav />
+                  </Sidebar>
                 </div>
+              </div>
             </div>
           </div>
         </header>

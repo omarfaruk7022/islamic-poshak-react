@@ -1,4 +1,3 @@
-
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -8,7 +7,6 @@ import "react-toastify/dist/ReactToastify.css";
 import swal from "sweetalert";
 import auth from "../../firebase.init";
 
-
 export default function Cart({ cartData, setCartData }) {
   const [user] = useAuthState(auth);
   const email = user?.email;
@@ -16,8 +14,8 @@ export default function Cart({ cartData, setCartData }) {
   const cartQuery = useQuery({
     queryKey: ["cart"],
     queryFn: () =>
-      fetch(`https://frantic-crab-cape.cyclic.app/api/cart/${email}`).then(
-        (res) => res.json()
+      fetch(`http://localhost:5000/api/cart/${email}`).then((res) =>
+        res.json()
       ),
   });
   const refetch = () => {
@@ -31,7 +29,7 @@ export default function Cart({ cartData, setCartData }) {
     }
   });
   const handleDelete = (id) => {
-    fetch(`https://frantic-crab-cape.cyclic.app/api/cart/${id}`, {
+    fetch(`http://localhost:5000/api/cart/${id}`, {
       method: "DELETE",
     }).then((res) => {
       if (res.ok) {
@@ -116,7 +114,7 @@ export default function Cart({ cartData, setCartData }) {
 
           <div class="space-y-4 text-center">
             <Link
-              href="/cartDetails"
+              to="/viewCart"
               class="inline-flex p-3 items-center justify-center rounded-md bg-green-100 dark:bg-green-200  text-green-500 dark:text-green-600 hover:bg-green-200 hover:text-green-600 transition"
             >
               {/* View my cart */}
