@@ -25,9 +25,9 @@ export default function MobileNav() {
   const { isLoading, error, data } = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch(`http://localhost:5000/api/users/email/${email}`).then((res) =>
-        res.json()
-      ),
+      fetch(
+        `https://frantic-crab-cape.cyclic.app/api/users/email/${email}`
+      ).then((res) => res.json()),
   });
   return (
     <div>

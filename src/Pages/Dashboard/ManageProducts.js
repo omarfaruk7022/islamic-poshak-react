@@ -19,15 +19,17 @@ export default function ManageProducts() {
   const productsQuery = useQuery({
     queryKey: ["products"],
     queryFn: () =>
-      fetch("http://localhost:5000/api/product").then((res) => res.json()),
+      fetch("https://frantic-crab-cape.cyclic.app/api/product").then((res) =>
+        res.json()
+      ),
   });
 
   const usersQuery = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch(`http://localhost:5000/api/users/email/${email}`).then((res) =>
-        res.json()
-      ),
+      fetch(
+        `https://frantic-crab-cape.cyclic.app/api/users/email/${email}`
+      ).then((res) => res.json()),
   });
 
   const products = productsQuery.data;
@@ -54,7 +56,7 @@ export default function ManageProducts() {
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
-        fetch(`http://localhost:5000/api/product/${id}`, {
+        fetch(`https://frantic-crab-cape.cyclic.app/api/product/${id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())

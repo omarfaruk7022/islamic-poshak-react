@@ -24,9 +24,9 @@ export default function MobileMenu() {
 
   const { isLoading, error, data } = useQuery({
     queryFn: () =>
-      fetch(`http://localhost:5000/api/users/email/${email}`).then((res) =>
-        res.json()
-      ),
+      fetch(
+        `https://frantic-crab-cape.cyclic.app/api/users/email/${email}`
+      ).then((res) => res.json()),
   });
   return (
     <div className="flex h-screen flex-col justify-between bg-white dark:bg-black ">

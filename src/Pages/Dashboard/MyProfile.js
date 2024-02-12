@@ -12,7 +12,7 @@ export default function MyProfile() {
   const email = user?.email;
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/users/email/${email}`)
+    fetch(`https://frantic-crab-cape.cyclic.app/api/users/email/${email}`)
       .then((res) => res.json())
       .then((data) => {
         setUserInfo(data);

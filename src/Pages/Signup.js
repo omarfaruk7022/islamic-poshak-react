@@ -33,7 +33,7 @@ export default function Signup() {
       if (error) {
         swal("Error", error.message, "error");
       } else {
-        fetch(`http://localhost:5000/api/users/email/${email}`, {
+        fetch(`https://frantic-crab-cape.cyclic.app/api/users/email/${email}`, {
           method: "PUT",
           headers: {
             "content-type": "application/json",
