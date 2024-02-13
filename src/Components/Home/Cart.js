@@ -60,7 +60,7 @@ export default function Cart({ cartData, setCartData }) {
 
                   <div>
                     <Link
-                      to={`/products/${product?.productId}`}
+                      to={`/productDetails/${product?.productId}`}
                       class="text-sm text-gray-900"
                     >
                       {product?.name}

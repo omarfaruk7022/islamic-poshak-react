@@ -28,11 +28,9 @@ export default function Hijab() {
       ) : error ? (
         <h1>{error}</h1>
       ) : null}
-
-      <div className="flex flex-wrap lg:px-36 px-0 gap-3">
+      <div className="grid grid-cols-2 gap-3  md:grid-cols-3 lg:grid-cols-6 px-0 lg:px-36">
         {data?.data
           .filter((product) => product.category === "Hijab")
-
           .map((product) => (
             <ProductsCard key={product._id} product={product} />
           ))}

@@ -29,9 +29,9 @@ export default function HijabComp() {
         <h1>{error}</h1>
       ) : null}
 
-      <div className="grid grid-cols-1 gap-3  md:grid-cols-3 lg:grid-cols-6 px-0 lg:px-36">
+      <div className="grid grid-cols-2 gap-3  md:grid-cols-3 lg:grid-cols-6 px-0 lg:px-36">
         {data?.data
-          .filter((product) => product.category === "Hijab")
+          .filter((product) => product.category == "Hijab")
           ?.slice(0, 8)
           .map((product) => (
             <ProductsCard key={product._id} product={product} />

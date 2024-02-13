@@ -119,7 +119,7 @@ export default function Navbar() {
                   Borka
                 </Link>
                 <Link
-                  href="/products"
+                  to="/all-products"
                   className="block h-16 border-b-4 border-transparent leading-[4rem] hover:border-current "
                 >
                   All products
@@ -202,6 +202,18 @@ export default function Navbar() {
                   )}
                 </div>
               </nav>
+              <div className="block lg:hidden">
+                <button
+                  icon="pi pi-arrow-left"
+                  className="mb-4"
+                  onClick={() => setVisibleRight(true)}
+                >
+                  <AiOutlineShoppingCart className="text-[30px] absolute bg-white   transition-all p-1 rounded-md shadow-md" />
+                  <span class="whitespace-nowrap rounded-full bg-green-100 px-1.5 py-0.5 text-sm text-green-700 relative left-5 bottom-1">
+                    {cartProducts?.length}
+                  </span>
+                </button>
+              </div>
               <div className="flex items-center gap-4 ">
                 <button
                   type="button"
@@ -229,7 +241,10 @@ export default function Navbar() {
                     visible={visibleTopNav}
                     onHide={() => setVisibleTopNav(false)}
                   >
-                    <MobileTopNav />
+                    <MobileTopNav
+                      visibleTopNav={visibleTopNav}
+                      setVisibleTopNav={setVisibleTopNav}
+                    />
                   </Sidebar>
                 </div>
               </div>

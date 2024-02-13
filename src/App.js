@@ -18,6 +18,8 @@ import MyOrders from "./Pages/Dashboard/MyOrders";
 import AddProduct from "./Pages/Dashboard/AddProduct";
 import ManageProducts from "./Pages/Dashboard/ManageProducts";
 import ViewCart from "./Pages/ViewCart";
+import ProductDetails from "./Pages/ProductDetails";
+import AllProducts from "./Pages/AllProducts";
 
 function App() {
   return (
@@ -31,15 +33,10 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/viewCart" element={<ViewCart />} />
-        <Route
-          path="/hijab"
-          element={
-            <RequireAuth>
-              <Hijab />
-            </RequireAuth>
-          }
-        />
         <Route path="/borka" element={<Borka />} />
+        <Route path="/hijab" element={<Hijab />} />
+        <Route path="/all-products" element={<AllProducts />} />
+        <Route path="/productDetails/:id" element={<ProductDetails />} />
         <Route path="dashboard">
           <Route
             index

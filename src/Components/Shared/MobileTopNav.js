@@ -14,7 +14,7 @@ import { FaUsers } from "react-icons/fa";
 import { IoSettings } from "react-icons/io5";
 import { useQuery } from "@tanstack/react-query";
 
-export default function MobileTopNav() {
+export default function MobileTopNav({ visibleTopNav, setVisibleTopNav }) {
   const [user, loading] = useAuthState(auth);
   const email = user?.email;
 

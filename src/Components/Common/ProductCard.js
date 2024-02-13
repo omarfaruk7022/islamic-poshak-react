@@ -51,9 +51,9 @@ export default function ProductsCard(product) {
   };
 
   return (
-    <div className=" rounded-md mt-5 ">
-      <div className=" block group  h-[310px] w-[220px]  border border-green-400 rounded-md hover:shadow-lg transition-shadow">
-        <Link to={`/products/${_id}`}>
+    <div className=" rounded-md mt-5 p-2 lg:p-0">
+      <div className=" block group  h-[310px] w-full lg:w-[220px]  border border-green-400 rounded-md hover:shadow-lg transition-shadow">
+        <Link to={`/productDetails/${_id}`}>
           <img
             priority
             src={image}

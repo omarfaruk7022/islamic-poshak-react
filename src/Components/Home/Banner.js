@@ -14,7 +14,7 @@ export default function Banner() {
   return (
     <div>
       <div>
-        <img className="h-[600px] object-cover" src={banner1} alt=""></img>
+        <img className="h-full  object-cover w-full" src={banner1} alt=""></img>
 
         {/* <Swiper
           slidesPerView={1}
