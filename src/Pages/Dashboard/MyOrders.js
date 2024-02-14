@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import swal from "sweetalert";
 import cross from "../../assets/images/close.png";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import auth from "../../firebase.init";
 import Loader from "../../Components/Common/Loader";
 import { Dialog } from "primereact/dialog";
@@ -30,7 +30,7 @@ export default function MyOrders() {
       ).then((res) => res.json()),
   });
   const orders = ordersQuery.data;
-  console.log(orders);
+  console.log(orders?.data);
   //   const userIsAdmin = isUserAdminQuery.data;
   const refetch = () => {
     ordersQuery.refetch();
@@ -80,157 +80,121 @@ export default function MyOrders() {
 
   return (
     <div>
-      <>
-        <div className="overflow-x-auto overflow-auto   p-5">
-          <table className="min-w-full divide-y-2 divide-gray-100 dark:divide-gray-800 text-sm ">
-            <thead className="ltr:text-left rtl:text-right">
-              <tr>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-left text-gray-900">
-                  Image
-                </th>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-left text-gray-900 ">
-                  Product name
-                </th>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-left text-gray-900 ">
-                  Price
-                </th>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-left text-gray-900 ">
-                  Quantity
-                </th>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-left text-gray-900 ">
-                  Ordered by
-                </th>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-left text-gray-900 ">
-                  Delivery Address
-                </th>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-left text-gray-900 ">
-                  Order Date
-                </th>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-left text-gray-900 ">
-                  View
-                </th>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-left text-gray-900 ">
-                  Action
-                </th>
-              </tr>
-            </thead>
-            {orders?.data?.map((order) => (
-              <>
-                <tbody className="divide-y divide-gray-200 overflow-auto ">
-                  <tr>
-                    <td className="">
-                      <img
-                        src={order?.image}
-                        alt=""
-                        className="rounded-md w-[40px]"
-                      ></img>
-                    </td>
-                    <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-700 dark:text-gray-200">
-                      {order?.name}
-                    </td>
-                    <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-700 dark:text-gray-200">
-                      {order?.price}
-                    </td>
-                    <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-700 dark:text-gray-200">
-                      {order?.quantity}
-                    </td>
-                    <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-700 dark:text-gray-200">
-                      {order?.email}
-                    </td>
-                    <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-700 dark:text-gray-200">
-                      {order?.deliveryAddress}
-                    </td>
-                    <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-700 dark:text-gray-200">
-                      {order?.orderTime} , {order?.orderDate}
-                    </td>
-                    {/* <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-700 dark:text-gray-200">
-                      <form
-                        className="lg:flex  items-center"
-                          onSubmit={(e) => handleStatus(e, order?._id)}
-                      >
-                        <div className="form-control  ">
-                          <select
-                            onChange={(e) =>
-                              handleStatus(e, order?._id, e.target.value)
-                            }
-                            name="status"
-                            className="text-[13px] rounded-md w-28 h-10 bg-white dark:bg-black outline-none focus:outline-none focus:ring-2 focus:ring-green-400 dark:focus:ring-green-700 focus:border-transparent "
-                          >
-                            <option
-                              className="text-black dark:text-white"
-                              default
-                            >
-                              {order?.orderStatus}
-                            </option>
+      {orders?.data?.map((order) => (
+        <article class="rounded-xl bg-white p-4 ring ring-green-50 sm:p-6 lg:p-8 m-5">
+          <div class="flex items-start sm:gap-8">
+            <div
+              class="hidden sm:grid sm:size-20 sm:shrink-0 sm:place-content-center sm:rounded-full sm:border-2 sm:border-green-500"
+              aria-hidden="true"
+            >
+              <div class="flex items-center gap-1">
+                <span class="h-8 w-0.5 rounded-full bg-green-500"></span>
+                <span class="h-6 w-0.5 rounded-full bg-green-500"></span>
+                <span class="h-4 w-0.5 rounded-full bg-green-500"></span>
+                <span class="h-6 w-0.5 rounded-full bg-green-500"></span>
+                <span class="h-8 w-0.5 rounded-full bg-green-500"></span>
+              </div>
+            </div>
 
-                            {order?.orderStatus !== "Pending" && (
-                              <option className="text-black dark:text-white">
-                                Pending
-                              </option>
-                            )}
-                            {order?.orderStatus !== "Processing" && (
-                              <option className="text-black dark:text-white">
-                                Processing
-                              </option>
-                            )}
-                            {order?.orderStatus !== "Confirmed" && (
-                              <option className="text-black dark:text-white">
-                                Confirmed
-                              </option>
-                            )}
-                            {order?.orderStatus !== "Delivered" && (
-                              <option className="text-black dark:text-white">
-                                Delivered
-                              </option>
-                            )}
-                            {order?.orderStatus !== "Canceled" && (
-                              <option className="text-black dark:text-white">
-                                Canceled
-                              </option>
-                            )}
-                          </select>
-                        </div>
-                      </form>
-                    </td> */}
-                    {visible && (
-                      <ShowMyOrder
-                        id={selectedItemId}
-                        visible={visible}
-                        setVisible={setVisible}
-                      />
-                    )}
-                    <td>
-                      <div className="ml-2">
-                        <button
-                          className="bg-green-500 text-white px-2 py-1 rounded-md"
-                          onClick={() => handleShow(order?.ordersId)}
-                        >
-                          View
-                        </button>
+            <div>
+              <strong class="rounded border border-green-500 bg-green-500 px-3 py-1.5 text-[10px] font-medium text-white">
+                Order id: #{order._id.slice(5, 10).toUpperCase()}
+              </strong>
+              <div className="flex gap-5 flex-wrap items-center">
+                {order?.orders?.map((item) => (
+                  <div class="flex   gap-2 mt-4">
+                    <div class="flex items-center ">
+                      <div>
+                        {" "}
+                        <img
+                          src={item?.image}
+                          alt=""
+                          class="h-20 w-20 object-cover rounded-lg"
+                        />
                       </div>
-                    </td>
-                    <td>
-                      {order?.orderStatus == "Pending" ||
-                      order?.orderStatus == "Processing" ? (
-                        <div className="ml-2">
-                          <button
-                            className="bg-red-500 text-white px-2 py-1 rounded-md"
-                            onClick={(e) => handleStatus(e, order?._id)}
-                          >
-                            Cancel
-                          </button>
-                        </div>
-                      ) : (
-                        order?.orderStatus
-                      )}
-                    </td>
-                  </tr>
-                </tbody>
-              </>
-            ))}
-          </table>
-        </div>
-      </>
+
+                      <div className="px-3">
+                        <p>
+                          <a href="#" class="hover:underline">
+                            {item?.name}
+                          </a>
+                        </p>
+                        <p class="text-sm font-medium ">Price: {item?.price}</p>
+                        <p class="text-sm font-medium">
+                          Quantity: {item?.quantity}
+                        </p>
+                      </div>
+                    </div>
+                    <div
+                      class="flex items
+                  -start gap-2"
+                    ></div>
+                  </div>
+                ))}
+                <div>
+                  <p class="text-md font-medium">
+                    Total:
+                    {order?.orders?.reduce(
+                      (total, item) => total + item.price * item.quantity,
+                      0
+                    )}
+                  </p>
+                </div>
+              </div>
+              <h3 class="mt-4 text-lg font-medium sm:text-xl">
+                <a href="#" class="hover:underline">
+                  {" "}
+                  Some Interesting Podcast Title{" "}
+                </a>
+              </h3>
+
+              <p class="mt-1 text-sm text-gray-700">{order?.description}</p>
+
+              <div class="mt-4 sm:flex sm:items-center sm:gap-2">
+                <div class="flex items-center gap-1 text-gray-500">
+                  <svg
+                    class="h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                    ></path>
+                  </svg>
+
+                  <p class="text-xs font-medium">
+                    {order?.orderTime} {order?.orderDate}
+                  </p>
+                </div>
+
+                <span class="hidden sm:block" aria-hidden="true">
+                  &middot;
+                </span>
+
+                <p class="mt-2 text-xs font-medium text-gray-500 sm:mt-0">
+                  Featuring{" "}
+                  <a href="#" class="underline hover:text-gray-700">
+                    Barry
+                  </a>
+                  ,
+                  <a href="#" class="underline hover:text-gray-700">
+                    Sandra
+                  </a>{" "}
+                  and
+                  <a href="#" class="underline hover:text-gray-700">
+                    August
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </article>
+      ))}
 
       {/* <>
           {userIsAdmin?.data[0]?.role !== "admin" &&

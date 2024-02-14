@@ -105,8 +105,8 @@ export default function ViewCart() {
         image: product?.image,
         quantity: product?.quantity,
         deliveryAddress: e.target.address.value,
-        orderDate: product?.orderDate,
-        orderTime: product?.orderTime,
+        orderDate: new Date().toLocaleDateString(),
+        orderTime: new Date().toLocaleTimeString(),
         orderStatus: product?.orderStatus,
         email: user?.email,
       });
