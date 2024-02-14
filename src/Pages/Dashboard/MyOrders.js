@@ -1,18 +1,21 @@
 import { useQuery } from "@tanstack/react-query";
 
-import React from "react";
+import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import swal from "sweetalert";
 import cross from "../../assets/images/close.png";
 import { useNavigate } from "react-router-dom";
 import auth from "../../firebase.init";
 import Loader from "../../Components/Common/Loader";
+import { Dialog } from "primereact/dialog";
+import ShowMyOrder from "./ShowMyOrder";
 
 export default function MyOrders() {
   const navigate = useNavigate();
   const [user, loading] = useAuthState(auth);
   const email = user?.email;
-
+  const [visible, setVisible] = useState(false);
+  const [selectedItemId, setSelectedItemId] = useState();
   //   const ordersQuery = useQuery({
   //     queryKey: ["orders"],
   //     queryFn: () =>
@@ -70,6 +73,11 @@ export default function MyOrders() {
         refetch();
       });
   };
+  const handleShow = (id) => {
+    setVisible(true);
+    setSelectedItemId(id);
+  };
+
   return (
     <div>
       <>
@@ -184,18 +192,23 @@ export default function MyOrders() {
                         </div>
                       </form>
                     </td> */}
-                    {/* <td>
+                    {visible && (
+                      <ShowMyOrder
+                        id={selectedItemId}
+                        visible={visible}
+                        setVisible={setVisible}
+                      />
+                    )}
+                    <td>
                       <div className="ml-2">
                         <button
                           className="bg-green-500 text-white px-2 py-1 rounded-md"
-                          onClick={() =>
-                            router.push(`/dashboard/order/${order?._id}`)
-                          }
+                          onClick={() => handleShow(order?.ordersId)}
                         >
                           View
                         </button>
                       </div>
-                    </td> */}
+                    </td>
                     <td>
                       {order?.orderStatus == "Pending" ||
                       order?.orderStatus == "Processing" ? (

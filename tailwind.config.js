@@ -2,8 +2,10 @@
 module.exports = {
   content: [
     "./src/**/*.{html,js}",
+    './src/**/*.{js,jsx,ts,tsx}',
     "app/**/*.{ts,tsx}",
     "components/**/*.{ts,tsx}",
+    "node_modules/flowbite-react/lib/esm/**/*.js",
   ],
   extend: {
     colors: {
@@ -79,5 +81,6 @@ module.exports = {
     require("daisyui"),
     require("@tailwindcss/forms"),
     require("tailwindcss-animate"),
+    require("flowbite/plugin"),
   ],
 };
