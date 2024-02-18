@@ -28,9 +28,9 @@ export default function Navbar() {
   const usersQuery = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch(
-        `https://frantic-crab-cape.cyclic.app/api/users/email/${email}`
-      ).then((res) => res.json()),
+      fetch(`http://localhost:5000/api/users/email/${email}`).then((res) =>
+        res.json()
+      ),
   });
   const userInfo = usersQuery.data?.data[0];
   const refetch = () => {
@@ -45,8 +45,8 @@ export default function Navbar() {
   const cartQuery = useQuery({
     queryKey: ["cart"],
     queryFn: () =>
-      fetch(`https://frantic-crab-cape.cyclic.app/api/cart/${email}`).then(
-        (res) => res.json()
+      fetch(`http://localhost:5000/api/cart/${email}`).then((res) =>
+        res.json()
       ),
   });
   const cartRefetch = () => {

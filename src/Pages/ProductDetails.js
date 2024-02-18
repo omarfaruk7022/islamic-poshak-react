@@ -18,7 +18,7 @@ export default function ProductDetails() {
   const [product, setProduct] = useState();
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
-    fetch(`https://frantic-crab-cape.cyclic.app/api/product/${id}`)
+    fetch(`http://localhost:5000/api/product/${id}`)
       .then((res) => res.json())
       .then((json) => setProduct(json));
   }, [id]);
@@ -55,7 +55,7 @@ export default function ProductDetails() {
     // };
 
     console.log(data);
-    fetch("https://frantic-crab-cape.cyclic.app/api/cart", {
+    fetch("http://localhost:5000/api/cart", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

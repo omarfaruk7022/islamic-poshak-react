@@ -15,14 +15,16 @@ export default function Signup() {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
+    const phone = e.target.phone.value;
     const username = e.target.name.value;
 
     const userSignupData = {
       email,
       password,
+      phone,
       username,
     };
-    if (!password || !email) {
+    if (!password || !email || !phone) {
       swal("Oops", "Email or Password Must Not Be Empty", "error");
     } else if (password.length < 6) {
       swal("Oops", "Password Must Be 6 Characters", "error");
@@ -33,7 +35,7 @@ export default function Signup() {
       if (error) {
         swal("Error", error.message, "error");
       } else {
-        fetch(`https://frantic-crab-cape.cyclic.app/api/users/email/${email}`, {
+        fetch(`http://localhost:5000/api/users/email/${email}`, {
           method: "PUT",
           headers: {
             "content-type": "application/json",
@@ -125,6 +127,23 @@ export default function Signup() {
                       />
                     </svg>
                   </span>
+                </div>
+              </div>
+              <div>
+                <label for="email" className="sr-only">
+                  Phone number
+                </label>
+
+                <div className="relative">
+                  <input
+                    required
+                    type="text"
+                    name="phone"
+                    className="w-full rounded-lg border-gray-200 text-black p-4 pe-12 text-sm shadow-sm  outline-none"
+                    placeholder="Enter Phone number"
+                  />
+
+                 
                 </div>
               </div>
 

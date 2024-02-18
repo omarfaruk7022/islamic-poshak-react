@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { MdOutlineSpaceDashboard } from "react-icons/md";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
-
 import { useQuery } from "@tanstack/react-query";
 import { MdLibraryAdd } from "react-icons/md";
 import { IoSettings } from "react-icons/io5";
@@ -10,15 +8,14 @@ import { FaUsers } from "react-icons/fa";
 import { RiAccountPinCircleFill } from "react-icons/ri";
 import { MdManageAccounts } from "react-icons/md";
 import { MdSpaceDashboard } from "react-icons/md";
-import { MdSecurity } from "react-icons/md";
 import { HiOutlineLogout, HiShoppingBag } from "react-icons/hi";
 import auth from "../../firebase.init";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export default function SideMenu() {
   const [user, loading] = useAuthState(auth);
   const email = user?.email;
-
+  const { slug } = useParams();
   const handleSignOut = () => {
     signOut(auth);
   };
@@ -26,10 +23,15 @@ export default function SideMenu() {
   const { isLoading, error, data } = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch(
-        `https://frantic-crab-cape.cyclic.app/api/users/email/${email}`
-      ).then((res) => res.json()),
+      fetch(`http://localhost:5000/api/users/`).then((res) => res.json()),
   });
+  const isAdmin = data.data.find((user) => user.email === email);
+
+  const refetch = () => {
+    data.refetch();
+  };
+
+  console.log("role", isAdmin);
   return (
     <div className="hidden lg:block shadow-2xl px-6  w-[220px] ">
       <div className="flex h-screen flex-col justify-between overflow-y-auto ">
@@ -43,7 +45,7 @@ export default function SideMenu() {
               <span className="text-sm font-medium"> Dashboard </span>
             </Link>
 
-            {data?.data[0]?.role === "admin" && (
+            {isAdmin?.role === "admin" && (
               <>
                 <Link
                   to="/dashboard/add-product"
@@ -68,7 +70,7 @@ export default function SideMenu() {
                   <span className="text-sm font-medium"> All Users </span>
                 </Link>
                 <Link
-                  to="/dashboard/allOrders"
+                  to="/dashboard/all-orders"
                   className="flex items-center gap-2 rounded-lg px-2 py-2   text-gray-900  hover:bg-gray-200  transition-all "
                 >
                   <HiShoppingBag className="text-[20px]" />
@@ -149,11 +151,11 @@ export default function SideMenu() {
             <div>
               <p className="text-xs">
                 <strong className="block font-medium">
-                  {data?.data[0]?.username}
+                  {isAdmin?.username}
                 </strong>
 
                 <span>
-                  {data?.data[0]?.role === "admin" ? (
+                  {isAdmin?.role === "admin" ? (
                     <>
                       <p className="text-red-500 font-bold">Admin</p>
                     </>

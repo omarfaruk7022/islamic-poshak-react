@@ -20,6 +20,7 @@ import ManageProducts from "./Pages/Dashboard/ManageProducts";
 import ViewCart from "./Pages/ViewCart";
 import ProductDetails from "./Pages/ProductDetails";
 import AllProducts from "./Pages/AllProducts";
+import AllOrders from "./Pages/Dashboard/AllOrders";
 
 function App() {
   return (
@@ -83,6 +84,14 @@ function App() {
             element={
               <DashboardLayout>
                 <MyOrders />
+              </DashboardLayout>
+            }
+          />
+          <Route
+            path="all-orders"
+            element={
+              <DashboardLayout>
+                <AllOrders />
               </DashboardLayout>
             }
           />

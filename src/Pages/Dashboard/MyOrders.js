@@ -19,15 +19,15 @@ export default function MyOrders() {
   //   const ordersQuery = useQuery({
   //     queryKey: ["orders"],
   //     queryFn: () =>
-  //       fetch("https://frantic-crab-cape.cyclic.app/api/cart").then((res) => res.json()),
+  //       fetch("http://localhost:5000/api/cart").then((res) => res.json()),
   //   });
 
   const ordersQuery = useQuery({
     queryKey: ["orders"],
     queryFn: () =>
-      fetch(
-        `https://frantic-crab-cape.cyclic.app/api/order/email/${email}`
-      ).then((res) => res.json()),
+      fetch(`http://localhost:5000/api/order/email/${email}`).then((res) =>
+        res.json()
+      ),
   });
   const orders = ordersQuery.data;
   console.log(orders?.data);
@@ -51,7 +51,7 @@ export default function MyOrders() {
   }
   const handleStatus = (e, id) => {
     e.preventDefault();
-    fetch(`https://frantic-crab-cape.cyclic.app/api/order/${id}`, {
+    fetch(`http://localhost:5000/api/order/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ orderStatus: "Canceled" }),
@@ -64,7 +64,7 @@ export default function MyOrders() {
   };
 
   const handleDelete = (id) => {
-    fetch(`https://frantic-crab-cape.cyclic.app/api/order/${id}`, {
+    fetch(`http://localhost:5000/api/order/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())

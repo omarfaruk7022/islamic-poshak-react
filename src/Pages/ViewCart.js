@@ -10,12 +10,20 @@ export default function ViewCart() {
   const [user] = useAuthState(auth);
 
   const email = user?.email;
+  const usersData = useQuery({
+    queryKey: ["users"],
+    queryFn: () =>
+      fetch(`http://localhost:5000/api/users/`).then((res) => res.json()),
+  });
 
+  const users = usersData.data;
+  const isAdmin = users?.data?.find((user) => user.email === email);
+  console.log("isAdmin", isAdmin);
   const cartQuery = useQuery({
     queryKey: ["cart"],
     queryFn: () =>
-      fetch(`https://frantic-crab-cape.cyclic.app/api/cart/${email}`).then(
-        (res) => res.json()
+      fetch(`http://localhost:5000/api/cart/${email}`).then((res) =>
+        res.json()
       ),
   });
   const refetch = () => {
@@ -30,7 +38,7 @@ export default function ViewCart() {
   });
 
   const handleDelete = (id) => {
-    fetch(`https://frantic-crab-cape.cyclic.app/api/cart/${id}`, {
+    fetch(`http://localhost:5000/api/cart/${id}`, {
       method: "DELETE",
     }).then((res) => {
       if (res.ok) {
@@ -67,7 +75,7 @@ export default function ViewCart() {
     const quantity = cartProducts?.find(
       (product) => product?._id === id
     )?.quantity;
-    fetch(`https://frantic-crab-cape.cyclic.app/api/cart/${id}`, {
+    fetch(`http://localhost:5000/api/cart/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -83,7 +91,7 @@ export default function ViewCart() {
     const quantity = cartProducts?.find(
       (product) => product?._id === id
     )?.quantity;
-    fetch(`https://frantic-crab-cape.cyclic.app/api/cart/${id}`, {
+    fetch(`http://localhost:5000/api/cart/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -109,6 +117,7 @@ export default function ViewCart() {
         orderTime: new Date().toLocaleTimeString(),
         orderStatus: product?.orderStatus,
         email: user?.email,
+        phone: isAdmin?.phone,
       });
     });
 
@@ -125,7 +134,7 @@ export default function ViewCart() {
       swal("Error!", "Delivery Address is required!", "error");
       return;
     }
-    fetch("https://frantic-crab-cape.cyclic.app/api/order", {
+    fetch("http://localhost:5000/api/order", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -137,7 +146,6 @@ export default function ViewCart() {
       }
     });
   };
-
   const subTotal = cartProducts?.reduce((acc, item) => {
     return acc + item.price * item.quantity;
   }, 0);
