@@ -50,7 +50,7 @@ export default function EditModal({ id, visible, setVisible, refetch }) {
             status &&
             addedBy
           ) {
-            fetch(`http://localhost:5000/api/product/${id}`, {
+            fetch(`https://api.islamicposhak.com/api/product/${id}`, {
               method: "PUT",
               headers: {
                 "Content-Type": "application/json",

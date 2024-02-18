@@ -15,7 +15,7 @@ export default function AllOrders() {
   const [loadingData, setLoadingData] = useState(true);
   const navigate = useNavigate();
   const handleView = (id) => {
-    fetch(`http://localhost:5000/api/order/${id}`)
+    fetch(`https://api.islamicposhak.com/api/order/${id}`)
       .then((res) => res.json())
       .then((json) => setOrderData(json?.data));
     setLoadingData(false);
@@ -26,18 +26,22 @@ export default function AllOrders() {
   const ordersQuery = useQuery({
     queryKey: ["orders"],
     queryFn: () =>
-      fetch("http://localhost:5000/api/order").then((res) => res.json()),
+      fetch("https://api.islamicposhak.com/api/order").then((res) =>
+        res.json()
+      ),
   });
 
   const usersQuery = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch("http://localhost:5000/api/users").then((res) => res.json()),
+      fetch("https://api.islamicposhak.com/api/users").then((res) =>
+        res.json()
+      ),
   });
   // const isUserAdminQuery = useQuery({
   //   queryKey: ["isUserAdmin"],
   //   queryFn: () =>
-  //     fetch(`http://localhost:5000/api/users/email/${email}`).then((res) =>
+  //     fetch(`https://api.islamicposhak.com/api/users/email/${email}`).then((res) =>
   //       res.json()
   //     ),
   // });
@@ -65,7 +69,7 @@ export default function AllOrders() {
 
   const handleStatus = (e, id, status) => {
     e.preventDefault();
-    fetch(`http://localhost:5000/api/order/${id}`, {
+    fetch(`https://api.islamicposhak.com/api/order/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ orderStatus: status }),
@@ -78,7 +82,7 @@ export default function AllOrders() {
   };
 
   const handleDelete = (id) => {
-    fetch(`http://localhost:5000/api/order/${id}`, {
+    fetch(`https://api.islamicposhak.com/api/order/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())

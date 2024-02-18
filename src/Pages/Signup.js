@@ -35,7 +35,7 @@ export default function Signup() {
       if (error) {
         swal("Error", error.message, "error");
       } else {
-        fetch(`http://localhost:5000/api/users/email/${email}`, {
+        fetch(`https://api.islamicposhak.com/api/users/email/${email}`, {
           method: "PUT",
           headers: {
             "content-type": "application/json",
@@ -142,8 +142,6 @@ export default function Signup() {
                     className="w-full rounded-lg border-gray-200 text-black p-4 pe-12 text-sm shadow-sm  outline-none"
                     placeholder="Enter Phone number"
                   />
-
-                 
                 </div>
               </div>
 

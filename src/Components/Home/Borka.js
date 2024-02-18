@@ -8,7 +8,9 @@ export default function Borka() {
   const { isLoading, error, data } = useQuery({
     queryKey: ["products"],
     queryFn: () =>
-      fetch("http://localhost:5000/api/product").then((res) => res.json()),
+      fetch("https://api.islamicposhak.com/api/product").then((res) =>
+        res.json()
+      ),
   });
   console.log("data", data?.data);
   return (

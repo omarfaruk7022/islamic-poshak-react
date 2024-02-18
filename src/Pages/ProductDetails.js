@@ -18,7 +18,7 @@ export default function ProductDetails() {
   const [product, setProduct] = useState();
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
-    fetch(`http://localhost:5000/api/product/${id}`)
+    fetch(`https://api.islamicposhak.com/api/product/${id}`)
       .then((res) => res.json())
       .then((json) => setProduct(json));
   }, [id]);
@@ -55,7 +55,7 @@ export default function ProductDetails() {
     // };
 
     console.log(data);
-    fetch("http://localhost:5000/api/cart", {
+    fetch("https://api.islamicposhak.com/api/cart", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

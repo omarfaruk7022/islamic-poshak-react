@@ -19,14 +19,14 @@ export default function MyOrders() {
   //   const ordersQuery = useQuery({
   //     queryKey: ["orders"],
   //     queryFn: () =>
-  //       fetch("http://localhost:5000/api/cart").then((res) => res.json()),
+  //       fetch("https://api.islamicposhak.com/api/cart").then((res) => res.json()),
   //   });
 
   const ordersQuery = useQuery({
     queryKey: ["orders"],
     queryFn: () =>
-      fetch(`http://localhost:5000/api/order/email/${email}`).then((res) =>
-        res.json()
+      fetch(`https://api.islamicposhak.com/api/order/email/${email}`).then(
+        (res) => res.json()
       ),
   });
   const orders = ordersQuery.data;
@@ -51,7 +51,7 @@ export default function MyOrders() {
   }
   const handleStatus = (e, id) => {
     e.preventDefault();
-    fetch(`http://localhost:5000/api/order/${id}`, {
+    fetch(`https://api.islamicposhak.com/api/order/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ orderStatus: "Canceled" }),
@@ -64,7 +64,7 @@ export default function MyOrders() {
   };
 
   const handleDelete = (id) => {
-    fetch(`http://localhost:5000/api/order/${id}`, {
+    fetch(`https://api.islamicposhak.com/api/order/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())
