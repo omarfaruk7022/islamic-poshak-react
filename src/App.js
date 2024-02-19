@@ -21,6 +21,7 @@ import ViewCart from "./Pages/ViewCart";
 import ProductDetails from "./Pages/ProductDetails";
 import AllProducts from "./Pages/AllProducts";
 import AllOrders from "./Pages/Dashboard/AllOrders";
+import Footer from "./Components/Shared/Footer";
 
 function App() {
   return (
@@ -50,49 +51,61 @@ function App() {
           <Route
             path="all-users"
             element={
-              <DashboardLayout>
-                <AllUsers />
-              </DashboardLayout>
+              <RequireAuth>
+                <DashboardLayout>
+                  <AllUsers />
+                </DashboardLayout>
+              </RequireAuth>
             }
           />
           <Route
             path="add-product"
             element={
-              <DashboardLayout>
-                <AddProduct />
-              </DashboardLayout>
+              <RequireAuth>
+                <DashboardLayout>
+                  <AddProduct />
+                </DashboardLayout>
+              </RequireAuth>
             }
           />
           <Route
             path="manage-products"
             element={
-              <DashboardLayout>
-                <ManageProducts />
-              </DashboardLayout>
+              <RequireAuth>
+                <DashboardLayout>
+                  <ManageProducts />
+                </DashboardLayout>
+              </RequireAuth>
             }
           />
           <Route
             path="my-profile"
             element={
-              <DashboardLayout>
-                <MyProfile />
-              </DashboardLayout>
+              <RequireAuth>
+                <DashboardLayout>
+                  <MyProfile />
+                </DashboardLayout>
+              </RequireAuth>
             }
           />
           <Route
             path="my-orders"
             element={
-              <DashboardLayout>
-                <MyOrders />
-              </DashboardLayout>
+              <RequireAuth>
+                <DashboardLayout>
+                  <MyOrders />
+                </DashboardLayout>
+              </RequireAuth>
             }
           />
           <Route
             path="all-orders"
             element={
-              <DashboardLayout>
-                <AllOrders />
-              </DashboardLayout>
+              <RequireAuth>
+                <DashboardLayout>
+                  <AllOrders />
+                </DashboardLayout>
+              </RequireAuth>
             }
           />
         </Route>
@@ -113,6 +126,7 @@ function App() {
           }
         /> */}
       </Routes>
+      <Footer />
     </div>
   );
 }

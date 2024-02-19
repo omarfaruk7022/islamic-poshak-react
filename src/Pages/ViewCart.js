@@ -4,11 +4,11 @@ import { useQuery } from "@tanstack/react-query";
 import swal from "sweetalert";
 import auth from "../firebase.init";
 import Navbar from "../Components/Shared/Navbar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function ViewCart() {
   const [user] = useAuthState(auth);
-
+  const navigate = useNavigate();
   const email = user?.email;
   const usersData = useQuery({
     queryKey: ["users"],
@@ -117,9 +117,10 @@ export default function ViewCart() {
         deliveryAddress: e.target.address.value,
         orderDate: new Date().toLocaleDateString(),
         orderTime: new Date().toLocaleTimeString(),
-        orderStatus: product?.orderStatus,
+        orderStatus: "pending",
         email: user?.email,
         phone: isAdmin?.phone,
+        customerName: isAdmin?.username,
       });
     });
 
@@ -144,7 +145,7 @@ export default function ViewCart() {
       body: JSON.stringify({ data: orderData }),
     }).then((res) => {
       if (res.ok) {
-        swal("Success!", "Product added to cart!", "success");
+        swal("Success!", "Product successfully ordered!", "success");
       }
     });
   };

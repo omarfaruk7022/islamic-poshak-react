@@ -5,7 +5,7 @@ import swal from "sweetalert";
 import auth from "../../firebase.init";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../Components/Common/Loader";
-
+import "../../App.css";
 export default function AllOrders() {
   const [user, loading] = useAuthState(auth);
   const email = user?.email;
@@ -26,17 +26,13 @@ export default function AllOrders() {
   const ordersQuery = useQuery({
     queryKey: ["orders"],
     queryFn: () =>
-      fetch("https://api.islamicposhak.com/api/order").then((res) =>
-        res.json()
-      ),
+      fetch("https://api.islamicposhak.com/api/order").then((res) => res.json()),
   });
 
   const usersQuery = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch("https://api.islamicposhak.com/api/users").then((res) =>
-        res.json()
-      ),
+      fetch("https://api.islamicposhak.com/api/users").then((res) => res.json()),
   });
   // const isUserAdminQuery = useQuery({
   //   queryKey: ["isUserAdmin"],
@@ -82,6 +78,7 @@ export default function AllOrders() {
   };
 
   const handleDelete = (id) => {
+    console.log("id", id);
     fetch(`https://api.islamicposhak.com/api/order/${id}`, {
       method: "DELETE",
     })
@@ -112,67 +109,78 @@ export default function AllOrders() {
             </div>
 
             <div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 flex-wrap">
                 {" "}
-                <strong class="rounded border border-green-500 bg-green-500 px-3 py-1.5 text-[10px] font-medium text-white">
-                  Order id: #{order._id.slice(5, 10).toUpperCase()}
+                <strong class="rounded border border-green-500 bg-green-500 px-3 py-1 text-[12px] font-medium text-white">
+                  Order id: #IP-{order._id.slice(5, 10).toUpperCase()}
                 </strong>
-                <strong class="rounded border border-green-500 bg-green-500 px-3 py-1.5 text-[10px] font-medium text-white">
-                  Order id: #{order?.phone}
+                <strong class="rounded border border-green-500 bg-green-500 px-3 py-1 text-[12px] font-medium text-white">
+                  Customer name : {order?.customerName}
                 </strong>
-                <strong class="rounded border border-green-500 bg-green-500 px-3 py-1.5 text-[10px] font-medium text-white">
+                <strong class="rounded border border-green-500 bg-green-500 px-3 py-1 text-[12px] font-medium text-white">
+                  Phone number : {order?.phone}
+                </strong>
+                <strong class="rounded border border-green-500 bg-green-500 px-3 py-1 text-[12px] font-medium text-white">
                   Email: {order.email}
                 </strong>
               </div>
-              <div className="flex gap-5 flex-wrap items-center">
-                {order?.orders?.map((item) => (
-                  <div class="flex   gap-2 mt-4">
-                    <div class="flex items-center ">
-                      <div>
-                        {" "}
-                        <img
-                          src={item?.image}
-                          alt=""
-                          class="h-20 w-20 object-cover rounded-lg"
-                        />
-                      </div>
+              <div className="flex gap-5 flex-wrap items-center  justify-between">
+                <div className="flex   gap-2 mt-4">
+                  {order?.orders?.map((item) => (
+                    <div class="">
+                      <div class="flex items-center ">
+                        <div>
+                          {" "}
+                          <img
+                            src={item?.image}
+                            alt=""
+                            class="h-20 w-20 object-cover rounded-lg"
+                          />
+                        </div>
 
-                      <div className="px-3">
-                        <p>
-                          <a href="#" class="hover:underline">
-                            {item?.name}
-                          </a>
-                        </p>
-                        <p class="text-sm font-medium ">Price: {item?.price}</p>
-                        <p class="text-sm font-medium">
-                          Quantity: {item?.quantity}
-                        </p>
+                        <div className="px-3">
+                          <p>
+                            <a href="#" class="hover:underline">
+                              {item?.name}
+                            </a>
+                          </p>
+                          <p class="text-sm font-medium ">
+                            Price: {item?.price} ৳
+                          </p>
+                          <p class="text-sm font-medium">
+                            Quantity: {item?.quantity}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                    <div
-                      class="flex items
-                  -start gap-2"
-                    ></div>
-                  </div>
-                ))}
-                <div>
-                  <p class="text-md font-medium">
-                    Total:
-                    {order?.orders?.reduce(
-                      (total, item) => total + item.price * item.quantity,
-                      0
-                    )}
-                  </p>
+                  ))}
                 </div>
               </div>
-              <h3 class="mt-4 text-lg font-medium sm:text-xl">
-                <a href="#" class="hover:underline">
-                  {" "}
-                  Some Interesting Podcast Title{" "}
-                </a>
-              </h3>
 
               <p class="mt-1 text-sm text-gray-700">{order?.description}</p>
+
+              <div>
+                <p class="text-md font-medium my-2">
+                  Total:
+                  {order?.orders?.reduce(
+                    (total, item) => total + item.price * item.quantity,
+                    0
+                  )}{" "}
+                  ৳
+                </p>
+              </div>
+              <button className="bg-green-500  text-white text-[13px]  transition-all hover:btn-outline px-2 py-1  rounded-md">
+                {order?.orderStatus}
+              </button>
+
+              <select name="" id="" className="">
+                <option value="pending" className="text-[12px] selectPadding">
+                  Pending
+                </option>
+                <option value="Processing">Processing</option>
+                <option value="Shipped">Shipped</option>
+                <option value="Delivered">Delivered</option>
+              </select>
 
               <div class="mt-4 sm:flex sm:items-center sm:gap-2">
                 <div class="flex items-center gap-1 text-gray-500">
@@ -194,6 +202,13 @@ export default function AllOrders() {
                   <p class="text-xs font-medium">
                     {order?.orderTime} {order?.orderDate}
                   </p>
+
+                  <button
+                    onClick={() => handleDelete(order?._id)}
+                    className="bg-red-600  text-white text-[13px]  transition-all hover:btn-outline px-2 py-1 mx-2 rounded-md"
+                  >
+                    Delete
+                  </button>
                 </div>
 
                 <span class="hidden sm:block" aria-hidden="true">

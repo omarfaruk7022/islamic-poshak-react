@@ -4,11 +4,6 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation, Pagination, Autoplay } from "swiper";
 import banner1 from "../../assets/images/bg-islamic-poshak.jpg";
-import banner2 from "../../assets/images/banner2.jpg";
-import banner3 from "../../assets/images/banner3.jpg";
-import banner4 from "../../assets/images/banner4.jpg";
-import banner5 from "../../assets/images/banner5.jpg";
-import logo from "../../assets/images/logo-1.png";
 
 export default function Banner() {
   return (
