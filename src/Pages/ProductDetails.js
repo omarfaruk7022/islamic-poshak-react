@@ -190,9 +190,7 @@ export default function ProductDetails() {
                       </p>
                     </div>
 
-                    <button class="mt-2 text-sm font-medium underline">
-                      Read More
-                    </button>
+                   
                   </div>
 
                   <form class="mt-8" onSubmit={handleAddToCart}>
