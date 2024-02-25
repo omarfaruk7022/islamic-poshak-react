@@ -189,8 +189,6 @@ export default function ProductDetails() {
                         {product?.data?.description}
                       </p>
                     </div>
-
-                   
                   </div>
 
                   <form class="mt-8" onSubmit={handleAddToCart}>

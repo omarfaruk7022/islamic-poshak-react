@@ -22,6 +22,7 @@ import ProductDetails from "./Pages/ProductDetails";
 import AllProducts from "./Pages/AllProducts";
 import AllOrders from "./Pages/Dashboard/AllOrders";
 import Footer from "./Components/Shared/Footer";
+import ThankYou from "./Pages/ThankYou";
 
 function App() {
   return (
@@ -37,6 +38,14 @@ function App() {
         <Route path="/viewCart" element={<ViewCart />} />
         <Route path="/borka" element={<Borka />} />
         <Route path="/hijab" element={<Hijab />} />
+        <Route
+          path="/thankyou"
+          element={
+            <RequireAuth>
+              <ThankYou />
+            </RequireAuth>
+          }
+        />
         <Route path="/all-products" element={<AllProducts />} />
         <Route path="/productDetails/:id" element={<ProductDetails />} />
         <Route path="dashboard">

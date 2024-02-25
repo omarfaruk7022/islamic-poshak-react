@@ -18,6 +18,7 @@ export default function ManageProducts() {
 
   const productsQuery = useQuery({
     queryKey: ["products"],
+
     queryFn: () =>
       fetch("https://api.islamicposhak.com/api/product").then((res) =>
         res.json()

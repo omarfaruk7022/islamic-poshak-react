@@ -38,7 +38,7 @@ export default function Signup() {
         fetch(`https://api.islamicposhak.com/api/users/email/${email}`, {
           method: "PUT",
           headers: {
-            "content-type": "application/json",
+            "Content-type": "application/json",
           },
           body: JSON.stringify(userSignupData),
         })

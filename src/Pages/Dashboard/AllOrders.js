@@ -1,11 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import swal from "sweetalert";
 import auth from "../../firebase.init";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../Components/Common/Loader";
 import "../../App.css";
+import { Dropdown } from "primereact/dropdown";
+
 export default function AllOrders() {
   const [user, loading] = useAuthState(auth);
   const email = user?.email;
@@ -13,6 +15,9 @@ export default function AllOrders() {
   const [selectedItemId, setSelectedItemId] = useState(null);
   const [orderData, setOrderData] = useState();
   const [loadingData, setLoadingData] = useState(true);
+  const [selectedStatus, setSelectedStatus] = useState(null);
+  const [selectedId, setSelectedId] = useState(null);
+
   const navigate = useNavigate();
   const handleView = (id) => {
     fetch(`https://api.islamicposhak.com/api/order/${id}`)
@@ -22,17 +27,28 @@ export default function AllOrders() {
     setVisible(true);
     setSelectedItemId(id);
   };
-
+  useEffect(() => {
+    if (user?.accessToken) {
+      window.localStorage.setItem("accessToken", user?.accessToken);
+    }
+  }, []);
   const ordersQuery = useQuery({
     queryKey: ["orders"],
     queryFn: () =>
-      fetch("https://api.islamicposhak.com/api/order").then((res) => res.json()),
+      fetch("https://api.islamicposhak.com/api/order", {
+        headers: {
+          authorization: `Bearer ${user?.accessToken}`,
+          ContentType: "application/json",
+        },
+      }).then((res) => res.json()),
   });
 
   const usersQuery = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch("https://api.islamicposhak.com/api/users").then((res) => res.json()),
+      fetch("https://api.islamicposhak.com/api/users").then((res) =>
+        res.json()
+      ),
   });
   // const isUserAdminQuery = useQuery({
   //   queryKey: ["isUserAdmin"],
@@ -56,40 +72,64 @@ export default function AllOrders() {
     navigate("/dashboard");
   }
 
-  if (loading || isLoading) {
-    return <Loader />;
-  }
-  if (userIsAdmin?.role !== "admin") {
-    navigate("/dashboard");
-  }
+  useEffect(() => {
+    if (selectedStatus && selectedId) {
+      handleStatus(selectedId, selectedStatus);
+    }
+  }, [selectedStatus]);
 
-  const handleStatus = (e, id, status) => {
-    e.preventDefault();
+  const handleStatus = (id, status) => {
+    console.log("id", id, "status", status);
+
     fetch(`https://api.islamicposhak.com/api/order/${id}`, {
       method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ orderStatus: status }),
+      headers: {
+        authorization: `Bearer ${user?.accessToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        orderStatus: status,
+      }),
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log("data", data);
         swal("Updated!", "Your Order Status has been updated!", "success");
         refetch();
       });
   };
 
   const handleDelete = (id) => {
+    const customer = orders?.data?.find((order) => order._id === id);
     console.log("id", id);
-    fetch(`https://api.islamicposhak.com/api/order/${id}`, {
-      method: "DELETE",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        swal("Deleted!", "Your Order has been deleted!", "success");
-        refetch();
-      });
+    swal({
+      title: `Delete ${customer.customerName}'s Order?`,
+      text: `Are you sure that you want to Delete ${customer?.customerName}'s order?`,
+      icon: "warning",
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        fetch(`https://api.islamicposhak.com/api/order/${id}`, {
+          headers: {
+            authorization: `Bearer ${user?.accessToken}`,
+            "Content-Type": "application/json",
+          },
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            swal(
+              "Deleted!",
+              `This ${customer?.customerName}'s file has been deleted!`,
+              "success"
+            );
+
+            refetch();
+          });
+      }
+    });
   };
 
-  console.log("orders?.data", orders);
   return (
     <div>
       {orders?.data?.map((order) => (
@@ -169,18 +209,60 @@ export default function AllOrders() {
                   ৳
                 </p>
               </div>
-              <button className="bg-green-500  text-white text-[13px]  transition-all hover:btn-outline px-2 py-1  rounded-md">
-                {order?.orderStatus}
-              </button>
-
-              <select name="" id="" className="">
-                <option value="pending" className="text-[12px] selectPadding">
-                  Pending
-                </option>
-                <option value="Processing">Processing</option>
-                <option value="Shipped">Shipped</option>
-                <option value="Delivered">Delivered</option>
-              </select>
+              <div className="flex flex-wrap gap-2 items-center">
+                <div>
+                  <button className="bg-green-100  text-green-400 text-[13px]  cursor-auto px-2 py-1  rounded-md">
+                    {order?.orderStatus.toUpperCase()}
+                  </button>
+                </div>
+                <form
+                  className="lg:flex  items-center"
+                  onSubmit={(e) => handleStatus(order?._id, e.target.value)}
+                >
+                  <div className="form-control  ">
+                    <select
+                      onChange={(e) => {
+                        handleStatus(order?._id, e.target.value);
+                        setSelectedStatus(e.target.value);
+                      }}
+                      name="status"
+                      className="text-[13px] rounded-md w-28  bg-white dark:bg-black outline-none focus:outline-none focus:ring-2 focus:ring-green-400 dark:focus:ring-green-700 focus:border-transparent "
+                    >
+                      <option
+                        defaultValue={order?.orderStatus.toUpperCase()}
+                        className="text-black dark:text-white"
+                      >
+                        {order?.orderStatus}
+                      </option>
+                      {order?.orderStatus.toLowerCase() !== "pending" && (
+                        <option className="text-black dark:text-white">
+                          Pending
+                        </option>
+                      )}
+                      {order?.orderStatus.toLowerCase() !== "processing" && (
+                        <option className="text-black dark:text-white">
+                          Processing
+                        </option>
+                      )}
+                      {order?.orderStatus.toLowerCase() !== "confirmed" && (
+                        <option className="text-black dark:text-white">
+                          Confirmed
+                        </option>
+                      )}
+                      {order?.orderStatus.toLowerCase() !== "delivered" && (
+                        <option className="text-black dark:text-white">
+                          Delivered
+                        </option>
+                      )}
+                      {order?.orderStatus.toLowerCase() !== "canceled" && (
+                        <option className="text-black dark:text-white">
+                          Canceled
+                        </option>
+                      )}
+                    </select>
+                  </div>
+                </form>
+              </div>
 
               <div class="mt-4 sm:flex sm:items-center sm:gap-2">
                 <div class="flex items-center gap-1 text-gray-500">

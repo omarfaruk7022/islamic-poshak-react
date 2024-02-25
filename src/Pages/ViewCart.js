@@ -140,12 +140,22 @@ export default function ViewCart() {
     fetch("https://api.islamicposhak.com/api/order", {
       method: "POST",
       headers: {
+        authorization: `Bearer ${user?.accessToken}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ data: orderData }),
     }).then((res) => {
       if (res.ok) {
         swal("Success!", "Product successfully ordered!", "success");
+        navigate("/thankyou");
+        // the carts all data will be deleted
+        fetch(`https://api.islamicposhak.com/api/cart/email/${email}`, {
+          method: "DELETE",
+        }).then((res) => {
+          if (res.ok) {
+            refetch();
+          }
+        });
       }
     });
   };

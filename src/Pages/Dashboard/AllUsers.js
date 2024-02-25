@@ -51,7 +51,9 @@ export default function AllUsers() {
   const handleAdmin = (id) => {
     fetch(`https://api.islamicposhak.com/api/users/${id}`, {
       method: "PATCH",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({ role: "admin" }),
     })
       .then((res) => res.json())
