@@ -1,11 +1,10 @@
 import Image from "next/image";
 import React from "react";
-import footer from "../../assets/images/footer.jpg";
-import banner1 from "../../assets/images/bg-islamic-poshak.jpg";
 
 import logo from "../../assets/images/logo.png";
 import { Link } from "react-router-dom";
 import Chat from "./Chat";
+import Message from "./Message";
 
 export default function Footer() {
   const date = new Date();
@@ -145,9 +144,10 @@ export default function Footer() {
               </p>
             </div>
           </div>
+          <Message />
         </div>
       </footer>
-        <Chat/>
+      <Chat />
     </div>
   );
 }

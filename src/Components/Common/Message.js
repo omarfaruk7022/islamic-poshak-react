@@ -1,6 +1,6 @@
 import React from "react";
 import { RiMessengerLine } from "react-icons/ri";
-import MessengerCustomerChat from "react-messenger-customer-chat/lib/MessengerCustomerChat";
+import MessengerCustomerChat from "react-messenger-customer-chat";
 
 const Message = () => {
   return (
