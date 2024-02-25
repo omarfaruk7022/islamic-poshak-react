@@ -146,8 +146,8 @@ export default function Footer() {
             </div>
           </div>
         </div>
-        <Chat/>
       </footer>
+        <Chat/>
     </div>
   );
 }
