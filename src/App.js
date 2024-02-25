@@ -23,6 +23,8 @@ import AllProducts from "./Pages/AllProducts";
 import AllOrders from "./Pages/Dashboard/AllOrders";
 import Footer from "./Components/Shared/Footer";
 import ThankYou from "./Pages/ThankYou";
+import MessengerCustomerChat from "react-messenger-customer-chat";
+import { RiMessengerLine } from "react-icons/ri";
 
 function App() {
   return (
@@ -135,6 +137,13 @@ function App() {
           }
         /> */}
       </Routes>
+      <div className="text-blue-600 mr-auto">
+        <RiMessengerLine className="text-4xl" />
+        <MessengerCustomerChat
+          pageId="103523232499808"
+          appId="1066323601321012"
+        />
+      </div>
       <Footer />
     </div>
   );
