@@ -106,9 +106,9 @@ export default function ProductsCard(product) {
             {name}
           </h5>
         </Link>
-        <p className="text-[13px]">{description.slice(0, 25)}</p>
+        <p className="text-[10px] md:text-[13px]">{description.slice(0, 25)}</p>
         <div class="flex items-center mt-2.5 mb-5">
-          <div class="flex items-center space-x-1 rtl:space-x-reverse">
+          {/* <div class="flex items-center space-x-1 rtl:space-x-reverse">
             <svg
               class="w-4 h-4 text-yellow-300"
               aria-hidden="true"
@@ -157,16 +157,16 @@ export default function ProductsCard(product) {
           </div>
           <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">
             5.0
-          </span>
+          </span> */}
         </div>
         <div class="flex  justify-between flex-wrap">
-          <span class="text-2xl font-bold text-gray-900 dark:text-white">
+          <span class="text-[18px] md:text-2xl font-bold text-gray-900 dark:text-white">
             {price}৳
           </span>
           <form onSubmit={handleAddToCart}>
             <button
               type="submit"
-              class="text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              class="text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-[10px] md:text-sm px-3 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
               Add to cart
             </button>
