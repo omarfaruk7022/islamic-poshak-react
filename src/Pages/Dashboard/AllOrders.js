@@ -20,7 +20,7 @@ export default function AllOrders() {
 
   const navigate = useNavigate();
   const handleView = (id) => {
-    fetch(`https://api.islamicposhak.com/api/order/${id}`)
+    fetch(`http://localhost:5000/api/order/${id}`)
       .then((res) => res.json())
       .then((json) => setOrderData(json?.data));
     setLoadingData(false);
@@ -35,7 +35,7 @@ export default function AllOrders() {
   const ordersQuery = useQuery({
     queryKey: ["orders"],
     queryFn: () =>
-      fetch("https://api.islamicposhak.com/api/order", {
+      fetch("http://localhost:5000/api/order", {
         headers: {
           authorization: `Bearer ${user?.accessToken}`,
           ContentType: "application/json",
@@ -46,14 +46,12 @@ export default function AllOrders() {
   const usersQuery = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch("https://api.islamicposhak.com/api/users").then((res) =>
-        res.json()
-      ),
+      fetch("http://localhost:5000/api/users").then((res) => res.json()),
   });
   // const isUserAdminQuery = useQuery({
   //   queryKey: ["isUserAdmin"],
   //   queryFn: () =>
-  //     fetch(`https://api.islamicposhak.com/api/users/email/${email}`).then((res) =>
+  //     fetch(`http://localhost:5000/api/users/email/${email}`).then((res) =>
   //       res.json()
   //     ),
   // });
@@ -81,7 +79,7 @@ export default function AllOrders() {
   const handleStatus = (id, status) => {
     console.log("id", id, "status", status);
 
-    fetch(`https://api.islamicposhak.com/api/order/${id}`, {
+    fetch(`http://localhost:5000/api/order/${id}`, {
       method: "PATCH",
       headers: {
         authorization: `Bearer ${user?.accessToken}`,
@@ -109,7 +107,7 @@ export default function AllOrders() {
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
-        fetch(`https://api.islamicposhak.com/api/order/${id}`, {
+        fetch(`http://localhost:5000/api/order/${id}`, {
           headers: {
             authorization: `Bearer ${user?.accessToken}`,
             "Content-Type": "application/json",
@@ -164,38 +162,40 @@ export default function AllOrders() {
                   Email: {order.email}
                 </strong>
               </div>
-              <div className="flex gap-5 flex-wrap items-center  justify-between">
-                <div className="flex   gap-2 mt-4">
-                  {order?.orders?.map((item) => (
-                    <div class="">
-                      <div class="flex items-center ">
-                        <div>
-                          {" "}
-                          <img
-                            src={item?.image}
-                            alt=""
-                            class="h-20 w-20 object-cover rounded-lg"
-                          />
-                        </div>
+              
+               
+                  <div className="flex flex-wrap gap-2 mt-4">
+                    {order?.orders?.map((item) => (
+                      <div class="">
+                        <div class="flex items-center ">
+                          <div>
+                            {" "}
+                            <img
+                              src={item?.image}
+                              alt=""
+                              class="h-20 w-20 object-cover rounded-lg"
+                            />
+                          </div>
 
-                        <div className="px-3">
-                          <p>
-                            <a href="#" class="hover:underline">
-                              {item?.name}
-                            </a>
-                          </p>
-                          <p class="text-sm font-medium ">
-                            Price: {item?.price} ৳
-                          </p>
-                          <p class="text-sm font-medium">
-                            Quantity: {item?.quantity}
-                          </p>
+                          <div className="px-3">
+                            <p>
+                              <a href="#" class="hover:underline">
+                                {item?.name}
+                              </a>
+                            </p>
+                            <p class="text-sm font-medium ">
+                              Price: {item?.price} ৳
+                            </p>
+                            <p class="text-sm font-medium">
+                              Quantity: {item?.quantity}
+                            </p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+                    ))}
+                  </div>
+          
+          
 
               <p class="mt-1 text-sm text-gray-700">{order?.description}</p>
 
@@ -263,7 +263,11 @@ export default function AllOrders() {
                   </div>
                 </form>
               </div>
-
+              <div className="my-2">
+                <h2 className="text-[12px]">
+                  Customer address: {order?.deliveryAddress}
+                </h2>
+              </div>
               <div class="mt-4 sm:flex sm:items-center sm:gap-2">
                 <div class="flex items-center gap-1 text-gray-500">
                   <svg

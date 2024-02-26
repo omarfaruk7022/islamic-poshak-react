@@ -24,8 +24,8 @@ export default function MobileMenu() {
 
   const { isLoading, error, data } = useQuery({
     queryFn: () =>
-      fetch(`https://api.islamicposhak.com/api/users/email/${email}`).then(
-        (res) => res.json()
+      fetch(`http://localhost:5000/api/users/email/${email}`).then((res) =>
+        res.json()
       ),
   });
   return (

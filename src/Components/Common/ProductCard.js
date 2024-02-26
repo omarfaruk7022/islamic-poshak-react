@@ -8,7 +8,7 @@ import auth from "../../firebase.init";
 import { format } from "date-fns";
 
 export default function ProductsCard(product) {
-  const { _id, name, image, price, description } = product.product;
+  const { _id, name, image, price, description, discount } = product.product;
   const [user, loading] = useAuthState(auth);
   const date = new Date();
   const formattedDate = format(date, "PP");
@@ -36,7 +36,7 @@ export default function ProductsCard(product) {
     // };
 
     console.log(data);
-    fetch("https://api.islamicposhak.com/api/cart", {
+    fetch("http://localhost:5000/api/cart", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -92,7 +92,7 @@ export default function ProductsCard(product) {
     //   </div>
     // </div>
 
-    <div class="w-full h-96 flex flex-col justify-between max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div class="w-full h-92 flex flex-col justify-between max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <Link to={`/productDetails/${_id}`}>
         <img
           class=" rounded-t-lg h-44 w-full object-cover object-center"
@@ -100,14 +100,14 @@ export default function ProductsCard(product) {
           alt="product image"
         />
       </Link>
-      <div class="px-2 md:px-5 pb-2 md:pb-5 ">
+      <div class="px-2 md:px-3 pb-2 md:pb-3 mt-2">
         <Link to={`/productDetails/${_id}`}>
           <h5 class="text-[20px] font-semibold tracking-tight text-gray-900 dark:text-white">
             {name}
           </h5>
         </Link>
         <p className="text-[10px] md:text-[13px]">{description.slice(0, 25)}</p>
-        <div class="flex items-center mt-2.5 mb-5">
+        <div class="flex items-center mt-1 mb-5">
           {/* <div class="flex items-center space-x-1 rtl:space-x-reverse">
             <svg
               class="w-4 h-4 text-yellow-300"
@@ -160,18 +160,25 @@ export default function ProductsCard(product) {
           </span> */}
         </div>
         <div class="flex  justify-between flex-wrap">
-          <span class="text-[18px] md:text-2xl font-bold text-gray-900 dark:text-white">
-            {price}৳
+          <span class="text-[18px] md:text-xl font-bold text-gray-900 dark:text-white">
+            {price * (1 - discount / 100)}৳
           </span>
-          <form onSubmit={handleAddToCart}>
-            <button
-              type="submit"
-              class="text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-[10px] md:text-sm px-3 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
-              Add to cart
-            </button>
-          </form>
+          {discount > 0 && (
+            <del>
+              <span class="text-[16px] md:text-[16px] font-medium text-gray-500 dark:text-gray-400">
+                {price}৳
+              </span>
+            </del>
+          )}
         </div>
+        <form onSubmit={handleAddToCart}>
+          <button
+            type="submit"
+            class="text-white w-full bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-[10px] md:text-sm px-3 py-2.5 mt-5 text-center  "
+          >
+            Add to cart
+          </button>
+        </form>
       </div>
     </div>
   );

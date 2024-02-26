@@ -22,9 +22,7 @@ export default function AllProducts() {
   const { isLoading, error, data } = useQuery({
     queryKey: ["products"],
     queryFn: () =>
-      fetch("https://api.islamicposhak.com/api/product").then((res) =>
-        res.json()
-      ),
+      fetch("http://localhost:5000/api/product").then((res) => res.json()),
   });
 
   console.log(data);

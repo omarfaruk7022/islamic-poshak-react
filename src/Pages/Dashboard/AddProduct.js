@@ -17,8 +17,8 @@ export default function AddProduct() {
   const isUserAdminQuery = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch(`https://api.islamicposhak.com/api/users/email/${email}`).then(
-        (res) => res.json()
+      fetch(`http://localhost:5000/api/users/email/${email}`).then((res) =>
+        res.json()
       ),
   });
 
@@ -39,6 +39,7 @@ export default function AddProduct() {
     const description = e.target.description.value;
     const price = e.target.price.value;
     const quantity = e.target.quantity.value;
+    const discount = e.target.discount.value;
     const status = e.target.status.value;
     const addedBy = email;
     const img = e.target.image.files[0];
@@ -63,6 +64,7 @@ export default function AddProduct() {
             image,
             status,
             quantity,
+            discount,
           };
           if (
             category &&
@@ -71,10 +73,11 @@ export default function AddProduct() {
             price &&
             image &&
             quantity &&
+            discount &&
             status &&
             addedBy
           ) {
-            fetch("https://api.islamicposhak.com/api/product", {
+            fetch("http://localhost:5000/api/product", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -88,6 +91,7 @@ export default function AddProduct() {
                 e.target.description.value = "";
                 e.target.price.value = "";
                 e.target.quantity.value = "";
+                e.target.discount.value = "";
                 e.target.image.value = "";
               } else {
                 swal("Error", res.message, "error");
@@ -199,6 +203,22 @@ export default function AddProduct() {
 
                   <span className="absolute start-3 top-3 -translate-y-1/2 text-xs text-gray-700  transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs">
                     Available Quantity
+                  </span>
+                </label>
+                <label
+                  for="discount"
+                  className="relative block my-2 overflow-hidden rounded-md border border-gray-300  px-3 pt-3 shadow-sm  focus-within:ring-1 w-full lg:w-96 m-auto"
+                >
+                  <input
+                    type="number"
+                    id="discount"
+                    placeholder="Discount"
+                    required
+                    className="peer h-8 w-full  text-[15px] border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
+                  />
+
+                  <span className="absolute start-3 top-3 -translate-y-1/2 text-xs text-gray-700  transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs">
+                    Discount
                   </span>
                 </label>
                 {/* <label

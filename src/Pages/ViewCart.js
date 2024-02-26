@@ -13,9 +13,7 @@ export default function ViewCart() {
   const usersData = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch(`https://api.islamicposhak.com/api/users/`).then((res) =>
-        res.json()
-      ),
+      fetch(`http://localhost:5000/api/users/`).then((res) => res.json()),
   });
 
   const users = usersData.data;
@@ -24,7 +22,7 @@ export default function ViewCart() {
   const cartQuery = useQuery({
     queryKey: ["cart"],
     queryFn: () =>
-      fetch(`https://api.islamicposhak.com/api/cart/${email}`).then((res) =>
+      fetch(`http://localhost:5000/api/cart/${email}`).then((res) =>
         res.json()
       ),
   });
@@ -40,7 +38,7 @@ export default function ViewCart() {
   });
 
   const handleDelete = (id) => {
-    fetch(`https://api.islamicposhak.com/api/cart/${id}`, {
+    fetch(`http://localhost:5000/api/cart/${id}`, {
       method: "DELETE",
     }).then((res) => {
       if (res.ok) {
@@ -77,7 +75,7 @@ export default function ViewCart() {
     const quantity = cartProducts?.find(
       (product) => product?._id === id
     )?.quantity;
-    fetch(`https://api.islamicposhak.com/api/cart/${id}`, {
+    fetch(`http://localhost:5000/api/cart/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -93,7 +91,7 @@ export default function ViewCart() {
     const quantity = cartProducts?.find(
       (product) => product?._id === id
     )?.quantity;
-    fetch(`https://api.islamicposhak.com/api/cart/${id}`, {
+    fetch(`http://localhost:5000/api/cart/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -137,7 +135,7 @@ export default function ViewCart() {
       swal("Error!", "Delivery Address is required!", "error");
       return;
     }
-    fetch("https://api.islamicposhak.com/api/order", {
+    fetch("http://localhost:5000/api/order", {
       method: "POST",
       headers: {
         authorization: `Bearer ${user?.accessToken}`,
@@ -149,7 +147,7 @@ export default function ViewCart() {
         swal("Success!", "Product successfully ordered!", "success");
         navigate("/thankyou");
         // the carts all data will be deleted
-        fetch(`https://api.islamicposhak.com/api/cart/email/${email}`, {
+        fetch(`http://localhost:5000/api/cart/email/${email}`, {
           method: "DELETE",
         }).then((res) => {
           if (res.ok) {
@@ -302,7 +300,7 @@ export default function ViewCart() {
                 ))}
               </ul>
 
-              <div class="mt-8 flex justify-end border-t border-gray-100  pt-8">
+              <div class="mt-8 flex justify-end border-t border-gray-100  pt-8 gap-10">
                 <div class="w-screen max-w-lg space-y-4">
                   <dl class="space-y-0.5 text-sm text-gray-700 ">
                     <div class="flex justify-between">
@@ -325,67 +323,48 @@ export default function ViewCart() {
                       <dd>৳{total}</dd>
                     </div>
                   </dl>
-
-                  <div class="flex justify-end">
-                    <span class="inline-flex items-center justify-center rounded-full bg-green-100 dark:bg-green-200 px-2.5 py-0.5 text-green-500 ">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        class="-ms-1 me-1.5 h-4 w-4"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 010 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 010-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375z"
-                        />
-                      </svg>
-
-                      {/* <p class="whitespace-nowrap text-xs">
-                        2 Discounts Applied
-                      </p> */}
-                    </span>
-                  </div>
-
-                  <div class="flex justify-end">
-                    <form class="mt-8" onSubmit={handleOrder}>
-                      <fieldset>
-                        <div class="mt-8 flex gap-4">
-                          <label for="quantity" class="sr-only">
-                            পরিমাণ
-                          </label>
-
-                          <input
-                            type="number"
-                            id="quantity"
-                            name="quantity"
-                            min="1"
-                            required
-                            defaultValue="1"
-                            placeholder="Qty"
-                            class="w-12 rounded text-black  bg-white border-gray-300   py-3 text-center text-xs [-moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
-                          />
-
-                          <input
-                            type="text"
+                </div>
+              </div>
+              <div class=" ">
+                <form class="mt-8 w-full" onSubmit={handleOrder}>
+                  <fieldset>
+                    <div class="mt-8  ">
+                      {/* <input
+                            type="textarea"
                             name="address"
                             required
                             placeholder="ডেলিভারী ঠিকানা"
                             className="inline-block w-96 rounded  py-3 text-center text-xs focus:outline-none focus:ring-0 text-black d bg-white border-gray-300 "
-                          />
+                          /> */}
+                      <div>
+                        <label
+                          htmlFor="OrderNotes"
+                          className="block text-sm font-medium text-gray-700 "
+                        >
+                          {" "}
+                          Order notes{" "}
+                        </label>
 
-                          <input
-                            type="submit"
-                            value="অর্ডার করুন"
-                            class="inline-flex items-center pointer justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-600 "
-                          />
-                        </div>
-                      </fieldset>
-                    </form>
-                  </div>
-                </div>
+                        <textarea
+                          id="OrderNotes"
+                          name="address"
+                          className="mt-2 w-full rounded-lg border-gray-200 align-top shadow-sm sm:text-sm "
+                          rows="4"
+                          placeholder="Enter any additional order notes..."
+                        ></textarea>
+                      </div>
+
+                      <div>
+                        {" "}
+                        <input
+                          type="submit"
+                          value="অর্ডার কনফার্ম করুন"
+                          class="cursor-pointer px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-600 float-right mt-5"
+                        />
+                      </div>
+                    </div>
+                  </fieldset>
+                </form>
               </div>
             </div>
           </div>

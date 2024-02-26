@@ -23,9 +23,7 @@ export default function SideMenu() {
   const { isLoading, error, data } = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch(`https://api.islamicposhak.com/api/users/`).then((res) =>
-        res.json()
-      ),
+      fetch(`http://localhost:5000/api/users/`).then((res) => res.json()),
   });
   const isAdmin = data.data.find((user) => user.email === email);
 
