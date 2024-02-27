@@ -25,8 +25,8 @@ export default function MobileTopNav({ visibleTopNav, setVisibleTopNav }) {
   const { isLoading, error, data } = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch(`http://localhost:5000/api/users/email/${email}`).then((res) =>
-        res.json()
+      fetch(`https://api.islamicposhak.com/api/users/email/${email}`).then(
+        (res) => res.json()
       ),
   });
   return (
@@ -105,7 +105,10 @@ export default function MobileTopNav({ visibleTopNav, setVisibleTopNav }) {
                     className="flex items-center gap-2 rounded-lg px-2 py-2   text-gray-900  hover:bg-gray-200  transition-all "
                   >
                     <HiShoppingBag className="text-[20px]" />
-                    <span className="text-sm font-medium"> Login / Register </span>
+                    <span className="text-sm font-medium">
+                      {" "}
+                      Login / Register{" "}
+                    </span>
                   </Link>
                 )}
               </nav>

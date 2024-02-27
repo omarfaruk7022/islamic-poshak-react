@@ -35,7 +35,7 @@ export default function Signup() {
       if (error) {
         swal("Error", error.message, "error");
       } else {
-        fetch(`http://localhost:5000/api/users/email/${email}`, {
+        fetch(`https://api.islamicposhak.com/api/users/email/${email}`, {
           method: "PUT",
           headers: {
             "Content-type": "application/json",

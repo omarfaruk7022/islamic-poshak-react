@@ -14,7 +14,9 @@ export default function ViewCart() {
   const usersData = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch(`http://localhost:5000/api/users/`).then((res) => res.json()),
+      fetch(`https://api.islamicposhak.com/api/users/`).then((res) =>
+        res.json()
+      ),
   });
 
   const users = usersData.data;
@@ -23,7 +25,7 @@ export default function ViewCart() {
   const cartQuery = useQuery({
     queryKey: ["cart"],
     queryFn: () =>
-      fetch(`http://localhost:5000/api/cart/${email}`).then((res) =>
+      fetch(`https://api.islamicposhak.com/api/cart/${email}`).then((res) =>
         res.json()
       ),
   });
@@ -39,7 +41,7 @@ export default function ViewCart() {
   });
 
   const handleDelete = (id) => {
-    fetch(`http://localhost:5000/api/cart/${id}`, {
+    fetch(`https://api.islamicposhak.com/api/cart/${id}`, {
       method: "DELETE",
     }).then((res) => {
       if (res.ok) {
@@ -76,7 +78,7 @@ export default function ViewCart() {
     const quantity = cartProducts?.find(
       (product) => product?._id === id
     )?.quantity;
-    fetch(`http://localhost:5000/api/cart/${id}`, {
+    fetch(`https://api.islamicposhak.com/api/cart/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -92,7 +94,7 @@ export default function ViewCart() {
     const quantity = cartProducts?.find(
       (product) => product?._id === id
     )?.quantity;
-    fetch(`http://localhost:5000/api/cart/${id}`, {
+    fetch(`https://api.islamicposhak.com/api/cart/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -148,7 +150,7 @@ export default function ViewCart() {
       swal("Error!", "Delivery Address is required!", "error");
       return;
     }
-    fetch("http://localhost:5000/api/order", {
+    fetch("https://api.islamicposhak.com/api/order", {
       method: "POST",
       headers: {
         authorization: `Bearer ${user?.accessToken}`,
@@ -160,7 +162,7 @@ export default function ViewCart() {
         swal("Success!", "Product successfully ordered!", "success");
         navigate("/thankyou");
         // the carts all data will be deleted
-        fetch(`http://localhost:5000/api/cart/email/${email}`, {
+        fetch(`https://api.islamicposhak.com/api/cart/email/${email}`, {
           method: "DELETE",
         }).then((res) => {
           if (res.ok) {
@@ -181,7 +183,18 @@ export default function ViewCart() {
   const total = subTotal + vat - discount;
   console.log("discount", total);
 
-  const longs = ["Select long","5'0", "5'1", "5'2", "5'3", "5'4", "5'5", "5'6", "5'7", "5'8"];
+  const longs = [
+    "Select long",
+    "5'0",
+    "5'1",
+    "5'2",
+    "5'3",
+    "5'4",
+    "5'5",
+    "5'6",
+    "5'7",
+    "5'8",
+  ];
   const bodys = [
     "Select body",
     "30 Inch",

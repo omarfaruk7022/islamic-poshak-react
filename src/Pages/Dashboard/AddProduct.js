@@ -17,8 +17,8 @@ export default function AddProduct() {
   const isUserAdminQuery = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch(`http://localhost:5000/api/users/email/${email}`).then((res) =>
-        res.json()
+      fetch(`https://api.islamicposhak.com/api/users/email/${email}`).then(
+        (res) => res.json()
       ),
   });
 
@@ -77,7 +77,7 @@ export default function AddProduct() {
             status &&
             addedBy
           ) {
-            fetch("http://localhost:5000/api/product", {
+            fetch("https://api.islamicposhak.com/api/product", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -103,7 +103,6 @@ export default function AddProduct() {
               "Please check all the fields filled with and valid and ",
               "error"
             );
-            
           }
         }
       });

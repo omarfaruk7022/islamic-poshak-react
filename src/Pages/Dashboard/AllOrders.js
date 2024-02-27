@@ -29,7 +29,7 @@ export default function AllOrders() {
   const ordersQuery = useQuery({
     queryKey: ["orders"],
     queryFn: () =>
-      fetch("http://localhost:5000/api/order", {
+      fetch("https://api.islamicposhak.com/api/order", {
         headers: {
           authorization: `Bearer ${user?.accessToken}`,
           ContentType: "application/json",
@@ -40,12 +40,14 @@ export default function AllOrders() {
   const usersQuery = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch("http://localhost:5000/api/users").then((res) => res.json()),
+      fetch("https://api.islamicposhak.com/api/users").then((res) =>
+        res.json()
+      ),
   });
   // const isUserAdminQuery = useQuery({
   //   queryKey: ["isUserAdmin"],
   //   queryFn: () =>
-  //     fetch(`http://localhost:5000/api/users/email/${email}`).then((res) =>
+  //     fetch(`https://api.islamicposhak.com/api/users/email/${email}`).then((res) =>
   //       res.json()
   //     ),
   // });
@@ -90,7 +92,7 @@ export default function AllOrders() {
   const handleStatus = (id, status) => {
     console.log("id", id, "status", status);
 
-    fetch(`http://localhost:5000/api/order/${id}`, {
+    fetch(`https://api.islamicposhak.com/api/order/${id}`, {
       method: "PATCH",
       headers: {
         authorization: `Bearer ${user?.accessToken}`,
@@ -118,7 +120,7 @@ export default function AllOrders() {
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
-        fetch(`http://localhost:5000/api/order/${id}`, {
+        fetch(`https://api.islamicposhak.com/api/order/${id}`, {
           headers: {
             authorization: `Bearer ${user?.accessToken}`,
             "Content-Type": "application/json",
