@@ -18,7 +18,7 @@ export default function ViewCart() {
   });
 
   const users = usersData.data;
-  const isAdmin = users?.data?.find((user) => user.email === email);
+  const isAdmin = users?.data?.find((user) => user.email == email);
   console.log("isAdmin", isAdmin);
   const cartQuery = useQuery({
     queryKey: ["cart"],
@@ -126,10 +126,19 @@ export default function ViewCart() {
       });
     });
 
+    console.log("orderData", orderData);
     // Check quantity for each product
     for (const product of orderData) {
       if (product.quantity <= 0) {
         swal("Error!", "Quantity must be greater than 0!", "error");
+        return;
+      }
+      if (product.long === "Select long") {
+        swal("Error!", "Long is required!", "error");
+        return;
+      }
+      if (product.body === "Select body") {
+        swal("Error!", "Body is required!", "error");
         return;
       }
     }
@@ -172,8 +181,9 @@ export default function ViewCart() {
   const total = subTotal + vat - discount;
   console.log("discount", total);
 
-  const longs = ["5'0", "5'1", "5'2", "5'3", "5'4", "5'5", "5'6", "5'7", "5'8"];
+  const longs = ["Select long","5'0", "5'1", "5'2", "5'3", "5'4", "5'5", "5'6", "5'7", "5'8"];
   const bodys = [
+    "Select body",
     "30 Inch",
     "32 Inch",
     "34 Inch",

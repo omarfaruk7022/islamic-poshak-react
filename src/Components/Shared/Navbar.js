@@ -19,6 +19,7 @@ export default function Navbar() {
   const [visibleNav, setVisibleNav] = useState(false);
   const [visibleTopNav, setVisibleTopNav] = useState(false);
   const [cartData, setCartData] = useState();
+  const [localCartData, setLocalCartData] = useState();
 
   const email = user?.email;
   const handleSignOut = () => {
@@ -52,8 +53,14 @@ export default function Navbar() {
   const cartRefetch = () => {
     cartQuery.refetch();
   };
-
   const cartProducts = cartQuery.data?.data;
+  useEffect(() => {
+    const cartData = JSON.parse(localStorage.getItem("cartData"));
+    cartRefetch();
+    setLocalCartData(cartData);
+  }, [cartProducts]);
+
+  console.log(localCartData?.length);
 
   return (
     <div>

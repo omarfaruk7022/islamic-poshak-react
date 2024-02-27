@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import swal from "sweetalert";
 import cross from "../../assets/images/close.png";
@@ -16,6 +16,8 @@ export default function MyOrders() {
   const email = user?.email;
   const [visible, setVisible] = useState(false);
   const [selectedItemId, setSelectedItemId] = useState();
+  const [sortBy, setSortBy] = useState("all");
+  const [finalData, setFinalData] = useState([]);
   //   const ordersQuery = useQuery({
   //     queryKey: ["orders"],
   //     queryFn: () =>
@@ -33,6 +35,29 @@ export default function MyOrders() {
       }).then((res) => res.json()),
   });
   const orders = ordersQuery.data;
+
+
+
+
+
+  
+  useEffect(() => {
+    if (orders) {
+      setFinalData(orders?.data);
+    }
+  }, [orders]);
+  useEffect(() => {
+    if (sortBy == "all") {
+      setFinalData(orders?.data);
+    } else {
+      const sortedData = orders?.data?.filter(
+        (product) => product?.orderStatus.toLowerCase() == sortBy.toLowerCase()
+      );
+      setFinalData(sortedData);
+    }
+  }, [sortBy]);
+
+
   //   const userIsAdmin = isUserAdminQuery.data;
   const refetch = () => {
     ordersQuery.refetch();
@@ -100,9 +125,29 @@ export default function MyOrders() {
 
   return (
     <div>
-      {orders?.data.length > 0 ? (
+      <div className="flex justify-end p-5">
+        <label htmlFor="SortBy" className="sr-only">
+          SortBy
+        </label>
+
+        <select
+          onChange={(e) => setSortBy(e.target.value)}
+          id="SortBy"
+          className="h-10 rounded border-gray-300 text-sm"
+        >
+          <option defaultValue={"all"} value="all">
+            All
+          </option>
+          <option value="pending">Pending</option>
+          <option value="processing">Processing</option>
+          <option value="delivered">Delivered</option>
+          <option value="confirmed">Confirmed</option>
+          <option value="canceled">Canceled</option>
+        </select>
+      </div>
+      {finalData?.length > 0 ? (
         <>
-          {orders?.data?.map((order) => (
+          {finalData?.map((order) => (
             <article class="rounded-xl bg-white p-4 ring ring-green-50 sm:p-6 lg:p-8 m-5">
               <div class="flex items-start sm:gap-8">
                 <div

@@ -26,6 +26,9 @@ export default function ProductsCard(product) {
       email: user?.email,
       discount: discount,
     };
+    let cartData = JSON.parse(localStorage.getItem("cartData")) ?? [];
+    cartData.push(data);
+
     // const data = {
     //   productId: _id,
     //   orderDate: formattedDate,
@@ -36,7 +39,6 @@ export default function ProductsCard(product) {
     //   email: user?.email,
     // };
 
-    console.log(data);
     fetch("http://localhost:5000/api/cart", {
       method: "POST",
       headers: {
@@ -46,6 +48,7 @@ export default function ProductsCard(product) {
     }).then((res) => {
       if (res.ok) {
         swal("Success!", "Product added to cart!", "success");
+        localStorage.setItem("cartData", JSON.stringify(cartData));
       }
       console.log(res);
     });
