@@ -73,7 +73,7 @@ export default function AddProduct() {
             price &&
             image &&
             quantity &&
-            discount &&
+            discount <= 100 &&
             status &&
             addedBy
           ) {
@@ -97,6 +97,13 @@ export default function AddProduct() {
                 swal("Error", res.message, "error");
               }
             });
+          } else {
+            swal(
+              "Error",
+              "Please check all the fields filled with and valid and ",
+              "error"
+            );
+            
           }
         }
       });
@@ -197,6 +204,7 @@ export default function AddProduct() {
                     type="number"
                     id="quantity"
                     placeholder="Quantity"
+                    min="0"
                     required
                     className="peer h-8 w-full  text-[15px] border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
                   />
@@ -213,6 +221,7 @@ export default function AddProduct() {
                     type="number"
                     id="discount"
                     placeholder="Discount"
+                    min="0"
                     required
                     className="peer h-8 w-full  text-[15px] border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
                   />

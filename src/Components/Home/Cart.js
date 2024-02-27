@@ -69,7 +69,9 @@ export default function Cart({ cartData, setCartData }) {
                     <dl class="mt-0.5 space-y-px text-[10px] text-gray-600">
                       <div>
                         <dt class="inline">দাম: </dt>
-                        <dd class="inline">${product?.price}</dd>
+                        <dd class="inline">
+                          {product?.price * (1 - product?.discount / 100)}৳
+                        </dd>
                       </div>
                     </dl>
                   </div>

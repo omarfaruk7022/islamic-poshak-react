@@ -60,37 +60,44 @@ export default function Navbar() {
       <div>
         <header
           aria-label="Site Header  "
-          className="w-full bg-white shadow-lg   "
+          className="w-full bg-white shadow-lg "
         >
           <div className="mx-auto flex h-20 max-w-screen-2xl items-center justify-between sm:px-6 lg:px-8  ">
             <div className="flex items-center gap-4 ">
-              <button
-                type="button"
-                className="p-2 lg:hidden"
-                onClick={() => setVisibleNav(true)}
-              >
-                <svg
-                  className="h-6 w-6"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
+              {user ? (
+                <button
+                  type="button"
+                  className="p-2 lg:hidden"
+                  onClick={() => setVisibleNav(true)}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                </svg>
-              </button>
+                  <svg
+                    className="h-6 w-6"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M4 6h16M4 12h16M4 18h16"
+                    />
+                  </svg>
+                </button>
+              ) : (
+                ""
+              )}
               <div>
                 <Sidebar
                   position="left"
                   visible={visibleNav}
                   onHide={() => setVisibleNav(false)}
                 >
-                  <MobileNav />
+                  <MobileNav
+                    visibleNav={visibleNav}
+                    setVisibleNav={setVisibleNav}
+                  />
                 </Sidebar>
               </div>
             </div>

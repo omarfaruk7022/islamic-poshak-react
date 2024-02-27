@@ -142,7 +142,9 @@ export default function MyOrders() {
                               </a>
                             </p>
                             <p class="text-sm font-medium ">
-                              Price: {item?.price}
+                              Price:{" "}
+                              {item?.price *
+                                (1 - item?.discount / 100).toFixed(0)}
                             </p>
                             <p class="text-sm font-medium">
                               Quantity: {item?.quantity}
@@ -155,18 +157,25 @@ export default function MyOrders() {
                         ></div>
                       </div>
                     ))}
-                    <div>
-                      <p class="text-md font-medium">
-                        Total:
-                        {order?.orders?.reduce(
-                          (total, item) => total + item.price * item.quantity,
+                  </div>
+                  <div>
+                    <p class="text-md font-medium my-2">
+                      Total:
+                      {order?.orders
+                        ?.reduce(
+                          (total, item) =>
+                            total +
+                            item.price *
+                              item.quantity *
+                              (1 - item.discount / 100),
                           0
-                        )}
-                      </p>
-                    </div>
+                        )
+                        .toFixed(0)}
+                      ৳
+                    </p>
                   </div>
 
-                  <div className="py-5 flex flex-wrap items-center gap-2">
+                  <div className="pb-5 flex flex-wrap items-center gap-2">
                     <button
                       className={` ${
                         order?.orderStatus.toLowerCase() == "canceled"

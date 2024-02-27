@@ -101,13 +101,11 @@ export default function MobileTopNav({ visibleTopNav, setVisibleTopNav }) {
                   </button>
                 ) : (
                   <Link
-                    href="/login"
-                    className="flex items-center gap-2 rounded-lg px-4 py-2 text-black  text-sm font-medium"
+                    to="/login"
+                    className="flex items-center gap-2 rounded-lg px-2 py-2   text-gray-900  hover:bg-gray-200  transition-all "
                   >
-                    <span className="text-sm font-medium">
-                      {" "}
-                      Login / Register{" "}
-                    </span>
+                    <HiShoppingBag className="text-[20px]" />
+                    <span className="text-sm font-medium"> Login / Register </span>
                   </Link>
                 )}
               </nav>

@@ -24,6 +24,7 @@ export default function ProductsCard(product) {
       price: price,
       image: image,
       email: user?.email,
+      discount: discount,
     };
     // const data = {
     //   productId: _id,

@@ -15,6 +15,7 @@ import { Link, useParams } from "react-router-dom";
 export default function SideMenu() {
   const [user, loading] = useAuthState(auth);
   const email = user?.email;
+  const [active, setActive] = useState(1);
   const { slug } = useParams();
   const handleSignOut = () => {
     signOut(auth);
@@ -38,8 +39,11 @@ export default function SideMenu() {
         <div className=" py-6 ">
           <nav aria-label="Main Nav" className="mt-6 flex flex-col space-y-1 ">
             <Link
+              onClick={() => setActive(1)}
               to="/dashboard"
-              className="flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900    transition-all  "
+              className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
+                active == 1 ? "bg-gray-200" : ""
+              } transition-all hover:bg-gray-200 `}
             >
               <MdSpaceDashboard className="text-[20px]" />
               <span className="text-sm font-medium"> Dashboard </span>
@@ -48,30 +52,42 @@ export default function SideMenu() {
             {isAdmin?.role === "admin" && (
               <>
                 <Link
+                  onClick={() => setActive(2)}
                   to="/dashboard/add-product"
-                  className="flex items-center gap-2 rounded-lg px-2 py-2   text-gray-900  hover:bg-gray-200  transition-all "
+                  className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
+                    active == 2 ? "bg-gray-200" : ""
+                  } transition-all hover:bg-gray-200 `}
                 >
                   <MdLibraryAdd className="text-[20px]" />
                   <span className="text-sm font-medium"> Add Product </span>
                 </Link>
 
                 <Link
+                  onClick={() => setActive(3)}
                   to="/dashboard/manage-products"
-                  className="flex items-center gap-2 rounded-lg px-2 py-2   text-gray-900  hover:bg-gray-200  transition-all "
+                  className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
+                    active == 3 ? "bg-gray-200" : ""
+                  } transition-all hover:bg-gray-200 `}
                 >
                   <IoSettings className="text-[20px]" />
                   <span className="text-sm font-medium"> Manage Product </span>
                 </Link>
                 <Link
+                  onClick={() => setActive(4)}
                   to="/dashboard/all-users"
-                  className="flex items-center gap-2 rounded-lg px-2 py-2   text-gray-900  hover:bg-gray-200  transition-all "
+                  className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
+                    active == 4 ? "bg-gray-200" : ""
+                  } transition-all hover:bg-gray-200 `}
                 >
                   <FaUsers className="text-[20px]" />
                   <span className="text-sm font-medium"> All Users </span>
                 </Link>
                 <Link
+                  onClick={() => setActive(5)}
                   to="/dashboard/all-orders"
-                  className="flex items-center gap-2 rounded-lg px-2 py-2   text-gray-900  hover:bg-gray-200  transition-all "
+                  className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
+                    active == 5 ? "bg-gray-200" : ""
+                  } transition-all hover:bg-gray-200 `}
                 >
                   <HiShoppingBag className="text-[20px]" />
                   <span className="text-sm font-medium"> All Orders </span>
@@ -80,15 +96,21 @@ export default function SideMenu() {
             )}
 
             <Link
+              onClick={() => setActive(6)}
               to="/dashboard/my-profile"
-              className="flex items-center gap-2 rounded-lg px-2 py-2   text-gray-900  hover:bg-gray-200  transition-all "
+              className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
+                active == 6 ? "bg-gray-200" : ""
+              } transition-all hover:bg-gray-200 `}
             >
               <RiAccountPinCircleFill className="text-[20px]" />
               <span className="text-sm font-medium"> My Profile </span>
             </Link>
             <Link
+              onClick={() => setActive(7)}
               to="/dashboard/my-orders"
-              className="flex items-center gap-2 rounded-lg px-2 py-2   text-gray-900  hover:bg-gray-200  transition-all "
+              className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
+                active == 7 ? "bg-gray-200" : ""
+              } transition-all hover:bg-gray-200 `}
             >
               <RiAccountPinCircleFill className="text-[20px]" />
               <span className="text-sm font-medium"> My Orders </span>

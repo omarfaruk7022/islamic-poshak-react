@@ -43,6 +43,9 @@ export default function ProductDetails() {
       price: product?.data?.price,
       image: product?.data?.image,
       email: user?.email,
+      discount: product?.data?.discount,
+      long: e.target.long.value,
+      body: e.target.body.value,
     };
     // const data = {
     //   productId: _id,
@@ -54,7 +57,6 @@ export default function ProductDetails() {
     //   email: user?.email,
     // };
 
-    console.log(data);
     fetch("http://localhost:5000/api/cart", {
       method: "POST",
       headers: {
@@ -68,6 +70,20 @@ export default function ProductDetails() {
       console.log(res);
     });
   };
+
+  const longs = ["5'0", "5'1", "5'2", "5'3", "5'4", "5'5", "5'6", "5'7", "5'8"];
+  const bodys = [
+    "30 Inch",
+    "32 Inch",
+    "34 Inch",
+    "36 Inch",
+    "38 Inch",
+    "40 Inch",
+    "42 Inch",
+    "44 Inch",
+    "46 Inch",
+    "48 Inch",
+  ];
 
   return (
     <div>
@@ -191,60 +207,59 @@ export default function ProductDetails() {
                     </div>
                   </div>
 
-                  <form class="mt-8" onSubmit={handleAddToCart}>
-                    <fieldset>
-                      {/* <div class="flex flex-wrap gap-1">
-                        <label for="color_tt" class="cursor-pointer">
+                  <div>
+                    <form class="mt-4" onSubmit={handleAddToCart}>
+                      <fieldset>
+                        <div class="">
+                          <h2 className="text-[14px]">Size long: </h2>
+                          <div className="flex gap-2 flex-wrap">
+                            {longs.map((long) => (
+                              <label for={long} class="cursor-pointer">
+                                <input
+                                  type="radio"
+                                  name="long"
+                                  value={long}
+                                  id={long}
+                                  class="peer sr-only"
+                                />
+
+                                <span class="group inline-block rounded-full border px-3 py-1 text-xs font-medium peer-checked:bg-green-500 peer-checked:text-white">
+                                  {long}
+                                </span>
+                              </label>
+                            ))}
+                          </div>
+                        </div>
+                        <div class=" mt-5">
+                          <h2 className="text-[14px]">Size Body: </h2>
+                          <div className="flex gap-2 flex-wrap">
+                            {bodys.map((body) => (
+                              <label for={body} class="cursor-pointer">
+                                <input
+                                  type="radio"
+                                  name="body"
+                                  value={body}
+                                  id={body}
+                                  class="peer sr-only"
+                                />
+
+                                <span class="group inline-block rounded-full border px-3 py-1 text-xs font-medium peer-checked:bg-green-500 peer-checked:text-white">
+                                  {body}
+                                </span>
+                              </label>
+                            ))}
+                          </div>
+                        </div>
+                        <div class="mt-8 flex gap-4">
                           <input
-                            type="radio"
-                            name="color"
-                            value="Texas Tea"
-                            id="color_tt"
-                            class="peer sr-only"
+                            type="submit"
+                            class="block rounded bg-green-600 px-5 py-3 text-xs font-medium text-white hover:bg-green-500 cursor-pointer transition-all"
+                            value="Add to Cart"
                           />
-
-                          <span class="group inline-block rounded-full border px-3 py-1 text-xs font-medium peer-checked:bg-black peer-checked:text-white">
-                            Texas Tea
-                          </span>
-                        </label>
-
-                        <label for="color_fr" class="cursor-pointer">
-                          <input
-                            type="radio"
-                            name="color"
-                            value="Fiesta Red"
-                            id="color_fr"
-                            class="peer sr-only"
-                          />
-
-                          <span class="group inline-block rounded-full border px-3 py-1 text-xs font-medium peer-checked:bg-black peer-checked:text-white">
-                            Fiesta Red
-                          </span>
-                        </label>
-
-                        <label for="color_cb" class="cursor-pointer">
-                          <input
-                            type="radio"
-                            name="color"
-                            value="Cobalt Blue"
-                            id="color_cb"
-                            class="peer sr-only "
-                          />
-
-                          <span class="group inline-block rounded-full border px-3 py-1 text-xs font-medium peer-checked:bg-black peer-checked:text-white">
-                            Cobalt Blue
-                          </span>
-                        </label>
-                      </div> */}
-                      <div class="mt-8 flex gap-4">
-                        <input
-                          type="submit"
-                          class="block rounded bg-green-600 px-5 py-3 text-xs font-medium text-white hover:bg-green-500 cursor-pointer transition-all"
-                          value="Add to Cart"
-                        />
-                      </div>
-                    </fieldset>
-                  </form>
+                        </div>
+                      </fieldset>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
