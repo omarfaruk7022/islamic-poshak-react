@@ -13,11 +13,13 @@ import { Link } from "react-router-dom";
 import { FaUsers } from "react-icons/fa";
 import { IoSettings } from "react-icons/io5";
 import { useQuery } from "@tanstack/react-query";
+import useAdmin from "./useAdmin";
 
 export default function MobileNav({ visibleNav, setVisibleNav }) {
   const [user, loading] = useAuthState(auth);
   const email = user?.email;
   const [active, setActive] = useState(1);
+  const [admin, adminLoading] = useAdmin(user);
 
   const handleSignOut = () => {
     signOut(auth);
@@ -30,14 +32,6 @@ export default function MobileNav({ visibleNav, setVisibleNav }) {
   //       res.json()
   //     ),
   // });
-  const { isLoading, error, data } = useQuery({
-    queryKey: ["users"],
-    queryFn: () =>
-      fetch(`https://api.islamicposhak.com/api/users/`).then((res) =>
-        res.json()
-      ),
-  });
-  const isAdmin = data.data.find((user) => user.email === email);
 
   console.log("visibleNav", visibleNav);
   return (
@@ -60,7 +54,7 @@ export default function MobileNav({ visibleNav, setVisibleNav }) {
                   <MdOutlineSpaceDashboard className="text-[20px]" />
                   <span className="text-sm font-medium"> Dashboard </span>
                 </Link>
-                {isAdmin?.role === "admin" && (
+                {admin?.role === "admin" && (
                   <>
                     <Link
                       onClick={() => setActive(2)}
@@ -75,7 +69,7 @@ export default function MobileNav({ visibleNav, setVisibleNav }) {
 
                     <Link
                       onClick={() => setActive(3)}
-                      to="/dashboard/manage-product"
+                      to="/dashboard/manage-products"
                       className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
                         active == 3 ? "bg-gray-200" : ""
                       } transition-all hover:bg-gray-200 `}
