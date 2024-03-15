@@ -1,18 +1,10 @@
 import React, { useState } from "react";
-import logo from "../../assets/images/logo-1.png";
 import { useAuthState } from "react-firebase-hooks/auth";
-import {
-  MdLibraryAdd,
-  MdOutlineSpaceDashboard,
-  MdSpaceDashboard,
-} from "react-icons/md";
-import { HiOutlineLogout, HiShoppingBag } from "react-icons/hi";
+import { MdOutlineSpaceDashboard } from "react-icons/md";
 import auth from "../../firebase.init";
 import { signOut } from "firebase/auth";
 import { Link } from "react-router-dom";
-import { FaUsers } from "react-icons/fa";
-import { IoSettings } from "react-icons/io5";
-import { useQuery } from "@tanstack/react-query";
+
 import useAdmin from "./useAdmin";
 
 export default function MobileNav({ visibleNav, setVisibleNav }) {
@@ -28,12 +20,11 @@ export default function MobileNav({ visibleNav, setVisibleNav }) {
   // const { isLoading, error, data } = useQuery({
   //   queryKey: ["users"],
   //   queryFn: () =>
-  //     fetch(`https://api.islamicposhak.com/api/users/email/${email}`).then((res) =>
+  //     fetch(`http://localhost:5000/api/users/email/${email}`).then((res) =>
   //       res.json()
   //     ),
   // });
 
-  console.log("visibleNav", visibleNav);
   return (
     <div>
       <div>

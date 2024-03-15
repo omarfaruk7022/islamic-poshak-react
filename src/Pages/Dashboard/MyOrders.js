@@ -21,13 +21,13 @@ export default function MyOrders() {
   //   const ordersQuery = useQuery({
   //     queryKey: ["orders"],
   //     queryFn: () =>
-  //       fetch("https://api.islamicposhak.com/api/cart").then((res) => res.json()),
+  //       fetch("http://localhost:5000/api/cart").then((res) => res.json()),
   //   });
 
   const ordersQuery = useQuery({
     queryKey: ["orders"],
     queryFn: () =>
-      fetch(`https://api.islamicposhak.com/api/order/email/${email}`, {
+      fetch(`http://localhost:5000/api/order/email/${email}`, {
         headers: {
           authorization: `Bearer ${user?.accessToken}`,
           "Content-Type": "application/json",
@@ -73,7 +73,7 @@ export default function MyOrders() {
   const handleStatus = (e, id) => {
     e.preventDefault();
 
-    fetch(`https://api.islamicposhak.com/api/order/${id}`, {
+    fetch(`http://localhost:5000/api/order/${id}`, {
       method: "PATCH",
       headers: {
         authorization: `Bearer ${user?.accessToken}`,
@@ -96,7 +96,7 @@ export default function MyOrders() {
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
-        fetch(`https://api.islamicposhak.com/api/order/${id}`, {
+        fetch(`http://localhost:5000/api/order/${id}`, {
           headers: {
             authorization: `Bearer ${user?.accessToken}`,
             "Content-Type": "application/json",
@@ -115,6 +115,28 @@ export default function MyOrders() {
   const handleShow = (id) => {
     setVisible(true);
     setSelectedItemId(id);
+  };
+
+  const handleReview = (e, id) => {
+    e.preventDefault();
+    const review = e.target.review.value;
+    console.log("review", review);
+    fetch(`http://localhost:5000/api/order/${id}`, {
+      method: "PATCH",
+      headers: {
+        authorization: `Bearer ${user?.accessToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        review: {
+          status: false,
+          review: review,
+        },
+      }),
+    });
+    swal("Review Added", "Your Review has been added!", "success");
+    e.target.reset();
+    refetch();
   };
 
   return (
@@ -142,7 +164,7 @@ export default function MyOrders() {
       {finalData?.length > 0 ? (
         <>
           {finalData?.map((order) => (
-            <article class="rounded-xl bg-white p-4 ring ring-green-50 sm:p-6 lg:p-8 m-5">
+            <article class="rounded-xl bg-white p-4 ring ring-green-50 sm:p-6 lg:p-8 m-5 flex justify-between">
               <div class="flex items-start sm:gap-8">
                 <div
                   class="hidden sm:grid sm:size-20 sm:shrink-0 sm:place-content-center sm:rounded-full sm:border-2 sm:border-green-500"
@@ -279,7 +301,84 @@ export default function MyOrders() {
                       </a>
                     </p>
                   </div>
+                  {order?.review?.review ? (
+                    <p>
+                      <strong>Review:</strong> {order?.review?.review}
+                    </p>
+                  ) : (
+                    ""
+                  )}
                 </div>
+              </div>
+              <div>
+                {console.log(
+                  "orders",
+                  order?.orderStatus?.toUpperCase() == "DELIVERED" &&
+                    order?.review?.review == ""
+                )}
+                {order?.orderStatus?.toUpperCase() == "DELIVERED" &&
+                order?.review?.review == "" ? (
+                  <div class="mt-6 flex justify-end gap-2">
+                    <button
+                      onClick={() =>
+                        document.getElementById("my_modal_3").showModal()
+                      }
+                      class="bg-green-100 text-green-400 text-[15px]   px-2 py-1  rounded-md cursor-pointer"
+                    >
+                      Review
+                    </button>
+                    {/* You can open the modal using document.getElementById('ID').showModal() method */}
+
+                    <dialog id="my_modal_3" className="modal">
+                      <div className="modal-box">
+                        <form method="dialog">
+                          {/* if there is a button in form, it will close the modal */}
+                          <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                            ✕
+                          </button>
+                        </form>
+                        <h3 className="font-bold text-lg">Thanks </h3>
+                        <p className="py-4">
+                          You can give a review to improve our service
+                        </p>
+
+                        <div>
+                          <label
+                            for="OrderNotes"
+                            class="block text-sm font-medium text-gray-700"
+                          >
+                            {" "}
+                            Review{" "}
+                          </label>
+
+                          <form onSubmit={(e) => handleReview(e, order?._id)}>
+                            <textarea
+                              id="OrderNotes"
+                              name="review"
+                              class="mt-2 w-full rounded-lg border-gray-200 align-top shadow-sm sm:text-sm"
+                              rows="4"
+                              placeholder="Enter any additional order notes..."
+                            ></textarea>
+                            <button
+                              type="submit"
+                              class="bg-green-100 text-green-400 text-[17px]   px-3 py-2  rounded-md cursor-pointer float-end mt-4 hover:bg-green-500 hover:text-white"
+                            >
+                              Submit
+                            </button>
+                          </form>
+                        </div>
+                      </div>
+                    </dialog>
+                    {/* <button
+                    onClick={() => handleShow(order._id)}
+                    class="bg-green-100 text-green-400 text-[15px]   px-2 py-1  rounded-md cursor-auto"
+                  >
+                    Download invoice
+                  </button> */}
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
             </article>
           ))}
