@@ -16,12 +16,14 @@ export default function AllUsers() {
   const usersQuery = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch("http://localhost:5000/api/users").then((res) => res.json()),
+      fetch("https://api.islamicposhak.com/api/users").then((res) =>
+        res.json()
+      ),
   });
   // const isUserAdminQuery = useQuery({
   //   queryKey: ["isUserAdmin"],
   //   queryFn: () =>
-  //     fetch(`http://localhost:5000/api/users/email/${email}`).then((res) =>
+  //     fetch(`https://api.islamicposhak.com/api/users/email/${email}`).then((res) =>
   //       res.json()
   //     ),
   // });
@@ -47,7 +49,7 @@ export default function AllUsers() {
   }
 
   const handleAdmin = (id) => {
-    fetch(`http://localhost:5000/api/users/${id}`, {
+    fetch(`https://api.islamicposhak.com/api/users/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -64,7 +66,7 @@ export default function AllUsers() {
   };
 
   const handleRemoveAdmin = (id) => {
-    fetch(`http://localhost:5000/api/users/${id}`, {
+    fetch(`https://api.islamicposhak.com/api/users/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ role: "user" }),

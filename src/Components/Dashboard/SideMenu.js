@@ -27,7 +27,7 @@ export default function SideMenu() {
   // const { isLoading, error, data } = useQuery({
   //   queryKey: ["users"],
   //   queryFn: () =>
-  //     fetch(`http://localhost:5000/api/users/`).then((res) =>
+  //     fetch(`https://api.islamicposhak.com/api/users/`).then((res) =>
   //       res.json()
   //     ),
   // });
@@ -42,7 +42,7 @@ export default function SideMenu() {
 
   // const getUser = async () => {
   //   const res = await fetch(
-  //     `http://localhost:5000/api/users/email/${email}`
+  //     `https://api.islamicposhak.com/api/users/email/${email}`
   //   );
   //   const data = await res.json();
   //   setIsAdmin(data.data[0]);

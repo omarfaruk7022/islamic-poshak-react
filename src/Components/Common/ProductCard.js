@@ -39,7 +39,7 @@ export default function ProductsCard(product) {
     //   email: user?.email,
     // };
 
-    fetch("http://localhost:5000/api/cart", {
+    fetch("https://api.islamicposhak.com/api/cart", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -21,13 +21,13 @@ export default function MyOrders() {
   //   const ordersQuery = useQuery({
   //     queryKey: ["orders"],
   //     queryFn: () =>
-  //       fetch("http://localhost:5000/api/cart").then((res) => res.json()),
+  //       fetch("https://api.islamicposhak.com/api/cart").then((res) => res.json()),
   //   });
 
   const ordersQuery = useQuery({
     queryKey: ["orders"],
     queryFn: () =>
-      fetch(`http://localhost:5000/api/order/email/${email}`, {
+      fetch(`https://api.islamicposhak.com/api/order/email/${email}`, {
         headers: {
           authorization: `Bearer ${user?.accessToken}`,
           "Content-Type": "application/json",
@@ -73,7 +73,7 @@ export default function MyOrders() {
   const handleStatus = (e, id) => {
     e.preventDefault();
 
-    fetch(`http://localhost:5000/api/order/${id}`, {
+    fetch(`https://api.islamicposhak.com/api/order/${id}`, {
       method: "PATCH",
       headers: {
         authorization: `Bearer ${user?.accessToken}`,
@@ -96,7 +96,7 @@ export default function MyOrders() {
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
-        fetch(`http://localhost:5000/api/order/${id}`, {
+        fetch(`https://api.islamicposhak.com/api/order/${id}`, {
           headers: {
             authorization: `Bearer ${user?.accessToken}`,
             "Content-Type": "application/json",
@@ -121,7 +121,7 @@ export default function MyOrders() {
     e.preventDefault();
     const review = e.target.review.value;
     console.log("review", review);
-    fetch(`http://localhost:5000/api/order/${id}`, {
+    fetch(`https://api.islamicposhak.com/api/order/${id}`, {
       method: "PATCH",
       headers: {
         authorization: `Bearer ${user?.accessToken}`,
