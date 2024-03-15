@@ -8,7 +8,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 export default function Signup() {
   const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
-  const navigate = useNavigate();
+  const history = useNavigate();
   let signInError;
 
   const handleSubmit = (e) => {
@@ -47,7 +47,7 @@ export default function Signup() {
             if (data) {
               createUserWithEmailAndPassword(email, password);
               swal("Yayy", "Sign Up Successfully Completed", "success");
-              navigate("/dashboard");
+              history("/dashboard");
             } else {
               swal("Error", "Sign Up Failed", "error");
             }

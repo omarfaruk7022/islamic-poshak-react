@@ -25,6 +25,7 @@ import Footer from "./Components/Shared/Footer";
 import ThankYou from "./Pages/ThankYou";
 import MessengerCustomerChat from "react-messenger-customer-chat";
 import { RiMessengerLine } from "react-icons/ri";
+import ForgetPassword from "./Pages/ForgetPassword";
 
 function App() {
   return (
@@ -40,6 +41,8 @@ function App() {
         <Route path="/viewCart" element={<ViewCart />} />
         <Route path="/borka" element={<Borka />} />
         <Route path="/hijab" element={<Hijab />} />
+        <Route path="/forget-password" element={<ForgetPassword/>} />
+        
         <Route
           path="/thankyou"
           element={
@@ -138,7 +141,6 @@ function App() {
         /> */}
       </Routes>
       <div className="text-blue-600 mr-auto">
-        
         <MessengerCustomerChat
           pageId="103523232499808"
           appId="1066323601321012"

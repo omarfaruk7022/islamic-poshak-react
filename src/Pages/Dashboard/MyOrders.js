@@ -120,7 +120,10 @@ export default function MyOrders() {
   const handleReview = (e, id) => {
     e.preventDefault();
     const review = e.target.review.value;
-    console.log("review", review);
+    if (review == "") {
+      swal("Review is Empty", "Please write a review!", "error");
+      return;
+    }
     fetch(`https://api.islamicposhak.com/api/order/${id}`, {
       method: "PATCH",
       headers: {

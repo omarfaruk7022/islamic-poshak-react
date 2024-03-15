@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from "react";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import swal from "sweetalert";
@@ -6,9 +5,10 @@ import { getAuth, signInWithPhoneNumber } from "firebase/auth";
 
 import auth from "../firebase.init";
 import Loader from "../Components/Common/Loader";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const history = useNavigate();
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
   let signInError;
@@ -31,6 +31,7 @@ export default function Login() {
       return;
     } else {
       signInWithEmailAndPassword(email, password);
+      history("/");
     }
   };
   const handleUserSubmit = (e) => {
@@ -71,12 +72,14 @@ export default function Login() {
       <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-lg">
           <h1 className="text-center text-2xl font-bold text-green-500 sm:text-3xl">
-            Get Started With BMW
+            Get Started With Islamic poshak collection
           </h1>
 
           <p className="mx-auto mt-4 max-w-md text-center text-gray-500">
             Welcome Back To{" "}
-            <span className="text-green-400 font-bold">BMW Family</span>
+            <span className="text-green-400 font-bold">
+              Islamic poshak collection
+            </span>
           </p>
 
           <form
@@ -151,13 +154,22 @@ export default function Login() {
                 User Login
               </button> */}
             </div>
-
-            <p className="text-center text-sm text-gray-500">
-              No account?
-              <Link to={"/signup"} className="underline text-blue-600">
-                Sign up
-              </Link>
-            </p>
+            <div className="flex justify-between">
+              <p className="text-center text-sm text-gray-500">
+                No account?
+                <Link to={"/signup"} className="underline text-blue-600">
+                  Sign up
+                </Link>
+              </p>
+              <p className="text-center text-sm text-gray-500">
+                <Link
+                  to={"/forget-password"}
+                  className="underline text-blue-600"
+                >
+                  Reset Password
+                </Link>
+              </p>
+            </div>
           </form>
         </div>
       </div>
