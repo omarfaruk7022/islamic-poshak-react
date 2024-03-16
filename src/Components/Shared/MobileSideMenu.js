@@ -24,7 +24,7 @@ export default function MobileSideMenu({ visibleNav, setVisibleNav }) {
   // const { isLoading, error, data } = useQuery({
   //   queryKey: ["users"],
   //   queryFn: () =>
-  //     fetch(`http://localhost:5000/api/users/email/${email}`).then((res) =>
+  //     fetch(`https://api.islamicposhak.com/api/users/email/${email}`).then((res) =>
   //       res.json()
   //     ),
   // });
@@ -59,10 +59,7 @@ export default function MobileSideMenu({ visibleNav, setVisibleNav }) {
                       } transition-all hover:bg-gray-200 `}
                     >
                       <MdLibraryAdd className="text-[20px]" />
-                      <span className="text-sm font-medium">
-                        {" "}
-                        Add Product 
-                      </span>
+                      <span className="text-sm font-medium"> Add Product</span>
                     </Link>
 
                     <Link
@@ -111,15 +108,15 @@ export default function MobileSideMenu({ visibleNav, setVisibleNav }) {
                   <span className="text-sm font-medium"> My orders </span>
                 </Link>
                 <Link
-                onClick={() => setActive(7)}
-                to="/dashboard/all-reviews"
-                className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
-                  active == 7 ? "bg-gray-200" : ""
-                } transition-all hover:bg-gray-200 `}
-              >
-                <GoCodeReview className="text-[20px]" />
-                <span className="text-sm font-medium"> All reviews </span>
-              </Link>
+                  onClick={() => setActive(7)}
+                  to="/dashboard/all-reviews"
+                  className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
+                    active == 7 ? "bg-gray-200" : ""
+                  } transition-all hover:bg-gray-200 `}
+                >
+                  <GoCodeReview className="text-[20px]" />
+                  <span className="text-sm font-medium"> All reviews </span>
+                </Link>
 
                 <Link
                   onClick={() => setActive(8)}

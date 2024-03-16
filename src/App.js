@@ -56,13 +56,15 @@ function App() {
         />
         <Route path="/all-products" element={<AllProducts />} />
         <Route path="/productDetails/:id" element={<ProductDetails />} />
-        <Route path="dashboard/">
+        <Route path="dashboard" >
           <Route
             index
             element={
-              <DashboardLayout>
-                <Dashboard />
-              </DashboardLayout>
+              <RequireAuth>
+                <DashboardLayout>
+                  <Dashboard />
+                </DashboardLayout>
+              </RequireAuth>
             }
           />
           <Route

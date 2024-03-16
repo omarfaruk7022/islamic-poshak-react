@@ -28,7 +28,7 @@ export default function SideMenu() {
   // const { isLoading, error, data } = useQuery({
   //   queryKey: ["users"],
   //   queryFn: () =>
-  //     fetch(`http://localhost:5000/api/users/`).then((res) =>
+  //     fetch(`https://api.islamicposhak.com/api/users/`).then((res) =>
   //       res.json()
   //     ),
   // });
@@ -43,7 +43,7 @@ export default function SideMenu() {
 
   // const getUser = async () => {
   //   const res = await fetch(
-  //     `http://localhost:5000/api/users/email/${email}`
+  //     `https://api.islamicposhak.com/api/users/email/${email}`
   //   );
   //   const data = await res.json();
   //   setIsAdmin(data.data[0]);
@@ -81,7 +81,7 @@ export default function SideMenu() {
                   <span className="text-sm font-medium"> Dashboard </span>
                 </Link>
 
-                {admin?.role == "admin" && (
+                {admin == "admin" && (
                   <>
                     <Link
                       onClick={() => setActive(2)}
@@ -141,20 +141,20 @@ export default function SideMenu() {
                 )}
 
                 <Link
-                  onClick={() => setActive(6)}
+                  onClick={() => setActive(7)}
                   to="/dashboard/my-profile"
                   className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
-                    active == 6 ? "bg-gray-200" : ""
+                    active == 7 ? "bg-gray-200" : ""
                   } transition-all hover:bg-gray-200 `}
                 >
                   <RiAccountPinCircleFill className="text-[20px]" />
                   <span className="text-sm font-medium"> My Profile </span>
                 </Link>
                 <Link
-                  onClick={() => setActive(7)}
+                  onClick={() => setActive(8)}
                   to="/dashboard/my-orders"
                   className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
-                    active == 7 ? "bg-gray-200" : ""
+                    active == 8 ? "bg-gray-200" : ""
                   } transition-all hover:bg-gray-200 `}
                 >
                   <RiAccountPinCircleFill className="text-[20px]" />
