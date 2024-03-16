@@ -21,6 +21,9 @@ export default function ForgetPassword() {
         swal("Success", "Password reset email sent", "success");
         e.target.reset();
         navigate("/login");
+      })
+      .catch((error) => {
+        swal("Oops", error.message, "error");
       });
     }
   };

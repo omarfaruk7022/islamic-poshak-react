@@ -26,6 +26,8 @@ import ThankYou from "./Pages/ThankYou";
 import MessengerCustomerChat from "react-messenger-customer-chat";
 import { RiMessengerLine } from "react-icons/ri";
 import ForgetPassword from "./Pages/ForgetPassword";
+import Reviews from "./Pages/Reviews";
+import AllReviews from "./Pages/Dashboard/AllReviews";
 
 function App() {
   return (
@@ -41,8 +43,9 @@ function App() {
         <Route path="/viewCart" element={<ViewCart />} />
         <Route path="/borka" element={<Borka />} />
         <Route path="/hijab" element={<Hijab />} />
-        <Route path="/forget-password" element={<ForgetPassword/>} />
-        
+        <Route path="/forget-password" element={<ForgetPassword />} />
+        <Route path="/reviews" element={<Reviews />} />
+
         <Route
           path="/thankyou"
           element={
@@ -118,6 +121,16 @@ function App() {
               <RequireAuth>
                 <DashboardLayout>
                   <AllOrders />
+                </DashboardLayout>
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="all-reviews"
+            element={
+              <RequireAuth>
+                <DashboardLayout>
+                  <AllReviews />
                 </DashboardLayout>
               </RequireAuth>
             }

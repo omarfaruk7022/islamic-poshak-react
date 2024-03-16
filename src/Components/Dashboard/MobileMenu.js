@@ -3,6 +3,7 @@ import { signOut } from "firebase/auth";
 import React, { useState } from "react";
 import {
   MdFormatListNumberedRtl,
+  MdLibraryAdd,
   MdOutlineSpaceDashboard,
 } from "react-icons/md";
 import ThemeToggler from "./ThemeToggler";
@@ -11,6 +12,10 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useQuery } from "@tanstack/react-query";
 import auth from "../../firebase.init";
 import { Link } from "react-router-dom";
+import { GoCodeReview } from "react-icons/go";
+import { HiShoppingBag } from "react-icons/hi";
+import { FaUsers } from "react-icons/fa";
+import { IoSettings } from "react-icons/io5";
 
 export default function MobileMenu() {
   const [user, loading] = useAuthState(auth);
@@ -25,16 +30,14 @@ export default function MobileMenu() {
 
   // const { isLoading, error, data } = useQuery({
   //   queryFn: () =>
-  //     fetch(`https://api.islamicposhak.com/api/users/email/${email}`).then((res) =>
+  //     fetch(`http://localhost:5000/api/users/email/${email}`).then((res) =>
   //       res.json()
   //     ),
   // });
   const { isLoading, error, data } = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch(`https://api.islamicposhak.com/api/users/`).then((res) =>
-        res.json()
-      ),
+      fetch(`http://localhost:5000/api/users/`).then((res) => res.json()),
   });
   const isAdmin = data.data.find((user) => user.email === email);
 
@@ -61,7 +64,7 @@ export default function MobileMenu() {
                   active == 2 ? "bg-gray-200" : ""
                 } transition-all hover:bg-gray-200 `}
               >
-                <MdOutlineSpaceDashboard className="text-[20px]" />
+                <MdLibraryAdd className="text-[20px]" />
                 <span className="text-sm font-medium"> Add Product </span>
               </Link>
 
@@ -72,7 +75,7 @@ export default function MobileMenu() {
                   active == 3 ? "bg-gray-200" : ""
                 } transition-all hover:bg-gray-200 `}
               >
-                <MdOutlineSpaceDashboard className="text-[20px]" />
+                <IoSettings className="text-[20px]" />
                 <span className="text-sm font-medium"> Manage Products </span>
               </Link>
               <Link
@@ -82,7 +85,7 @@ export default function MobileMenu() {
                   active == 4 ? "bg-gray-200" : ""
                 } transition-all hover:bg-gray-200 `}
               >
-                <MdOutlineSpaceDashboard className="text-[20px]" />
+                <FaUsers className="text-[20px]" />
                 <span className="text-sm font-medium"> All Users </span>
               </Link>
               <Link
@@ -92,8 +95,18 @@ export default function MobileMenu() {
                   active == 5 ? "bg-gray-200" : ""
                 } transition-all hover:bg-gray-200 `}
               >
-                <MdOutlineSpaceDashboard className="text-[20px]" />
+                <HiShoppingBag className="text-[20px]" />
                 <span className="text-sm font-medium"> All orders </span>
+              </Link>
+              <Link
+                onClick={() => setActive(6)}
+                to="/dashboard/all-reviews"
+                className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
+                  active == 6 ? "bg-gray-200" : ""
+                } transition-all hover:bg-gray-200 `}
+              >
+                <GoCodeReview className="text-[20px]" />
+                <span className="text-sm font-medium"> All reviews </span>
               </Link>
             </>
           )}

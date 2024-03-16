@@ -2,7 +2,7 @@ import React from "react";
 import Banner from "../Components/Home/Banner";
 import ProductsComp from "../Components/Home/ProductComp";
 import HijabComp from "../Components/Home/HiabComp";
-import Reviews from "../Components/Home/Reviews";
+import ReviewsComp from "../Components/Home/ReviewsComp";
 
 export default function Home() {
   return (
@@ -10,7 +10,7 @@ export default function Home() {
       <Banner />
       <ProductsComp />
       <HijabComp />
-      <Reviews />
+      <ReviewsComp />
     </div>
   );
 }

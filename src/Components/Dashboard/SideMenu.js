@@ -8,6 +8,7 @@ import { FaUsers } from "react-icons/fa";
 import { RiAccountPinCircleFill } from "react-icons/ri";
 import { MdManageAccounts } from "react-icons/md";
 import { MdSpaceDashboard } from "react-icons/md";
+import { GoCodeReview } from "react-icons/go";
 import { HiOutlineLogout, HiShoppingBag } from "react-icons/hi";
 import auth from "../../firebase.init";
 import { Link, useParams } from "react-router-dom";
@@ -27,7 +28,7 @@ export default function SideMenu() {
   // const { isLoading, error, data } = useQuery({
   //   queryKey: ["users"],
   //   queryFn: () =>
-  //     fetch(`https://api.islamicposhak.com/api/users/`).then((res) =>
+  //     fetch(`http://localhost:5000/api/users/`).then((res) =>
   //       res.json()
   //     ),
   // });
@@ -42,7 +43,7 @@ export default function SideMenu() {
 
   // const getUser = async () => {
   //   const res = await fetch(
-  //     `https://api.islamicposhak.com/api/users/email/${email}`
+  //     `http://localhost:5000/api/users/email/${email}`
   //   );
   //   const data = await res.json();
   //   setIsAdmin(data.data[0]);
@@ -125,6 +126,16 @@ export default function SideMenu() {
                     >
                       <HiShoppingBag className="text-[20px]" />
                       <span className="text-sm font-medium"> All Orders </span>
+                    </Link>
+                    <Link
+                      onClick={() => setActive(6)}
+                      to="/dashboard/all-reviews"
+                      className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
+                        active == 6 ? "bg-gray-200" : ""
+                      } transition-all hover:bg-gray-200 `}
+                    >
+                      <GoCodeReview className="text-[20px]" />
+                      <span className="text-sm font-medium"> All Reviews </span>
                     </Link>
                   </>
                 )}

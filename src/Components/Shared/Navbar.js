@@ -7,11 +7,11 @@ import { useQuery } from "@tanstack/react-query";
 import { Sidebar } from "primereact/sidebar";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 
-import MobileNav from "./MobileNav";
 import { Link } from "react-router-dom";
 import Cart from "../Home/Cart";
 import auth from "../../firebase.init";
 import MobileTopNav from "./MobileTopNav";
+import MobileSideMenu from "./MobileSideMenu";
 
 export default function Navbar() {
   const [user] = useAuthState(auth);
@@ -29,8 +29,8 @@ export default function Navbar() {
   const usersQuery = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch(`https://api.islamicposhak.com/api/users/email/${email}`).then(
-        (res) => res.json()
+      fetch(`http://localhost:5000/api/users/email/${email}`).then((res) =>
+        res.json()
       ),
   });
   const userInfo = usersQuery.data?.data[0];
@@ -46,7 +46,7 @@ export default function Navbar() {
   const cartQuery = useQuery({
     queryKey: ["cart"],
     queryFn: () =>
-      fetch(`https://api.islamicposhak.com/api/cart/${email}`).then((res) =>
+      fetch(`http://localhost:5000/api/cart/${email}`).then((res) =>
         res.json()
       ),
   });
@@ -60,7 +60,6 @@ export default function Navbar() {
     setLocalCartData(cartData);
   }, [cartProducts]);
 
-  console.log(localCartData?.length);
 
   return (
     <div>
@@ -101,7 +100,7 @@ export default function Navbar() {
                   visible={visibleNav}
                   onHide={() => setVisibleNav(false)}
                 >
-                  <MobileNav
+                  <MobileSideMenu
                     visibleNav={visibleNav}
                     setVisibleNav={setVisibleNav}
                   />
@@ -137,6 +136,12 @@ export default function Navbar() {
                   className="block h-16 border-b-4 border-transparent leading-[4rem] hover:border-current "
                 >
                   All products
+                </Link>
+                <Link
+                  to="/reviews"
+                  className="block h-16 border-b-4 border-transparent leading-[4rem] hover:border-current "
+                >
+                  Reviews
                 </Link>
 
                 {user && (

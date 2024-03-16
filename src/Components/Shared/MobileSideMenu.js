@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { MdOutlineSpaceDashboard } from "react-icons/md";
+import { MdLibraryAdd, MdOutlineSpaceDashboard } from "react-icons/md";
 import auth from "../../firebase.init";
 import { signOut } from "firebase/auth";
 import { Link } from "react-router-dom";
 
 import useAdmin from "./useAdmin";
+import { IoSettings } from "react-icons/io5";
+import { FaUsers } from "react-icons/fa";
+import { HiShoppingBag } from "react-icons/hi";
+import { GoCodeReview } from "react-icons/go";
 
-export default function MobileNav({ visibleNav, setVisibleNav }) {
+export default function MobileSideMenu({ visibleNav, setVisibleNav }) {
   const [user, loading] = useAuthState(auth);
   const email = user?.email;
   const [active, setActive] = useState(1);
@@ -20,7 +24,7 @@ export default function MobileNav({ visibleNav, setVisibleNav }) {
   // const { isLoading, error, data } = useQuery({
   //   queryKey: ["users"],
   //   queryFn: () =>
-  //     fetch(`https://api.islamicposhak.com/api/users/email/${email}`).then((res) =>
+  //     fetch(`http://localhost:5000/api/users/email/${email}`).then((res) =>
   //       res.json()
   //     ),
   // });
@@ -54,8 +58,11 @@ export default function MobileNav({ visibleNav, setVisibleNav }) {
                         active == 2 ? "bg-gray-200" : ""
                       } transition-all hover:bg-gray-200 `}
                     >
-                      <MdOutlineSpaceDashboard className="text-[20px]" />
-                      <span className="text-sm font-medium"> Add Product </span>
+                      <MdLibraryAdd className="text-[20px]" />
+                      <span className="text-sm font-medium">
+                        {" "}
+                        Add Product 
+                      </span>
                     </Link>
 
                     <Link
@@ -65,7 +72,7 @@ export default function MobileNav({ visibleNav, setVisibleNav }) {
                         active == 3 ? "bg-gray-200" : ""
                       } transition-all hover:bg-gray-200 `}
                     >
-                      <MdOutlineSpaceDashboard className="text-[20px]" />
+                      <IoSettings className="text-[20px]" />
                       <span className="text-sm font-medium">
                         {" "}
                         Manage Products{" "}
@@ -78,7 +85,7 @@ export default function MobileNav({ visibleNav, setVisibleNav }) {
                         active == 4 ? "bg-gray-200" : ""
                       } transition-all hover:bg-gray-200 `}
                     >
-                      <MdOutlineSpaceDashboard className="text-[20px]" />
+                      <FaUsers className="text-[20px]" />
                       <span className="text-sm font-medium"> All Users </span>
                     </Link>
                     <Link
@@ -88,7 +95,7 @@ export default function MobileNav({ visibleNav, setVisibleNav }) {
                         active == 5 ? "bg-gray-200" : ""
                       } transition-all hover:bg-gray-200 `}
                     >
-                      <MdOutlineSpaceDashboard className="text-[20px]" />
+                      <HiShoppingBag className="text-[20px]" />
                       <span className="text-sm font-medium"> All orders </span>
                     </Link>
                   </>
@@ -103,12 +110,22 @@ export default function MobileNav({ visibleNav, setVisibleNav }) {
                   <MdOutlineSpaceDashboard className="text-[20px]" />
                   <span className="text-sm font-medium"> My orders </span>
                 </Link>
+                <Link
+                onClick={() => setActive(7)}
+                to="/dashboard/all-reviews"
+                className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
+                  active == 7 ? "bg-gray-200" : ""
+                } transition-all hover:bg-gray-200 `}
+              >
+                <GoCodeReview className="text-[20px]" />
+                <span className="text-sm font-medium"> All reviews </span>
+              </Link>
 
                 <Link
-                  onClick={() => setActive(5)}
+                  onClick={() => setActive(8)}
                   to="/dashboard/my-profile"
                   className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
-                    active == 5 ? "bg-gray-200" : ""
+                    active == 8 ? "bg-gray-200" : ""
                   } transition-all hover:bg-gray-200 `}
                 >
                   <svg
