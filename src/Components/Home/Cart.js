@@ -14,7 +14,7 @@ export default function Cart({ cartData, setCartData }) {
   const cartQuery = useQuery({
     queryKey: ["cart"],
     queryFn: () =>
-      fetch(`https://api.islamicposhak.com/api/cart/${email}`).then((res) =>
+      fetch(`http://localhost:5000/api/cart/${email}`).then((res) =>
         res.json()
       ),
   });
@@ -29,7 +29,7 @@ export default function Cart({ cartData, setCartData }) {
     }
   });
   const handleDelete = (id) => {
-    fetch(`https://api.islamicposhak.com/api/cart/${id}`, {
+    fetch(`http://localhost:5000/api/cart/${id}`, {
       method: "DELETE",
     }).then((res) => {
       if (res.ok) {
@@ -70,7 +70,9 @@ export default function Cart({ cartData, setCartData }) {
                       <div>
                         <dt class="inline">দাম: </dt>
                         <dd class="inline">
-                          {product?.price * (1 - product?.discount / 100)}৳
+                        {parseFloat(
+                                product?.price * (1 - product?.discount / 100)
+                              ).toFixed(0)}৳
                         </dd>
                       </div>
                     </dl>

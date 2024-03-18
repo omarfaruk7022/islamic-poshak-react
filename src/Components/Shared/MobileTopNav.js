@@ -25,8 +25,8 @@ export default function MobileTopNav({ visibleTopNav, setVisibleTopNav }) {
   const { isLoading, error, data } = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch(`https://api.islamicposhak.com/api/users/email/${email}`).then(
-        (res) => res.json()
+      fetch(`http://localhost:5000/api/users/email/${email}`).then((res) =>
+        res.json()
       ),
   });
   return (
@@ -54,7 +54,9 @@ export default function MobileTopNav({ visibleTopNav, setVisibleTopNav }) {
                   className="flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900    transition-all  "
                 >
                   <MdSpaceDashboard className="text-[20px]" />
-                  <span className="text-sm font-medium"> Home </span>
+                  <span className="text-sm font-medium">
+                  হোম
+                  </span>
                 </Link>
 
                 <Link
@@ -62,7 +64,9 @@ export default function MobileTopNav({ visibleTopNav, setVisibleTopNav }) {
                   className="flex items-center gap-2 rounded-lg px-2 py-2   text-gray-900  hover:bg-gray-200  transition-all "
                 >
                   <MdLibraryAdd className="text-[20px]" />
-                  <span className="text-sm font-medium"> Borka </span>
+                  <span className="text-sm font-medium">
+                  বোরকা
+                  </span>
                 </Link>
 
                 <Link
@@ -70,14 +74,14 @@ export default function MobileTopNav({ visibleTopNav, setVisibleTopNav }) {
                   className="flex items-center gap-2 rounded-lg px-2 py-2   text-gray-900  hover:bg-gray-200  transition-all "
                 >
                   <IoSettings className="text-[20px]" />
-                  <span className="text-sm font-medium"> Hijab </span>
+                  <span className="text-sm font-medium"> হিজাব </span>
                 </Link>
                 <Link
                   to="/all-products"
                   className="flex items-center gap-2 rounded-lg px-2 py-2   text-gray-900  hover:bg-gray-200  transition-all "
                 >
                   <FaUsers className="text-[20px]" />
-                  <span className="text-sm font-medium"> All products </span>
+                  <span className="text-sm font-medium"> সকল প্রোডাক্টস </span>
                 </Link>
                 {user ? (
                   <Link
@@ -85,7 +89,11 @@ export default function MobileTopNav({ visibleTopNav, setVisibleTopNav }) {
                     className="flex items-center gap-2 rounded-lg px-2 py-2   text-gray-900  hover:bg-gray-200  transition-all "
                   >
                     <HiShoppingBag className="text-[20px]" />
-                    <span className="text-sm font-medium"> Dashboard </span>
+                    <span className="text-sm font-medium">
+                     
+
+                      ড্যাশবোর্ড
+                    </span>
                   </Link>
                 ) : (
                   ""
@@ -97,7 +105,9 @@ export default function MobileTopNav({ visibleTopNav, setVisibleTopNav }) {
                     className="flex items-center gap-2 rounded-lg px-[19px] py-2 text-black  text-sm font-medium"
                   >
                     <HiOutlineLogout className="text-[20px]" />
-                    <span className="text-sm font-medium"> Logout </span>
+                    <span className="text-sm font-medium">
+                    লগ আউট
+                    </span>
                   </button>
                 ) : (
                   <Link
@@ -107,7 +117,7 @@ export default function MobileTopNav({ visibleTopNav, setVisibleTopNav }) {
                     <HiShoppingBag className="text-[20px]" />
                     <span className="text-sm font-medium">
                       {" "}
-                      Login / Register{" "}
+                      লগইন করুন
                     </span>
                   </Link>
                 )}

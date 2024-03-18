@@ -12,9 +12,7 @@ export default function ReviewsComp() {
   const reviewsQuery = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch("https://api.islamicposhak.com/api/reviews").then((res) =>
-        res.json()
-      ),
+      fetch("http://localhost:5000/api/reviews").then((res) => res.json()),
   });
 
   const reviews = reviewsQuery?.data;

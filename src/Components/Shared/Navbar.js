@@ -29,8 +29,8 @@ export default function Navbar() {
   const usersQuery = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch(`https://api.islamicposhak.com/api/users/email/${email}`).then(
-        (res) => res.json()
+      fetch(`http://localhost:5000/api/users/email/${email}`).then((res) =>
+        res.json()
       ),
   });
   const userInfo = usersQuery.data?.data[0];
@@ -46,7 +46,7 @@ export default function Navbar() {
   const cartQuery = useQuery({
     queryKey: ["cart"],
     queryFn: () =>
-      fetch(`https://api.islamicposhak.com/api/cart/${email}`).then((res) =>
+      fetch(`http://localhost:5000/api/cart/${email}`).then((res) =>
         res.json()
       ),
   });
@@ -116,31 +116,37 @@ export default function Navbar() {
                   to="/"
                   className="block h-16 border-b-4 border-transparent leading-[4rem] hover:border-current "
                 >
-                  Home
+                  হোম
                 </Link>
                 <Link
                   to="/hijab"
                   className="block h-16 border-b-4 border-transparent leading-[4rem] hover:border-current "
                 >
-                  Hijab
+                  হিজাব
                 </Link>
                 <Link
                   to="/borka"
                   className="block h-16 border-b-4 border-transparent leading-[4rem] hover:border-current "
                 >
-                  Borka
+                  বোরকা
                 </Link>
                 <Link
                   to="/all-products"
                   className="block h-16 border-b-4 border-transparent leading-[4rem] hover:border-current "
                 >
-                  All products
+                  সকল প্রোডাক্টস
+                </Link>
+                <Link
+                  to="/gallery"
+                  className="block h-16 border-b-4 border-transparent leading-[4rem] hover:border-current "
+                >
+                  গ্যালারি
                 </Link>
                 <Link
                   to="/reviews"
                   className="block h-16 border-b-4 border-transparent leading-[4rem] hover:border-current "
                 >
-                  Reviews
+                  রিভিউ
                 </Link>
 
                 {user && (
@@ -148,7 +154,7 @@ export default function Navbar() {
                     to="/dashboard"
                     className="block h-16 border-b-4 border-transparent leading-[4rem] hover:border-current "
                   >
-                    Dashboard
+                    ড্যাশবোর্ড
                   </Link>
                 )}
 
@@ -157,14 +163,14 @@ export default function Navbar() {
                     onClick={handleSignOut}
                     className="block h-16 border-b-4 border-transparent leading-[4rem] hover:border-current"
                   >
-                    LOGOUT
+                    লগ আউট
                   </button>
                 ) : (
                   <Link
                     to="/login"
                     className="block h-16 border-b-4 border-transparent leading-[4rem] hover:border-current "
                   >
-                    Login / Register
+                    লগ ইন / রেজিস্টার
                   </Link>
                 )}
 

@@ -8,7 +8,7 @@ const useAdmin = (user) => {
     const email = user?.email;
 
     if (email) {
-      fetch(`https://api.islamicposhak.com/api/users/email/${email}`, {
+      fetch(`http://localhost:5000/api/users/email/${email}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -16,7 +16,7 @@ const useAdmin = (user) => {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log("data",data);
+          console.log("data", data);
 
           setAdmin(data?.data[0]?.role);
           setAdminLoading(false);

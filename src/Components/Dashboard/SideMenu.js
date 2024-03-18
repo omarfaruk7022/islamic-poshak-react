@@ -28,7 +28,7 @@ export default function SideMenu() {
   // const { isLoading, error, data } = useQuery({
   //   queryKey: ["users"],
   //   queryFn: () =>
-  //     fetch(`https://api.islamicposhak.com/api/users/`).then((res) =>
+  //     fetch(`http://localhost:5000/api/users/`).then((res) =>
   //       res.json()
   //     ),
   // });
@@ -43,7 +43,7 @@ export default function SideMenu() {
 
   // const getUser = async () => {
   //   const res = await fetch(
-  //     `https://api.islamicposhak.com/api/users/email/${email}`
+  //     `http://localhost:5000/api/users/email/${email}`
   //   );
   //   const data = await res.json();
   //   setIsAdmin(data.data[0]);
@@ -78,7 +78,9 @@ export default function SideMenu() {
                   } transition-all hover:bg-gray-200 `}
                 >
                   <MdSpaceDashboard className="text-[20px]" />
-                  <span className="text-sm font-medium"> Dashboard </span>
+                    <span className="text-sm font-medium">
+                      ড্যাশবোর্ড
+                  </span>
                 </Link>
 
                 {admin == "admin" && (
@@ -93,12 +95,22 @@ export default function SideMenu() {
                       <MdLibraryAdd className="text-[20px]" />
                       <span className="text-sm font-medium"> Add Product </span>
                     </Link>
-
                     <Link
                       onClick={() => setActive(3)}
-                      to="/dashboard/manage-products"
+                      to="/dashboard/add-gallery-image"
                       className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
                         active == 3 ? "bg-gray-200" : ""
+                      } transition-all hover:bg-gray-200 `}
+                    >
+                      <MdLibraryAdd className="text-[20px]" />
+                      <span className="text-sm font-medium"> Add Gallery image </span>
+                    </Link>
+
+                    <Link
+                      onClick={() => setActive(4)}
+                      to="/dashboard/manage-products"
+                      className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
+                        active == 4 ? "bg-gray-200" : ""
                       } transition-all hover:bg-gray-200 `}
                     >
                       <IoSettings className="text-[20px]" />
@@ -108,30 +120,30 @@ export default function SideMenu() {
                       </span>
                     </Link>
                     <Link
-                      onClick={() => setActive(4)}
+                      onClick={() => setActive(5)}
                       to="/dashboard/all-users"
                       className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
-                        active == 4 ? "bg-gray-200" : ""
+                        active == 5 ? "bg-gray-200" : ""
                       } transition-all hover:bg-gray-200 `}
                     >
                       <FaUsers className="text-[20px]" />
                       <span className="text-sm font-medium"> All Users </span>
                     </Link>
                     <Link
-                      onClick={() => setActive(5)}
+                      onClick={() => setActive(6)}
                       to="/dashboard/all-orders"
                       className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
-                        active == 5 ? "bg-gray-200" : ""
+                        active == 6 ? "bg-gray-200" : ""
                       } transition-all hover:bg-gray-200 `}
                     >
                       <HiShoppingBag className="text-[20px]" />
                       <span className="text-sm font-medium"> All Orders </span>
                     </Link>
                     <Link
-                      onClick={() => setActive(6)}
+                      onClick={() => setActive(7)}
                       to="/dashboard/all-reviews"
                       className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
-                        active == 6 ? "bg-gray-200" : ""
+                        active == 8? "bg-gray-200" : ""
                       } transition-all hover:bg-gray-200 `}
                     >
                       <GoCodeReview className="text-[20px]" />
@@ -141,20 +153,20 @@ export default function SideMenu() {
                 )}
 
                 <Link
-                  onClick={() => setActive(7)}
+                  onClick={() => setActive(9)}
                   to="/dashboard/my-profile"
                   className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
-                    active == 7 ? "bg-gray-200" : ""
+                    active == 9 ? "bg-gray-200" : ""
                   } transition-all hover:bg-gray-200 `}
                 >
                   <RiAccountPinCircleFill className="text-[20px]" />
                   <span className="text-sm font-medium"> My Profile </span>
                 </Link>
                 <Link
-                  onClick={() => setActive(8)}
+                  onClick={() => setActive(10)}
                   to="/dashboard/my-orders"
                   className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
-                    active == 8 ? "bg-gray-200" : ""
+                    active == 10 ? "bg-gray-200" : ""
                   } transition-all hover:bg-gray-200 `}
                 >
                   <RiAccountPinCircleFill className="text-[20px]" />

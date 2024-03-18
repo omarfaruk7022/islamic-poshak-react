@@ -24,7 +24,7 @@ export default function MobileSideMenu({ visibleNav, setVisibleNav }) {
   // const { isLoading, error, data } = useQuery({
   //   queryKey: ["users"],
   //   queryFn: () =>
-  //     fetch(`https://api.islamicposhak.com/api/users/email/${email}`).then((res) =>
+  //     fetch(`http://localhost:5000/api/users/email/${email}`).then((res) =>
   //       res.json()
   //     ),
   // });

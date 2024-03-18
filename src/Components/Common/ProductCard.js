@@ -39,7 +39,7 @@ export default function ProductsCard(product) {
     //   email: user?.email,
     // };
 
-    fetch("https://api.islamicposhak.com/api/cart", {
+    fetch("http://localhost:5000/api/cart", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -165,7 +165,7 @@ export default function ProductsCard(product) {
         </div>
         <div class="flex  justify-between flex-wrap">
           <span class="text-[18px] md:text-xl font-bold text-gray-900 dark:text-white">
-            {price * (1 - discount / 100)}৳
+            {parseFloat(price * (1 - discount / 100)).toFixed(0)}৳
           </span>
           {discount > 0 && (
             <del>

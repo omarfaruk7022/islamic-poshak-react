@@ -24,9 +24,7 @@ export default function AllProducts() {
   const { isLoading, error, data } = useQuery({
     queryKey: ["products"],
     queryFn: () =>
-      fetch("https://api.islamicposhak.com/api/product").then((res) =>
-        res.json()
-      ),
+      fetch("http://localhost:5000/api/product").then((res) => res.json()),
   });
 
   const allProducts = data?.data;
@@ -312,13 +310,15 @@ export default function AllProducts() {
 
                             <span className="tracking-wider text-gray-900">
                               {" "}
-                              {product?.price *
-                                (1 - product?.discount / 100)}৳{" "}
+                              {parseFloat(
+                                product?.price * (1 - product?.discount / 100)
+                              ).toFixed(0)}
+                              ৳{" "}
                             </span>
                             <del>
                               <span className="tracking-wider text-gray-900">
                                 {" "}
-                                {product?.price} ৳{" "}
+                                {product?.price?.toFixed(0)} ৳{" "}
                               </span>
                             </del>
                           </p>
@@ -349,13 +349,15 @@ export default function AllProducts() {
 
                             <span className="tracking-wider text-gray-900">
                               {" "}
-                              {product?.price *
-                                (1 - product?.discount / 100)}৳{" "}
+                              {parseFloat(
+                                product?.price * (1 - product?.discount / 100)
+                              ).toFixed(0)}
+                              ৳{" "}
                             </span>
                             <del>
                               <span className="tracking-wider text-gray-900">
                                 {" "}
-                                {product?.price}৳{" "}
+                                {product?.price.toFixed(0)}৳{" "}
                               </span>
                             </del>
                           </p>

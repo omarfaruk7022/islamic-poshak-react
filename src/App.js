@@ -28,6 +28,8 @@ import { RiMessengerLine } from "react-icons/ri";
 import ForgetPassword from "./Pages/ForgetPassword";
 import Reviews from "./Pages/Reviews";
 import AllReviews from "./Pages/Dashboard/AllReviews";
+import Gallery from "./Pages/Gallery";
+import AddGalleryImages from "./Pages/Dashboard/AddGalleryImages";
 
 function App() {
   return (
@@ -45,6 +47,7 @@ function App() {
         <Route path="/hijab" element={<Hijab />} />
         <Route path="/forget-password" element={<ForgetPassword />} />
         <Route path="/reviews" element={<Reviews />} />
+        <Route path="/gallery" element={<Gallery />} />
 
         <Route
           path="/thankyou"
@@ -56,7 +59,7 @@ function App() {
         />
         <Route path="/all-products" element={<AllProducts />} />
         <Route path="/productDetails/:id" element={<ProductDetails />} />
-        <Route path="dashboard" >
+        <Route path="dashboard">
           <Route
             index
             element={
@@ -83,6 +86,16 @@ function App() {
               <RequireAuth>
                 <DashboardLayout>
                   <AddProduct />
+                </DashboardLayout>
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="add-gallery-image"
+            element={
+              <RequireAuth>
+                <DashboardLayout>
+                  <AddGalleryImages />
                 </DashboardLayout>
               </RequireAuth>
             }
