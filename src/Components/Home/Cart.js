@@ -14,7 +14,7 @@ export default function Cart({ visibleRight, setVisibleRight }) {
   const cartQuery = useQuery({
     queryKey: ["cart"],
     queryFn: () =>
-      fetch(`http://api.islamicposhak.com/api/cart/${email}`).then((res) =>
+      fetch(`http://localhost:5000/api/cart/${email}`).then((res) =>
         res.json()
       ),
   });
@@ -29,7 +29,7 @@ export default function Cart({ visibleRight, setVisibleRight }) {
     }
   });
   const handleDelete = (id) => {
-    fetch(`http://api.islamicposhak.com/api/cart/${id}`, {
+    fetch(`http://localhost:5000/api/cart/${id}`, {
       method: "DELETE",
     }).then((res) => {
       if (res.ok) {

@@ -3,8 +3,8 @@ import ImageGallery from "react-image-gallery";
 
 export default function Gallery() {
   const [images, setImages] = useState([]);
-  const gallryImages = async () => {
-    const response = await fetch("http://api.islamicposhak.com/api/gallery");
+  const galleryImages = async () => {
+    const response = await fetch("http://localhost:5000/api/gallery");
     const data = await response.json();
     setImages(
       data.data?.map((image) => ({
@@ -16,11 +16,13 @@ export default function Gallery() {
   };
 
   useEffect(() => {
-    gallryImages();
+    galleryImages();
   }, []);
   return (
-    <div className="mt-5">
-      <ImageGallery items={images} />
+    <div>
+      <div className="mt-5">
+        {images ? <ImageGallery items={images} /> : null}
+      </div>
     </div>
   );
 }

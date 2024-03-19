@@ -17,8 +17,8 @@ export default function AddProduct() {
   const isUserAdminQuery = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch(`http://api.islamicposhak.com/api/users/email/${email}`).then(
-        (res) => res.json()
+      fetch(`http://localhost:5000/api/users/email/${email}`).then((res) =>
+        res.json()
       ),
   });
 
@@ -77,7 +77,7 @@ export default function AddProduct() {
             status &&
             addedBy
           ) {
-            fetch("http://api.islamicposhak.com/api/product", {
+            fetch("http://localhost:5000/api/product", {
               method: "POST",
               headers: {
                 authorization: `Bearer ${user?.accessToken}`,

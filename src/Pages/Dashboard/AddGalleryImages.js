@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import swal from "sweetalert";
 import auth from "../../firebase.init";
+import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
 export default function AddGalleryImages() {
   const imgStorageKey = "7bd193c3ab5dcf0453572e262a763279";
   const [user, loading] = useAuthState(auth);
+  const [images, setImages] = useState([]);
 
   const handleImageUpload = async (e) => {
     e.preventDefault();
@@ -28,7 +31,7 @@ export default function AddGalleryImages() {
             const image = result.data.url;
 
             if (image) {
-              fetch("http://api.islamicposhak.com/api/gallery", {
+              fetch("http://localhost:5000/api/gallery", {
                 method: "POST",
                 headers: {
                   authorization: `Bearer ${user?.accessToken}`,
@@ -37,8 +40,10 @@ export default function AddGalleryImages() {
                 body: JSON.stringify({ image }),
               }).then((res) => {
                 if (res.ok) {
-                  swal("Yayy", "Product Added Successfully", "success");
-
+                  swal("Yayy", "Image Added Successfully", "success");
+                  setTimeout(() => {
+                    refetch();
+                  }, 1000);
                   e.target.image.value = "";
                 } else {
                   swal("Error", res.message, "error");
@@ -55,10 +60,40 @@ export default function AddGalleryImages() {
         });
     }
   };
+
+  const galleryQuery = useQuery({
+    queryKey: ["gallery"],
+    queryFn: () =>
+      fetch("http://localhost:5000/api/gallery", {
+        headers: {
+          authorization: `Bearer ${user?.accessToken}`,
+          ContentType: "application/json",
+        },
+      }).then((res) => res.json()),
+  });
+
+  const gallery = galleryQuery.data;
+  const refetch = galleryQuery.refetch;
+
+  const handleDelete = async (id) => {
+    const response = await fetch(`http://localhost:5000/api/gallery/${id}`, {
+      method: "DELETE",
+      headers: {
+        authorization: `Bearer ${user?.accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    if (data) {
+      swal("Yayy", "Image Deleted Successfully", "success");
+      refetch();
+    } else {
+      swal("Error", "Something went wrong", "error");
+    }
+  };
   return (
-    <div className="mt-5 p-20 bg-slate-200 w-96 m-auto">
-      <h1 className="text-center">Add Gallery Images</h1>
-      <div className="my-2">
+    <div className="">
+      <div className="my-2 mt-5 p-20 bg-slate-200 w-96 m-auto">
         <form action="" onSubmit={handleImageUpload}>
           <div className="mb-3">
             <input type="file" className="form-control" id="image" />
@@ -70,6 +105,26 @@ export default function AddGalleryImages() {
             Submit
           </button>
         </form>
+      </div>
+      <div className="grid grid-cols-6 gap-4 p-3">
+        {gallery?.data?.map((image) => (
+          <div class="w-full h-92 flex flex-col justify-between max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <img
+              class=" rounded-t-lg h-full w-full object-cover object-center"
+              src={image?.image}
+              alt="product image"
+            />
+
+            <div class="px-2 md:px-3 pb-2 md:pb-3 mt-2">
+              <button
+                onClick={() => handleDelete(image?._id)}
+                class="text-white w-full bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-[10px] md:text-sm px-3 py-2.5 mt-5 text-center  "
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

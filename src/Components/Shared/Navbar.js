@@ -29,8 +29,8 @@ export default function Navbar() {
   const usersQuery = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch(`http://api.islamicposhak.com/api/users/email/${email}`).then(
-        (res) => res.json()
+      fetch(`http://localhost:5000/api/users/email/${email}`).then((res) =>
+        res.json()
       ),
   });
   const userInfo = usersQuery.data?.data[0];
@@ -46,7 +46,7 @@ export default function Navbar() {
   const cartQuery = useQuery({
     queryKey: ["cart"],
     queryFn: () =>
-      fetch(`http://api.islamicposhak.com/api/cart/${email}`).then((res) =>
+      fetch(`http://localhost:5000/api/cart/${email}`).then((res) =>
         res.json()
       ),
   });
@@ -190,13 +190,13 @@ export default function Navbar() {
                       <div className="">
                         <button
                           icon="pi pi-arrow-left"
-                          className="mb-4"
                           onClick={() => setVisibleRight(true)}
                         >
-                          <AiOutlineShoppingCart className="text-[30px] absolute bg-white   transition-all p-1 rounded-md shadow-md" />
-                          <span class="whitespace-nowrap rounded-full bg-green-100 px-1.5 py-0.5 text-sm text-green-700 relative left-5 bottom-1">
-                            {cartProducts?.length}
-                          </span>
+                          <AiOutlineShoppingCart
+                            className="text-[30px]  bg-white   transition-all p-1 rounded-md
+                          
+                            shadow-md"
+                          />
                         </button>
                       </div>
                       <div>
