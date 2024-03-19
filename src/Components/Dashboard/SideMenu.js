@@ -28,7 +28,7 @@ export default function SideMenu() {
   // const { isLoading, error, data } = useQuery({
   //   queryKey: ["users"],
   //   queryFn: () =>
-  //     fetch(`http://localhost:5000/api/users/`).then((res) =>
+  //     fetch(`http://api.islamicposhak.com/api/users/`).then((res) =>
   //       res.json()
   //     ),
   // });
@@ -43,7 +43,7 @@ export default function SideMenu() {
 
   // const getUser = async () => {
   //   const res = await fetch(
-  //     `http://localhost:5000/api/users/email/${email}`
+  //     `http://api.islamicposhak.com/api/users/email/${email}`
   //   );
   //   const data = await res.json();
   //   setIsAdmin(data.data[0]);
@@ -78,9 +78,7 @@ export default function SideMenu() {
                   } transition-all hover:bg-gray-200 `}
                 >
                   <MdSpaceDashboard className="text-[20px]" />
-                    <span className="text-sm font-medium">
-                      ড্যাশবোর্ড
-                  </span>
+                  <span className="text-sm font-medium">ড্যাশবোর্ড</span>
                 </Link>
 
                 {admin == "admin" && (
@@ -103,7 +101,10 @@ export default function SideMenu() {
                       } transition-all hover:bg-gray-200 `}
                     >
                       <MdLibraryAdd className="text-[20px]" />
-                      <span className="text-sm font-medium"> Add Gallery image </span>
+                      <span className="text-sm font-medium">
+                        {" "}
+                        Add Gallery image{" "}
+                      </span>
                     </Link>
 
                     <Link
@@ -143,7 +144,7 @@ export default function SideMenu() {
                       onClick={() => setActive(7)}
                       to="/dashboard/all-reviews"
                       className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
-                        active == 8? "bg-gray-200" : ""
+                        active == 8 ? "bg-gray-200" : ""
                       } transition-all hover:bg-gray-200 `}
                     >
                       <GoCodeReview className="text-[20px]" />

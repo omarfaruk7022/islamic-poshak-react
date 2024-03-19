@@ -30,14 +30,14 @@ export default function MobileMenu() {
 
   // const { isLoading, error, data } = useQuery({
   //   queryFn: () =>
-  //     fetch(`http://localhost:5000/api/users/email/${email}`).then((res) =>
+  //     fetch(`http://api.islamicposhak.com/api/users/email/${email}`).then((res) =>
   //       res.json()
   //     ),
   // });
   const { isLoading, error, data } = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch(`http://localhost:5000/api/users/`, {
+      fetch(`http://api.islamicposhak.com/api/users/`, {
         headers: {
           authorization: `Bearer ${user?.accessToken}`,
           ContentType: "application/json",

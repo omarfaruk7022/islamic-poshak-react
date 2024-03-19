@@ -14,7 +14,7 @@ export default function ViewCart() {
   const usersData = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch(`http://localhost:5000/api/users/`, {
+      fetch(`http://api.islamicposhak.com/api/users/`, {
         headers: {
           authorization: `Bearer ${user?.accessToken}`,
           ContentType: "application/json",
@@ -28,7 +28,7 @@ export default function ViewCart() {
   const cartQuery = useQuery({
     queryKey: ["cart"],
     queryFn: () =>
-      fetch(`http://localhost:5000/api/cart/${email}`).then((res) =>
+      fetch(`http://api.islamicposhak.com/api/cart/${email}`).then((res) =>
         res.json()
       ),
   });
@@ -44,7 +44,7 @@ export default function ViewCart() {
   });
 
   const handleDelete = (id) => {
-    fetch(`http://localhost:5000/api/cart/${id}`, {
+    fetch(`http://api.islamicposhak.com/api/cart/${id}`, {
       method: "DELETE",
     }).then((res) => {
       if (res.ok) {
@@ -81,7 +81,7 @@ export default function ViewCart() {
     const quantity = cartProducts?.find(
       (product) => product?._id === id
     )?.quantity;
-    fetch(`http://localhost:5000/api/cart/${id}`, {
+    fetch(`http://api.islamicposhak.com/api/cart/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -97,7 +97,7 @@ export default function ViewCart() {
     const quantity = cartProducts?.find(
       (product) => product?._id === id
     )?.quantity;
-    fetch(`http://localhost:5000/api/cart/${id}`, {
+    fetch(`http://api.islamicposhak.com/api/cart/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -153,11 +153,15 @@ export default function ViewCart() {
     }
 
     // Check if deliveryAddress is empty
-    if (orderData.length === 0 || orderData[0].deliveryAddress === "") {
+    if (orderData.length === 0) {
+      swal("Error!", "Cart is empty!", "error");
+      return;
+    }
+    if (orderData[0].deliveryAddress === "") {
       swal("Error!", "Delivery Address is required!", "error");
       return;
     }
-    fetch("http://localhost:5000/api/order", {
+    fetch("http://api.islamicposhak.com/api/order", {
       method: "POST",
       headers: {
         authorization: `Bearer ${user?.accessToken}`,
@@ -169,7 +173,7 @@ export default function ViewCart() {
         swal("Success!", "Product successfully ordered!", "success");
         navigate("/thankyou");
         // the carts all data will be deleted
-        fetch(`http://localhost:5000/api/cart/email/${email}`, {
+        fetch(`http://api.islamicposhak.com/api/cart/email/${email}`, {
           method: "DELETE",
         }).then((res) => {
           if (res.ok) {

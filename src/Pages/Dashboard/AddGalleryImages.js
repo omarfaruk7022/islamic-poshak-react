@@ -28,7 +28,7 @@ export default function AddGalleryImages() {
             const image = result.data.url;
 
             if (image) {
-              fetch("http://localhost:5000/api/gallery", {
+              fetch("http://api.islamicposhak.com/api/gallery", {
                 method: "POST",
                 headers: {
                   authorization: `Bearer ${user?.accessToken}`,

@@ -14,7 +14,7 @@ import { GoCodeReview } from "react-icons/go";
 export default function MobileSideMenu({ visibleNav, setVisibleNav }) {
   const [user, loading] = useAuthState(auth);
   const email = user?.email;
-  const [active, setActive] = useState(1);
+  const [active, setActive] = useState(0);
   const [admin, adminLoading] = useAdmin(user);
 
   const handleSignOut = () => {
@@ -24,11 +24,11 @@ export default function MobileSideMenu({ visibleNav, setVisibleNav }) {
   // const { isLoading, error, data } = useQuery({
   //   queryKey: ["users"],
   //   queryFn: () =>
-  //     fetch(`http://localhost:5000/api/users/email/${email}`).then((res) =>
+  //     fetch(`http://api.islamicposhak.com/api/users/email/${email}`).then((res) =>
   //       res.json()
   //     ),
   // });
-
+  console.log(active);
   return (
     <div>
       <div>
@@ -40,7 +40,10 @@ export default function MobileSideMenu({ visibleNav, setVisibleNav }) {
                 className="mt-6 flex flex-col space-y-1"
               >
                 <Link
-                  onClick={() => setActive(1)}
+                  onClick={() => {
+                    setActive(1);
+                    setVisibleNav(false);
+                  }}
                   to="/dashboard/"
                   className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
                     active == 1 ? "bg-gray-200" : ""
@@ -49,10 +52,13 @@ export default function MobileSideMenu({ visibleNav, setVisibleNav }) {
                   <MdOutlineSpaceDashboard className="text-[20px]" />
                   <span className="text-sm font-medium"> Dashboard </span>
                 </Link>
-                {admin?.role === "admin" && (
+                {admin === "admin" && (
                   <>
                     <Link
-                      onClick={() => setActive(2)}
+                      onClick={() => {
+                        setActive(2);
+                        setVisibleNav(false);
+                      }}
                       to="/dashboard/add-product"
                       className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
                         active == 2 ? "bg-gray-200" : ""
@@ -63,7 +69,10 @@ export default function MobileSideMenu({ visibleNav, setVisibleNav }) {
                     </Link>
 
                     <Link
-                      onClick={() => setActive(3)}
+                      onClick={() => {
+                        setActive(3);
+                        setVisibleNav(false);
+                      }}
                       to="/dashboard/manage-products"
                       className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
                         active == 3 ? "bg-gray-200" : ""
@@ -76,7 +85,10 @@ export default function MobileSideMenu({ visibleNav, setVisibleNav }) {
                       </span>
                     </Link>
                     <Link
-                      onClick={() => setActive(4)}
+                      onClick={() => {
+                        setActive(4);
+                        setVisibleNav(false);
+                      }}
                       to="/dashboard/all-users"
                       className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
                         active == 4 ? "bg-gray-200" : ""
@@ -86,7 +98,10 @@ export default function MobileSideMenu({ visibleNav, setVisibleNav }) {
                       <span className="text-sm font-medium"> All Users </span>
                     </Link>
                     <Link
-                      onClick={() => setActive(5)}
+                      onClick={() => {
+                        setActive(5);
+                        setVisibleNav(false);
+                      }}
                       to="/dashboard/all-orders"
                       className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
                         active == 5 ? "bg-gray-200" : ""
@@ -98,7 +113,10 @@ export default function MobileSideMenu({ visibleNav, setVisibleNav }) {
                   </>
                 )}
                 <Link
-                  onClick={() => setActive(6)}
+                  onClick={() => {
+                    setActive(6);
+                    setVisibleNav(false);
+                  }}
                   to="/dashboard/my-orders"
                   className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
                     active == 6 ? "bg-gray-200" : ""
@@ -108,7 +126,10 @@ export default function MobileSideMenu({ visibleNav, setVisibleNav }) {
                   <span className="text-sm font-medium"> My orders </span>
                 </Link>
                 <Link
-                  onClick={() => setActive(7)}
+                  onClick={() => {
+                    setActive(7);
+                    setVisibleNav(false);
+                  }}
                   to="/dashboard/all-reviews"
                   className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
                     active == 7 ? "bg-gray-200" : ""
@@ -119,7 +140,10 @@ export default function MobileSideMenu({ visibleNav, setVisibleNav }) {
                 </Link>
 
                 <Link
-                  onClick={() => setActive(8)}
+                  onClick={() => {
+                    setActive(8);
+                    setVisibleNav(false);
+                  }}
                   to="/dashboard/my-profile"
                   className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
                     active == 8 ? "bg-gray-200" : ""

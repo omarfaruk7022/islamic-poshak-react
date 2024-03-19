@@ -16,7 +16,7 @@ export default function AllUsers() {
   const usersQuery = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch("http://localhost:5000/api/users", {
+      fetch("http://api.islamicposhak.com/api/users", {
         headers: {
           authorization: `Bearer ${user?.accessToken}`,
           ContentType: "application/json",
@@ -26,7 +26,7 @@ export default function AllUsers() {
   // const isUserAdminQuery = useQuery({
   //   queryKey: ["isUserAdmin"],
   //   queryFn: () =>
-  //     fetch(`http://localhost:5000/api/users/email/${email}`).then((res) =>
+  //     fetch(`http://api.islamicposhak.com/api/users/email/${email}`).then((res) =>
   //       res.json()
   //     ),
   // });
@@ -52,9 +52,10 @@ export default function AllUsers() {
   }
 
   const handleAdmin = (id) => {
-    fetch(`http://localhost:5000/api/users/${id}`, {
+    fetch(`http://api.islamicposhak.com/api/users/${id}`, {
       method: "PATCH",
       headers: {
+        authorization: `Bearer ${user?.accessToken}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ role: "admin" }),
@@ -69,9 +70,12 @@ export default function AllUsers() {
   };
 
   const handleRemoveAdmin = (id) => {
-    fetch(`http://localhost:5000/api/users/${id}`, {
+    fetch(`http://api.islamicposhak.com/api/users/${id}`, {
       method: "PATCH",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        authorization: `Bearer ${user?.accessToken}`,
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({ role: "user" }),
     })
       .then((res) => res.json())

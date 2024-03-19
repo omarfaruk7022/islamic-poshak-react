@@ -18,7 +18,7 @@ export default function Navbar() {
   const [visibleRight, setVisibleRight] = useState(false);
   const [visibleNav, setVisibleNav] = useState(false);
   const [visibleTopNav, setVisibleTopNav] = useState(false);
-  const [cartData, setCartData] = useState();
+
   const [localCartData, setLocalCartData] = useState();
 
   const email = user?.email;
@@ -29,8 +29,8 @@ export default function Navbar() {
   const usersQuery = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch(`http://localhost:5000/api/users/email/${email}`).then((res) =>
-        res.json()
+      fetch(`http://api.islamicposhak.com/api/users/email/${email}`).then(
+        (res) => res.json()
       ),
   });
   const userInfo = usersQuery.data?.data[0];
@@ -46,7 +46,7 @@ export default function Navbar() {
   const cartQuery = useQuery({
     queryKey: ["cart"],
     queryFn: () =>
-      fetch(`http://localhost:5000/api/cart/${email}`).then((res) =>
+      fetch(`http://api.islamicposhak.com/api/cart/${email}`).then((res) =>
         res.json()
       ),
   });
@@ -60,6 +60,7 @@ export default function Navbar() {
     setLocalCartData(cartData);
   }, [cartProducts]);
 
+  console.log(visibleNav);
   return (
     <div>
       <div>
@@ -106,6 +107,9 @@ export default function Navbar() {
                 </Sidebar>
               </div>
             </div>
+            <Link to="/">
+              <img className="h-24 w-24 lg:h-36 lg:w-36" src={logo} alt="" />
+            </Link>
 
             <div className="flex flex-1 items-center justify-end gap-8 ">
               <nav
@@ -140,7 +144,7 @@ export default function Navbar() {
                   to="/gallery"
                   className="block h-16 border-b-4 border-transparent leading-[4rem] hover:border-current "
                 >
-                  গ্যালারি
+                  গ্যালারী
                 </Link>
                 <Link
                   to="/reviews"
@@ -201,7 +205,10 @@ export default function Navbar() {
                           visible={visibleRight}
                           onHide={() => setVisibleRight(false)}
                         >
-                          <Cart cartData={cartData} setCartData={setCartData} />
+                          <Cart
+                            visibleRight={visibleRight}
+                            setVisibleRight={setVisibleRight}
+                          />
                         </Sidebar>
                       </div>
                       <button

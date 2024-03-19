@@ -4,7 +4,7 @@ import ImageGallery from "react-image-gallery";
 export default function Gallery() {
   const [images, setImages] = useState([]);
   const gallryImages = async () => {
-    const response = await fetch("http://localhost:5000/api/gallery");
+    const response = await fetch("http://api.islamicposhak.com/api/gallery");
     const data = await response.json();
     setImages(
       data.data?.map((image) => ({

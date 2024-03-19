@@ -11,12 +11,14 @@ export default function AllReviews() {
   const reviewsQuery = useQuery({
     queryKey: ["reviews"],
     queryFn: () =>
-      fetch("http://localhost:5000/api/reviews").then((res) => res.json()),
+      fetch("http://api.islamicposhak.com/api/reviews").then((res) =>
+        res.json()
+      ),
   });
   const ordersQuery = useQuery({
     queryKey: ["orders"],
     queryFn: () =>
-      fetch("http://localhost:5000/api/order", {
+      fetch("http://api.islamicposhak.com/api/order", {
         headers: {
           authorization: `Bearer ${user?.accessToken}`,
           ContentType: "application/json",
@@ -52,13 +54,16 @@ export default function AllReviews() {
   }
 
   const handleReviewStatus = async (id) => {
-    const response = await fetch(`http://localhost:5000/api/reviews/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ status: true }),
-    });
+    const response = await fetch(
+      `http://api.islamicposhak.com/api/reviews/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ status: true }),
+      }
+    );
     const data = await response.json();
     refetch();
   };

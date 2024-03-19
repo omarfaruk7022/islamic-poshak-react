@@ -7,7 +7,9 @@ export default function ProductsComp() {
   const { isLoading, error, data } = useQuery({
     queryKey: ["products"],
     queryFn: () =>
-      fetch("http://localhost:5000/api/product").then((res) => res.json()),
+      fetch("http://api.islamicposhak.com/api/product").then((res) =>
+        res.json()
+      ),
   });
   console.log("data", data?.data);
   return (
