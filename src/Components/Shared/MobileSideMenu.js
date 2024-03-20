@@ -10,6 +10,7 @@ import { IoSettings } from "react-icons/io5";
 import { FaUsers } from "react-icons/fa";
 import { HiShoppingBag } from "react-icons/hi";
 import { GoCodeReview } from "react-icons/go";
+import { GrGallery } from "react-icons/gr";
 
 export default function MobileSideMenu({ visibleNav, setVisibleNav }) {
   const [user, loading] = useAuthState(auth);
@@ -24,7 +25,7 @@ export default function MobileSideMenu({ visibleNav, setVisibleNav }) {
   // const { isLoading, error, data } = useQuery({
   //   queryKey: ["users"],
   //   queryFn: () =>
-  //     fetch(`http://localhost:5000/api/users/email/${email}`).then((res) =>
+  //     fetch(`https://api.islamicposhak.com/api/users/email/${email}`).then((res) =>
   //       res.json()
   //     ),
   // });
@@ -67,15 +68,27 @@ export default function MobileSideMenu({ visibleNav, setVisibleNav }) {
                       <MdLibraryAdd className="text-[20px]" />
                       <span className="text-sm font-medium"> Add Product</span>
                     </Link>
-
+                    <Link
+                      onClick={() => setActive(3)}
+                      to="/dashboard/add-gallery-image"
+                      className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
+                        active == 3 ? "bg-gray-200" : ""
+                      } transition-all hover:bg-gray-200 `}
+                    >
+                      <GrGallery className="text-[20px]" />
+                      <span className="text-sm font-medium">
+                        {" "}
+                        Add Gallery image{" "}
+                      </span>
+                    </Link>
                     <Link
                       onClick={() => {
-                        setActive(3);
+                        setActive(4);
                         setVisibleNav(false);
                       }}
                       to="/dashboard/manage-products"
                       className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
-                        active == 3 ? "bg-gray-200" : ""
+                        active == 4 ? "bg-gray-200" : ""
                       } transition-all hover:bg-gray-200 `}
                     >
                       <IoSettings className="text-[20px]" />
@@ -86,12 +99,12 @@ export default function MobileSideMenu({ visibleNav, setVisibleNav }) {
                     </Link>
                     <Link
                       onClick={() => {
-                        setActive(4);
+                        setActive(5);
                         setVisibleNav(false);
                       }}
                       to="/dashboard/all-users"
                       className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
-                        active == 4 ? "bg-gray-200" : ""
+                        active == 5 ? "bg-gray-200" : ""
                       } transition-all hover:bg-gray-200 `}
                     >
                       <FaUsers className="text-[20px]" />
@@ -99,12 +112,12 @@ export default function MobileSideMenu({ visibleNav, setVisibleNav }) {
                     </Link>
                     <Link
                       onClick={() => {
-                        setActive(5);
+                        setActive(6);
                         setVisibleNav(false);
                       }}
                       to="/dashboard/all-orders"
                       className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
-                        active == 5 ? "bg-gray-200" : ""
+                        active == 6 ? "bg-gray-200" : ""
                       } transition-all hover:bg-gray-200 `}
                     >
                       <HiShoppingBag className="text-[20px]" />
@@ -114,12 +127,12 @@ export default function MobileSideMenu({ visibleNav, setVisibleNav }) {
                 )}
                 <Link
                   onClick={() => {
-                    setActive(6);
+                    setActive(7);
                     setVisibleNav(false);
                   }}
                   to="/dashboard/my-orders"
                   className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
-                    active == 6 ? "bg-gray-200" : ""
+                    active == 7 ? "bg-gray-200" : ""
                   } transition-all hover:bg-gray-200 `}
                 >
                   <MdOutlineSpaceDashboard className="text-[20px]" />
@@ -127,12 +140,12 @@ export default function MobileSideMenu({ visibleNav, setVisibleNav }) {
                 </Link>
                 <Link
                   onClick={() => {
-                    setActive(7);
+                    setActive(8);
                     setVisibleNav(false);
                   }}
                   to="/dashboard/all-reviews"
                   className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
-                    active == 7 ? "bg-gray-200" : ""
+                    active == 8 ? "bg-gray-200" : ""
                   } transition-all hover:bg-gray-200 `}
                 >
                   <GoCodeReview className="text-[20px]" />
@@ -141,12 +154,12 @@ export default function MobileSideMenu({ visibleNav, setVisibleNav }) {
 
                 <Link
                   onClick={() => {
-                    setActive(8);
+                    setActive(9);
                     setVisibleNav(false);
                   }}
                   to="/dashboard/my-profile"
                   className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
-                    active == 8 ? "bg-gray-200" : ""
+                    active == 9 ? "bg-gray-200" : ""
                   } transition-all hover:bg-gray-200 `}
                 >
                   <svg

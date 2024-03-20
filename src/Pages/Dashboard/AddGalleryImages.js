@@ -31,7 +31,7 @@ export default function AddGalleryImages() {
             const image = result.data.url;
 
             if (image) {
-              fetch("http://localhost:5000/api/gallery", {
+              fetch("https://api.islamicposhak.com/api/gallery", {
                 method: "POST",
                 headers: {
                   authorization: `Bearer ${user?.accessToken}`,
@@ -64,7 +64,7 @@ export default function AddGalleryImages() {
   const galleryQuery = useQuery({
     queryKey: ["gallery"],
     queryFn: () =>
-      fetch("http://localhost:5000/api/gallery", {
+      fetch("https://api.islamicposhak.com/api/gallery", {
         headers: {
           authorization: `Bearer ${user?.accessToken}`,
           ContentType: "application/json",
@@ -76,13 +76,16 @@ export default function AddGalleryImages() {
   const refetch = galleryQuery.refetch;
 
   const handleDelete = async (id) => {
-    const response = await fetch(`http://localhost:5000/api/gallery/${id}`, {
-      method: "DELETE",
-      headers: {
-        authorization: `Bearer ${user?.accessToken}`,
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `https://api.islamicposhak.com/api/gallery/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          authorization: `Bearer ${user?.accessToken}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
     const data = await response.json();
     if (data) {
       swal("Yayy", "Image Deleted Successfully", "success");
@@ -106,7 +109,7 @@ export default function AddGalleryImages() {
           </button>
         </form>
       </div>
-      <div className="grid grid-cols-6 gap-4 p-3">
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 p-3">
         {gallery?.data?.map((image) => (
           <div class="w-full h-92 flex flex-col justify-between max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <img

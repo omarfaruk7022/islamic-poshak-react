@@ -6,17 +6,20 @@ import swal from "sweetalert";
 import { useNavigate } from "react-router-dom";
 import auth from "../../firebase.init";
 import Loader from "../../Components/Common/Loader";
+import useAdmin from "../../Components/Shared/useAdmin";
 
 export default function AllUsers() {
   const [allUsers, setAllUsers] = useState();
   const [user, loading] = useAuthState(auth);
   const email = user?.email;
   const navigate = useNavigate();
+  const [finalData, setFinalData] = useState([]);
+  const [admin, adminLoading] = useAdmin(user);
 
   const usersQuery = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch("http://localhost:5000/api/users", {
+      fetch("https://api.islamicposhak.com/api/users", {
         headers: {
           authorization: `Bearer ${user?.accessToken}`,
           ContentType: "application/json",
@@ -26,20 +29,25 @@ export default function AllUsers() {
   // const isUserAdminQuery = useQuery({
   //   queryKey: ["isUserAdmin"],
   //   queryFn: () =>
-  //     fetch(`http://localhost:5000/api/users/email/${email}`).then((res) =>
+  //     fetch(`https://api.islamicposhak.com/api/users/email/${email}`).then((res) =>
   //       res.json()
   //     ),
   // });
 
   const users = usersQuery.data;
   const userIsAdmin = users.data?.find((user) => user.email === email);
-  console.log("userIsAdmin", users?.data);
+
+  useEffect(() => {
+    if (users?.data) {
+      setFinalData(users?.data);
+    }
+  }, [users?.data]);
   const refetch = () => {
     usersQuery.refetch();
   };
 
   const isLoading = usersQuery.isLoading;
-
+  console.log("admin", admin);
   if (userIsAdmin?.role !== "admin" && userIsAdmin !== undefined) {
     navigate("/dashboard");
   }
@@ -52,7 +60,7 @@ export default function AllUsers() {
   }
 
   const handleAdmin = (id) => {
-    fetch(`http://localhost:5000/api/users/${id}`, {
+    fetch(`https://api.islamicposhak.com/api/users/${id}`, {
       method: "PATCH",
       headers: {
         authorization: `Bearer ${user?.accessToken}`,
@@ -70,7 +78,7 @@ export default function AllUsers() {
   };
 
   const handleRemoveAdmin = (id) => {
-    fetch(`http://localhost:5000/api/users/${id}`, {
+    fetch(`https://api.islamicposhak.com/api/users/${id}`, {
       method: "PATCH",
       headers: {
         authorization: `Bearer ${user?.accessToken}`,
@@ -87,9 +95,65 @@ export default function AllUsers() {
       });
   };
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const search = e.target.value;
+    if (search == "" || search == null || search == undefined) {
+      setFinalData(users?.data);
+    } else {
+      const searchData = users?.data?.filter((user) => {
+        return (
+          user?.username.toLowerCase().includes(search.toLowerCase()) ||
+          user?.email.toLowerCase().includes(search.toLowerCase()) ||
+          user?.role.toLowerCase().includes(search.toLowerCase())
+        );
+      });
+      setFinalData(searchData);
+    }
+  };
+ 
+
   return (
     <div>
       <div className="overflow-x-auto  p-5">
+        <div className="flex justify-end my-3">
+          <form onChange={handleSearch}>
+            <div class="relative">
+              <label for="Search" class="sr-only">
+                {" "}
+                Search{" "}
+              </label>
+
+              <input
+                type="text"
+                id="Search"
+                placeholder="Search for..."
+                class="w-full rounded-md border-gray-200 py-2.5 pe-10 shadow-sm sm:text-sm"
+              />
+
+              <span class="absolute inset-y-0 end-0 grid w-10 place-content-center">
+                <button type="submit" class="text-gray-600 hover:text-gray-700">
+                  <span class="sr-only">Search</span>
+
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="h-4 w-4"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                    />
+                  </svg>
+                </button>
+              </span>
+            </div>
+          </form>
+        </div>
         <table className="min-w-full divide-y-2 divide-gray-100  text-sm">
           <thead className="ltr:text-left rtl:text-right">
             <tr>
@@ -102,7 +166,7 @@ export default function AllUsers() {
               <th className="whitespace-nowrap px-4 py-2 font-medium text-left text-gray-900 hite">
                 Role
               </th>
-              {userIsAdmin?.role == "admin" && (
+              {admin == "admin" && (
                 <>
                   <th className="whitespace-nowrap px-4 py-2 font-medium text-center text-gray-900 ">
                     Change Role
@@ -111,7 +175,7 @@ export default function AllUsers() {
               )}
             </tr>
           </thead>
-          {users?.data?.map((user) => (
+          {finalData?.map((user) => (
             <>
               <tbody className="divide-y divide-gray-200">
                 <tr>
@@ -125,7 +189,7 @@ export default function AllUsers() {
                     {user?.role === "admin" ? (
                       <span className="text-red-500">Admin</span>
                     ) : (
-                      <span className="text-green-500">Normal user</span>
+                      <span className="text-green-500">user</span>
                     )}
                   </td>
                   {userIsAdmin?._id !== user?._id && user?.role !== "admin" && (

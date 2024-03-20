@@ -4,7 +4,7 @@ import ReviewsComp from "../Components/Home/ReviewsComp";
 export default function Reviews() {
   return (
     <div>
-      <ReviewsComp />
+      <ReviewsComp from={"page"} />
     </div>
   );
 }

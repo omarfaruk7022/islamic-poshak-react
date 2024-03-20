@@ -8,6 +8,8 @@ import { FaUsers } from "react-icons/fa";
 import { RiAccountPinCircleFill } from "react-icons/ri";
 import { MdManageAccounts } from "react-icons/md";
 import { MdSpaceDashboard } from "react-icons/md";
+import { GrGallery } from "react-icons/gr";
+
 import { GoCodeReview } from "react-icons/go";
 import { HiOutlineLogout, HiShoppingBag } from "react-icons/hi";
 import auth from "../../firebase.init";
@@ -28,7 +30,7 @@ export default function SideMenu() {
   // const { isLoading, error, data } = useQuery({
   //   queryKey: ["users"],
   //   queryFn: () =>
-  //     fetch(`http://localhost:5000/api/users/`).then((res) =>
+  //     fetch(`https://api.islamicposhak.com/api/users/`).then((res) =>
   //       res.json()
   //     ),
   // });
@@ -43,7 +45,7 @@ export default function SideMenu() {
 
   // const getUser = async () => {
   //   const res = await fetch(
-  //     `http://localhost:5000/api/users/email/${email}`
+  //     `https://api.islamicposhak.com/api/users/email/${email}`
   //   );
   //   const data = await res.json();
   //   setIsAdmin(data.data[0]);
@@ -64,7 +66,7 @@ export default function SideMenu() {
         </div>
       ) : (
         <div className="hidden lg:block shadow-2xl px-6  w-[220px] ">
-          <div className="flex h-screen flex-col justify-between overflow-y-auto ">
+          <div className="flex max-h-screen flex-col justify-between overflow-y-auto ">
             <div className=" py-6 ">
               <nav
                 aria-label="Main Nav"
@@ -100,7 +102,7 @@ export default function SideMenu() {
                         active == 3 ? "bg-gray-200" : ""
                       } transition-all hover:bg-gray-200 `}
                     >
-                      <MdLibraryAdd className="text-[20px]" />
+                      <GrGallery className="text-[20px]" />
                       <span className="text-sm font-medium">
                         {" "}
                         Add Gallery image{" "}
@@ -153,7 +155,7 @@ export default function SideMenu() {
                   </>
                 )}
 
-                <Link
+                {/* <Link
                   onClick={() => setActive(9)}
                   to="/dashboard/my-profile"
                   className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
@@ -162,7 +164,7 @@ export default function SideMenu() {
                 >
                   <RiAccountPinCircleFill className="text-[20px]" />
                   <span className="text-sm font-medium"> My Profile </span>
-                </Link>
+                </Link> */}
                 <Link
                   onClick={() => setActive(10)}
                   to="/dashboard/my-orders"

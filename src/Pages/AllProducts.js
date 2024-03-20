@@ -19,12 +19,15 @@ export default function AllProducts() {
   const navigate = useNavigate();
   const [user, loading] = useAuthState(auth);
   const [sortBy, setSortBy] = useState("");
+  const [finalData, setFinalData] = useState([]);
   const [availability, setAvailability] = useState("");
 
   const { isLoading, error, data } = useQuery({
     queryKey: ["products"],
     queryFn: () =>
-      fetch("http://localhost:5000/api/product").then((res) => res.json()),
+      fetch("https://api.islamicposhak.com/api/product").then((res) =>
+        res.json()
+      ),
   });
 
   const allProducts = data?.data;
@@ -34,8 +37,11 @@ export default function AllProducts() {
   const availableProducts = allProducts?.filter(
     (product) => product?.status == availability
   );
-
-  const finalData = [];
+  useEffect(() => {
+    if (allProducts) {
+      setFinalData(allProducts);
+    }
+  }, [allProducts]);
 
   // for (let i = 0; i < 1; i++) {
   //   finalData.push({
@@ -44,11 +50,24 @@ export default function AllProducts() {
   //   });
   // }
 
-  console.log(sortedData);
   if (loading) {
     return <Loader />;
   }
-
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const search = e.target.value;
+    if (search) {
+      const searchData = allProducts?.filter((product) => {
+        return (
+          product?.name?.toLowerCase().includes(search.toLowerCase()) ||
+          product?.category?.toLowerCase().includes(search.toLowerCase())
+        );
+      });
+      setFinalData(searchData);
+    } else {
+      setFinalData(allProducts);
+    }
+  };
   return (
     <div>
       <>
@@ -267,21 +286,66 @@ export default function AllProducts() {
                 </div>
               </div>
 
-              <div className="">
-                <label htmlFor="SortBy" className="sr-only">
-                  SortBy
-                </label>
+              <div className="flex justify-end items-center gap-2">
+                <div>
+                  <div className="flex justify-center ">
+                    <form onChange={handleSearch}>
+                      <div class="relative">
+                        <label for="Search" class="sr-only">
+                          {" "}
+                          Search{" "}
+                        </label>
 
-                <select
-                  onChange={(e) => setSortBy(e.target.value)}
-                  id="SortBy"
-                  className="h-10 rounded border-gray-300 text-sm"
-                >
-                  <option>Sort By</option>
-                  <option value="Borka">Borka</option>
-                  <option value="Hijab">Hijab</option>
-                  <option value="Abaya">Abaya</option>
-                </select>
+                        <input
+                          type="text"
+                          id="Search"
+                          placeholder="Search for..."
+                          class="w-full rounded-md border-gray-200 py-2.5 pe-10 shadow-sm sm:text-sm"
+                        />
+
+                        <span class="absolute inset-y-0 end-0 grid w-10 place-content-center">
+                          <button
+                            type="submit"
+                            class="text-gray-600 hover:text-gray-700"
+                          >
+                            <span class="sr-only">Search</span>
+
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke-width="1.5"
+                              stroke="currentColor"
+                              class="h-4 w-4"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                              />
+                            </svg>
+                          </button>
+                        </span>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div className="">
+                  <label htmlFor="SortBy" className="sr-only">
+                    SortBy
+                  </label>
+
+                  <select
+                    onChange={(e) => setSortBy(e.target.value)}
+                    id="SortBy"
+                    className="h-10 rounded border-gray-300 text-sm"
+                  >
+                    <option>Sort By</option>
+                    <option value="Borka">Borka</option>
+                    <option value="Hijab">Hijab</option>
+                    <option value="Abaya">Abaya</option>
+                  </select>
+                </div>
               </div>
             </div>
 
@@ -326,7 +390,7 @@ export default function AllProducts() {
                       </Link>
                     </li>
                   ))
-                : data?.data?.map((product) => (
+                : finalData?.map((product) => (
                     // <ProductsCard key={product._id} product={product} />
                     <li>
                       <Link

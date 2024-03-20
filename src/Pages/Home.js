@@ -10,7 +10,7 @@ export default function Home() {
       <Banner />
       <ProductsComp />
       <HijabComp />
-      <ReviewsComp />
+      <ReviewsComp from={"home"} />
     </div>
   );
 }

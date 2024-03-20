@@ -29,7 +29,7 @@ export default function AllOrders() {
   const ordersQuery = useQuery({
     queryKey: ["orders"],
     queryFn: () =>
-      fetch("http://localhost:5000/api/order", {
+      fetch("https://api.islamicposhak.com/api/order", {
         headers: {
           authorization: `Bearer ${user?.accessToken}`,
           ContentType: "application/json",
@@ -40,7 +40,7 @@ export default function AllOrders() {
   const usersQuery = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch("http://localhost:5000/api/users", {
+      fetch("https://api.islamicposhak.com/api/users", {
         headers: {
           authorization: `Bearer ${user?.accessToken}`,
           ContentType: "application/json",
@@ -50,7 +50,7 @@ export default function AllOrders() {
   // const isUserAdminQuery = useQuery({
   //   queryKey: ["isUserAdmin"],
   //   queryFn: () =>
-  //     fetch(`http://localhost:5000/api/users/email/${email}`).then((res) =>
+  //     fetch(`https://api.islamicposhak.com/api/users/email/${email}`).then((res) =>
   //       res.json()
   //     ),
   // });
@@ -95,7 +95,7 @@ export default function AllOrders() {
   const handleStatus = (id, status) => {
     console.log("id", id, "status", status);
 
-    fetch(`http://localhost:5000/api/order/${id}`, {
+    fetch(`https://api.islamicposhak.com/api/order/${id}`, {
       method: "PATCH",
       headers: {
         authorization: `Bearer ${user?.accessToken}`,
@@ -123,7 +123,7 @@ export default function AllOrders() {
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
-        fetch(`http://localhost:5000/api/order/${id}`, {
+        fetch(`https://api.islamicposhak.com/api/order/${id}`, {
           headers: {
             authorization: `Bearer ${user?.accessToken}`,
             "Content-Type": "application/json",
@@ -143,28 +143,90 @@ export default function AllOrders() {
       }
     });
   };
-
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const search = e.target.value;
+    if (search) {
+      const searchData = orders?.data?.filter((order) => {
+        return (
+          order?.customerName.toLowerCase().includes(search.toLowerCase()) ||
+          order?.orderStatus.toLowerCase().includes(search.toLowerCase()) ||
+          order?.email.includes(search.toLowerCase()) ||
+          order?.phone.includes(search.toLowerCase()) ||
+          order?._id.includes(search.toLowerCase())
+        );
+      });
+      setFinalData(searchData);
+    } else {
+      setFinalData(orders?.data);
+    }
+  };
   return (
     <div>
-      <div className="flex justify-end p-5">
-        <label htmlFor="SortBy" className="sr-only">
-          SortBy
-        </label>
+      <div className="flex justify-end items-center">
+        <div>
+          <div className="flex justify-center ">
+            <form onChange={handleSearch}>
+              <div class="relative">
+                <label for="Search" class="sr-only">
+                  {" "}
+                  Search{" "}
+                </label>
 
-        <select
-          onChange={(e) => setSortBy(e.target.value)}
-          id="SortBy"
-          className="h-10 rounded border-gray-300 text-sm"
-        >
-          <option defaultValue={"all"} value="all">
-            All
-          </option>
-          <option value="pending">Pending</option>
-          <option value="processing">Processing</option>
-          <option value="delivered">Delivered</option>
-          <option value="confirmed">Confirmed</option>
-          <option value="canceled">Canceled</option>
-        </select>
+                <input
+                  type="text"
+                  id="Search"
+                  placeholder="Search for..."
+                  class="w-full rounded-md border-gray-200 py-2.5 pe-10 shadow-sm sm:text-sm"
+                />
+
+                <span class="absolute inset-y-0 end-0 grid w-10 place-content-center">
+                  <button
+                    type="submit"
+                    class="text-gray-600 hover:text-gray-700"
+                  >
+                    <span class="sr-only">Search</span>
+
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="h-4 w-4"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                      />
+                    </svg>
+                  </button>
+                </span>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div className="flex justify-end p-5">
+          <label htmlFor="SortBy" className="sr-only">
+            SortBy
+          </label>
+
+          <select
+            onChange={(e) => setSortBy(e.target.value)}
+            id="SortBy"
+            className="h-10 rounded border-gray-300 text-sm"
+          >
+            <option defaultValue={"all"} value="all">
+              All
+            </option>
+            <option value="pending">Pending</option>
+            <option value="processing">Processing</option>
+            <option value="delivered">Delivered</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="canceled">Canceled</option>
+          </select>
+        </div>
       </div>
       {finalData?.length > 0 ? (
         <>

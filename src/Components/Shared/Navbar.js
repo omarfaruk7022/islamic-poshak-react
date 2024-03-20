@@ -29,8 +29,8 @@ export default function Navbar() {
   const usersQuery = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch(`http://localhost:5000/api/users/email/${email}`).then((res) =>
-        res.json()
+      fetch(`https://api.islamicposhak.com/api/users/email/${email}`).then(
+        (res) => res.json()
       ),
   });
   const userInfo = usersQuery.data?.data[0];
@@ -46,7 +46,7 @@ export default function Navbar() {
   const cartQuery = useQuery({
     queryKey: ["cart"],
     queryFn: () =>
-      fetch(`http://localhost:5000/api/cart/${email}`).then((res) =>
+      fetch(`https://api.islamicposhak.com/api/cart/${email}`).then((res) =>
         res.json()
       ),
   });

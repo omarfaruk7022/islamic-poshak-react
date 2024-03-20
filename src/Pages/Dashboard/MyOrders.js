@@ -21,13 +21,13 @@ export default function MyOrders() {
   //   const ordersQuery = useQuery({
   //     queryKey: ["orders"],
   //     queryFn: () =>
-  //       fetch("http://localhost:5000/api/cart").then((res) => res.json()),
+  //       fetch("https://api.islamicposhak.com/api/cart").then((res) => res.json()),
   //   });
 
   const ordersQuery = useQuery({
     queryKey: ["orders"],
     queryFn: () =>
-      fetch(`http://localhost:5000/api/order/email/${email}`, {
+      fetch(`https://api.islamicposhak.com/api/order/email/${email}`, {
         headers: {
           authorization: `Bearer ${user?.accessToken}`,
           "Content-Type": "application/json",
@@ -73,7 +73,7 @@ export default function MyOrders() {
   const handleStatus = (e, id) => {
     e.preventDefault();
 
-    fetch(`http://localhost:5000/api/order/${id}`, {
+    fetch(`https://api.islamicposhak.com/api/order/${id}`, {
       method: "PATCH",
       headers: {
         authorization: `Bearer ${user?.accessToken}`,
@@ -96,7 +96,7 @@ export default function MyOrders() {
   //     dangerMode: true,
   //   }).then((willDelete) => {
   //     if (willDelete) {
-  //       fetch(`http://localhost:5000/api/order/${id}`, {
+  //       fetch(`https://api.islamicposhak.com/api/order/${id}`, {
   //         headers: {
   //           authorization: `Bearer ${user?.accessToken}`,
   //           "Content-Type": "application/json",
@@ -124,7 +124,7 @@ export default function MyOrders() {
       swal("Review is Empty", "Please write a review!", "error");
       return;
     }
-    // fetch(`http://localhost:5000/api/order/${id}`, {
+    // fetch(`https://api.islamicposhak.com/api/order/${id}`, {
     //   method: "PATCH",
     //   headers: {
     //     authorization: `Bearer ${user?.accessToken}`,
@@ -138,19 +138,22 @@ export default function MyOrders() {
     //   }),
     // });
     try {
-      const response = await fetch(`http://localhost:5000/api/order/${id}`, {
-        method: "PATCH",
-        headers: {
-          authorization: `Bearer ${user?.accessToken}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          review: {
-            status: false,
-            review: review,
+      const response = await fetch(
+        `https://api.islamicposhak.com/api/order/${id}`,
+        {
+          method: "PATCH",
+          headers: {
+            authorization: `Bearer ${user?.accessToken}`,
+            "Content-Type": "application/json",
           },
-        }),
-      });
+          body: JSON.stringify({
+            review: {
+              status: false,
+              review: review,
+            },
+          }),
+        }
+      );
 
       if (response.ok) {
         const raw = {
@@ -162,7 +165,7 @@ export default function MyOrders() {
         console.log(raw);
         try {
           const reviewResponse = await fetch(
-            `http://localhost:5000/api/reviews`,
+            `https://api.islamicposhak.com/api/reviews`,
             {
               method: "POST",
               headers: {
@@ -193,28 +196,87 @@ export default function MyOrders() {
       return { error: error.message }; // Return error message
     }
   };
-
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const search = e.target.value;
+    if (search) {
+      const searchData = orders?.data?.filter((order) => {
+        return (
+          order?.orderStatus.toLowerCase().includes(search.toLowerCase()) ||
+          order?._id.includes(search.toLowerCase())
+        );
+      });
+      setFinalData(searchData);
+    } else {
+      setFinalData(orders?.data);
+    }
+  };
   return (
     <div>
-      <div className="flex justify-end p-5">
-        <label htmlFor="SortBy" className="sr-only">
-          SortBy
-        </label>
+      <div className="flex justify-end items-center">
+        <div>
+          <div className="flex justify-center ">
+            <form onChange={handleSearch}>
+              <div class="relative">
+                <label for="Search" class="sr-only">
+                  {" "}
+                  Search{" "}
+                </label>
 
-        <select
-          onChange={(e) => setSortBy(e.target.value)}
-          id="SortBy"
-          className="h-10 rounded border-gray-300 text-sm"
-        >
-          <option defaultValue={"all"} value="all">
-            All
-          </option>
-          <option value="pending">Pending</option>
-          <option value="processing">Processing</option>
-          <option value="delivered">Delivered</option>
-          <option value="confirmed">Confirmed</option>
-          <option value="canceled">Canceled</option>
-        </select>
+                <input
+                  type="text"
+                  id="Search"
+                  placeholder="Search for..."
+                  class="w-full rounded-md border-gray-200 py-2.5 pe-10 shadow-sm sm:text-sm"
+                />
+
+                <span class="absolute inset-y-0 end-0 grid w-10 place-content-center">
+                  <button
+                    type="submit"
+                    class="text-gray-600 hover:text-gray-700"
+                  >
+                    <span class="sr-only">Search</span>
+
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="h-4 w-4"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                      />
+                    </svg>
+                  </button>
+                </span>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div className="flex justify-end p-5">
+          <label htmlFor="SortBy" className="sr-only">
+            SortBy
+          </label>
+
+          <select
+            onChange={(e) => setSortBy(e.target.value)}
+            id="SortBy"
+            className="h-10 rounded border-gray-300 text-sm"
+          >
+            <option defaultValue={"all"} value="all">
+              All
+            </option>
+            <option value="pending">Pending</option>
+            <option value="processing">Processing</option>
+            <option value="delivered">Delivered</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="canceled">Canceled</option>
+          </select>
+        </div>
       </div>
       {finalData?.length > 0 ? (
         <>
@@ -236,7 +298,7 @@ export default function MyOrders() {
 
                 <div>
                   <strong class="rounded border border-green-500 bg-green-500 px-3 py-1.5 text-[10px] font-medium text-white">
-                    Order id: #{order._id.slice(5, 10).toUpperCase()}
+                  Order id: #IP-{order._id.slice(5, 10).toUpperCase()}
                   </strong>
                   <div className="flex gap-5 flex-wrap items-center">
                     {order?.orders?.map((item) => (
@@ -259,7 +321,7 @@ export default function MyOrders() {
                             </p>
                             <p class="text-sm font-medium ">
                               Price:{" "}
-                              {item?.price *
+                              {item?.price * 
                                 (1 - item?.discount / 100).toFixed(0)}
                             </p>
                             <p class="text-sm font-medium">
@@ -341,20 +403,7 @@ export default function MyOrders() {
                       &middot;
                     </span>
 
-                    <p class="mt-2 text-xs font-medium text-gray-500 sm:mt-0">
-                      Featuring{" "}
-                      <a href="#" class="underline hover:text-gray-700">
-                        Barry
-                      </a>
-                      ,
-                      <a href="#" class="underline hover:text-gray-700">
-                        Sandra
-                      </a>{" "}
-                      and
-                      <a href="#" class="underline hover:text-gray-700">
-                        August
-                      </a>
-                    </p>
+                    
                   </div>
                   {order?.review?.review ? (
                     <p>
@@ -429,7 +478,6 @@ export default function MyOrders() {
                 ) : (
                   ""
                 )}
-              
               </div>
             </article>
           ))}

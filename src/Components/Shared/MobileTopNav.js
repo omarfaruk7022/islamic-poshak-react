@@ -25,8 +25,8 @@ export default function MobileTopNav({ visibleTopNav, setVisibleTopNav }) {
   const { isLoading, error, data } = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch(`http://localhost:5000/api/users/email/${email}`).then((res) =>
-        res.json()
+      fetch(`https://api.islamicposhak.com/api/users/email/${email}`).then(
+        (res) => res.json()
       ),
   });
   return (

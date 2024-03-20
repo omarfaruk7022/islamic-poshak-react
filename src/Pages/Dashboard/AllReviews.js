@@ -7,16 +7,19 @@ import Loader from "../../Components/Common/Loader";
 
 export default function AllReviews() {
   const [user, loading] = useAuthState(auth);
+  const [finalData, setFinalData] = useState([]);
   const [allReviews, setAllReviews] = useState([]);
   const reviewsQuery = useQuery({
     queryKey: ["reviews"],
     queryFn: () =>
-      fetch("http://localhost:5000/api/reviews").then((res) => res.json()),
+      fetch("https://api.islamicposhak.com/api/reviews").then((res) =>
+        res.json()
+      ),
   });
   const ordersQuery = useQuery({
     queryKey: ["orders"],
     queryFn: () =>
-      fetch("http://localhost:5000/api/order", {
+      fetch("https://api.islamicposhak.com/api/order", {
         headers: {
           authorization: `Bearer ${user?.accessToken}`,
           ContentType: "application/json",
@@ -50,28 +53,91 @@ export default function AllReviews() {
   if (reviews?.data?.length < 0) {
     refetch();
   }
+  useEffect(() => {
+    if (allReviews) {
+      setFinalData(allReviews);
+    }
+  }, [allReviews]);
 
   const handleReviewStatus = async (id) => {
-    const response = await fetch(`http://localhost:5000/api/reviews/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ status: true }),
-    });
+    const response = await fetch(
+      `https://api.islamicposhak.com/api/reviews/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ status: true }),
+      }
+    );
     const data = await response.json();
     refetch();
   };
-  console.log("allReviews", allReviews, loadingReviews, loadingOrders);
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const search = e.target.value;
+    if (search == "" || search == null || search == undefined) {
+      setFinalData(allReviews);
+    } else {
+      const searchData = allReviews?.filter((user) => {
+        return (
+          user?.order?.customerName
+            .toLowerCase()
+            .includes(search.toLowerCase()) ||
+          user?.email.toLowerCase().includes(search.toLowerCase())
+        );
+      });
+      setFinalData(searchData);
+    }
+  };
+  console.log("finalData", finalData);
   return (
     <div>
+      <div className="flex justify-end m-4">
+        <form onChange={handleSearch}>
+          <div class="relative">
+            <label for="Search" class="sr-only">
+              {" "}
+              Search{" "}
+            </label>
+
+            <input
+              type="text"
+              id="Search"
+              placeholder="Search for..."
+              class="w-full rounded-md border-gray-200 py-2.5 pe-10 shadow-sm sm:text-sm"
+            />
+
+            <span class="absolute inset-y-0 end-0 grid w-10 place-content-center">
+              <button type="submit" class="text-gray-600 hover:text-gray-700">
+                <span class="sr-only">Search</span>
+
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="h-4 w-4"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                  />
+                </svg>
+              </button>
+            </span>
+          </div>
+        </form>
+      </div>
       <div class="mt-8 [column-fill:_balance] sm:columns-2 sm:gap-6 lg:columns-3 lg:gap-8 px-5">
         {loadingReviews || loadingOrders ? (
           <Loader />
         ) : (
           <>
-            {allReviews?.map((review) => (
+            {finalData?.map((review) => (
               <div class="mb-8 sm:break-inside-avoid">
                 <blockquote class="rounded-lg bg-gray-50 p-6 shadow-sm sm:p-8">
                   <div class="flex items-center gap-4">
