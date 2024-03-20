@@ -66,7 +66,7 @@ export default function SideMenu() {
         </div>
       ) : (
         <div className="hidden lg:block shadow-2xl px-6  w-[220px] ">
-          <div className="flex max-h-screen flex-col justify-between overflow-y-auto ">
+          <div className="flex h-screen flex-col justify-between overflow-y-auto ">
             <div className=" py-6 ">
               <nav
                 aria-label="Main Nav"

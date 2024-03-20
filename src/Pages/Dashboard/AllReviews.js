@@ -4,11 +4,15 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import avatar from "../../assets/images/avatar.jpg";
 import auth from "../../firebase.init";
 import Loader from "../../Components/Common/Loader";
+import useAdmin from "../../Components/Shared/useAdmin";
+import { useNavigate } from "react-router-dom";
 
 export default function AllReviews() {
   const [user, loading] = useAuthState(auth);
   const [finalData, setFinalData] = useState([]);
   const [allReviews, setAllReviews] = useState([]);
+  const [admin, adminLoading] = useAdmin(user);
+  const navigate = useNavigate();
   const reviewsQuery = useQuery({
     queryKey: ["reviews"],
     queryFn: () =>
@@ -52,6 +56,9 @@ export default function AllReviews() {
 
   if (reviews?.data?.length < 0) {
     refetch();
+  }
+  if (admin !== "admin" && admin !== undefined) {
+    navigate("/dashboard");
   }
   useEffect(() => {
     if (allReviews) {

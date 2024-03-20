@@ -8,12 +8,14 @@ import auth from "../../firebase.init";
 import Loader from "../../Components/Common/Loader";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { TailSpin } from "react-loader-spinner";
+import useAdmin from "../../Components/Shared/useAdmin";
 
 export default function AddProduct() {
   const [user, loading] = useAuthState(auth);
   const [loadingData, setLoadingData] = useState(false);
   const navigate = useNavigate();
   const email = user?.email;
+  const [admin, adminLoading] = useAdmin(user);
   const isUserAdminQuery = useQuery({
     queryKey: ["users"],
     queryFn: () =>
@@ -25,7 +27,7 @@ export default function AddProduct() {
   const data = isUserAdminQuery.data;
   const isLoading = isUserAdminQuery.isLoading;
   const error = isUserAdminQuery.error;
-  if (data?.data[0]?.role !== "admin" && data !== undefined) {
+  if (admin !== "admin" && admin !== undefined) {
     navigate("/dashboard");
   }
   const imgStorageKey = "7bd193c3ab5dcf0453572e262a763279";

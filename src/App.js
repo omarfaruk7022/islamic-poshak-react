@@ -30,6 +30,7 @@ import Reviews from "./Pages/Reviews";
 import AllReviews from "./Pages/Dashboard/AllReviews";
 import Gallery from "./Pages/Gallery";
 import AddGalleryImages from "./Pages/Dashboard/AddGalleryImages";
+import RequireAdmin from "./Components/Shared/RequireAdmin";
 
 function App() {
   return (
@@ -75,7 +76,7 @@ function App() {
             element={
               <RequireAuth>
                 <DashboardLayout>
-                  <AllUsers />
+                    <AllUsers />
                 </DashboardLayout>
               </RequireAuth>
             }
@@ -85,7 +86,7 @@ function App() {
             element={
               <RequireAuth>
                 <DashboardLayout>
-                  <AddProduct />
+                    <AddProduct />
                 </DashboardLayout>
               </RequireAuth>
             }
@@ -95,7 +96,7 @@ function App() {
             element={
               <RequireAuth>
                 <DashboardLayout>
-                  <AddGalleryImages />
+                    <AddGalleryImages />
                 </DashboardLayout>
               </RequireAuth>
             }
@@ -105,7 +106,7 @@ function App() {
             element={
               <RequireAuth>
                 <DashboardLayout>
-                  <ManageProducts />
+                    <ManageProducts />
                 </DashboardLayout>
               </RequireAuth>
             }

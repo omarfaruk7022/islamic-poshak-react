@@ -8,12 +8,14 @@ import { useNavigate } from "react-router-dom";
 import auth from "../../firebase.init";
 import EditModal from "../../Components/Dashboard/EditModal";
 import Loader from "../../Components/Common/Loader";
+import useAdmin from "../../Components/Shared/useAdmin";
 
 export default function ManageProducts() {
   const [visible, setVisible] = useState(false);
   const [selectedItemId, setSelectedItemId] = useState(null);
   const [user] = useAuthState(auth);
   const email = user?.email;
+  const [admin, adminLoading] = useAdmin(user);
   const navigate = useNavigate();
 
   const productsQuery = useQuery({
@@ -25,22 +27,12 @@ export default function ManageProducts() {
       ),
   });
 
-  const usersQuery = useQuery({
-    queryKey: ["users"],
-    queryFn: () =>
-      fetch(`https://api.islamicposhak.com/api/users/email/${email}`).then(
-        (res) => res.json()
-      ),
-  });
-
   const products = productsQuery.data;
-  const userIsAdmin = usersQuery.data;
 
   const refetch = () => {
     productsQuery.refetch();
-    usersQuery.refetch();
   };
-  if (userIsAdmin?.data[0]?.role !== "admin" && userIsAdmin !== undefined) {
+  if (admin !== "admin" && admin !== undefined) {
     navigate("/dashboard");
   }
   const handleEdit = (id) => {
@@ -75,7 +67,7 @@ export default function ManageProducts() {
 
   return (
     <div>
-      {userIsAdmin?.data[0]?.role === "admin" && userIsAdmin !== undefined ? (
+      {admin === "admin" && admin !== undefined ? (
         <>
           <div className="overflow-x-auto p-5 ">
             <table className="min-w-full divide-y-2 divide-gray-100  text-sm overflow-y-scroll  ">
@@ -216,8 +208,8 @@ export default function ManageProducts() {
         </>
       ) : (
         <>
-          {userIsAdmin?.data[0]?.role !== "admin" &&
-          userIsAdmin !== undefined &&
+          {admin !== "admin" &&
+          admin !== undefined &&
           navigate("/dashboard") ? (
             <div className="m-5">
               <h2 className="text-red-500 font-bold text-center text-xl">

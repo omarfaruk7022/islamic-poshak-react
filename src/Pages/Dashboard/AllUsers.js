@@ -48,16 +48,14 @@ export default function AllUsers() {
 
   const isLoading = usersQuery.isLoading;
   console.log("admin", admin);
-  if (userIsAdmin?.role !== "admin" && userIsAdmin !== undefined) {
+  if (admin !== "admin" && admin !== undefined) {
     navigate("/dashboard");
   }
 
   if (loading || isLoading) {
     return <Loader />;
   }
-  if (userIsAdmin?.role !== "admin") {
-    navigate("/dashboard");
-  }
+  
 
   const handleAdmin = (id) => {
     fetch(`https://api.islamicposhak.com/api/users/${id}`, {

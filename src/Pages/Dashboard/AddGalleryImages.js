@@ -2,13 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import swal from "sweetalert";
 import auth from "../../firebase.init";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import useAdmin from "../../Components/Shared/useAdmin";
 
 export default function AddGalleryImages() {
   const imgStorageKey = "7bd193c3ab5dcf0453572e262a763279";
   const [user, loading] = useAuthState(auth);
   const [images, setImages] = useState([]);
+  const [admin, adminLoading] = useAdmin(user);
+  const navigate = useNavigate();
 
   const handleImageUpload = async (e) => {
     e.preventDefault();
@@ -60,6 +63,10 @@ export default function AddGalleryImages() {
         });
     }
   };
+
+  if (admin !== "admin" && admin !== undefined) {
+    navigate("/dashboard");
+  }
 
   const galleryQuery = useQuery({
     queryKey: ["gallery"],
