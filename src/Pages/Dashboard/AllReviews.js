@@ -57,9 +57,7 @@ export default function AllReviews() {
   if (reviews?.data?.length < 0) {
     refetch();
   }
-  if (admin !== "admin" && admin !== undefined) {
-    navigate("/dashboard");
-  }
+
   useEffect(() => {
     if (allReviews) {
       setFinalData(allReviews);
@@ -101,102 +99,111 @@ export default function AllReviews() {
   console.log("finalData", finalData);
   return (
     <div>
-      <div className="flex justify-end m-4">
-        <form onChange={handleSearch}>
-          <div class="relative">
-            <label for="Search" class="sr-only">
-              {" "}
-              Search{" "}
-            </label>
+      {adminLoading ? (
+        <Loader />
+      ) : (
+        <>
+          <div className="flex justify-end m-4">
+            <form onChange={handleSearch}>
+              <div class="relative">
+                <label for="Search" class="sr-only">
+                  {" "}
+                  Search{" "}
+                </label>
 
-            <input
-              type="text"
-              id="Search"
-              placeholder="Search for..."
-              class="w-full rounded-md border-gray-200 py-2.5 pe-10 shadow-sm sm:text-sm"
-            />
+                <input
+                  type="text"
+                  id="Search"
+                  placeholder="Search for..."
+                  class="w-full rounded-md border-gray-200 py-2.5 pe-10 shadow-sm sm:text-sm"
+                />
 
-            <span class="absolute inset-y-0 end-0 grid w-10 place-content-center">
-              <button type="submit" class="text-gray-600 hover:text-gray-700">
-                <span class="sr-only">Search</span>
+                <span class="absolute inset-y-0 end-0 grid w-10 place-content-center">
+                  <button
+                    type="submit"
+                    class="text-gray-600 hover:text-gray-700"
+                  >
+                    <span class="sr-only">Search</span>
 
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="h-4 w-4"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                  />
-                </svg>
-              </button>
-            </span>
-          </div>
-        </form>
-      </div>
-      <div class="mt-8 [column-fill:_balance] sm:columns-2 sm:gap-6 lg:columns-3 lg:gap-8 px-5">
-        {loadingReviews || loadingOrders ? (
-          <Loader />
-        ) : (
-          <>
-            {finalData?.map((review) => (
-              <div class="mb-8 sm:break-inside-avoid">
-                <blockquote class="rounded-lg bg-gray-50 p-6 shadow-sm sm:p-8">
-                  <div class="flex items-center gap-4">
-                    <img
-                      alt=""
-                      src={avatar}
-                      class="size-14 rounded-full object-cover"
-                    />
-
-                    <div>
-                      <p class="mt-0.5 text-lg font-medium text-gray-900">
-                        {review?.order?.customerName}
-                      </p>
-                      <p class=" text-[13px] font-medium text-gray-900">
-                        {review?.email}
-                      </p>
-                      <strong class="rounded border border-green-500 bg-green-500 px-3 py-1 text-[12px] font-medium text-white">
-                        Order id: #IP-
-                        {review?.order?._id.slice(5, 10).toUpperCase()}
-                      </strong>
-                    </div>
-                  </div>
-
-                  <p class="mt-4 text-gray-700">{review?.review}</p>
-                  {review?.status == false ? (
-                    <div class="mt-5">
-                      <button
-                        onClick={() => {
-                          handleReviewStatus(review._id);
-                        }}
-                        class="bg-red-100 text-red-400
-                              text-[13px]   px-2 py-1  rounded-md "
-                      >
-                        Approve Review
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="mt-5">
-                      <span
-                        class="bg-green-100 text-green-400
-                              text-[13px]   px-2 py-1  rounded-md cursor-auto"
-                      >
-                        Approved
-                      </span>
-                    </div>
-                  )}
-                </blockquote>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="h-4 w-4"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                      />
+                    </svg>
+                  </button>
+                </span>
               </div>
-            ))}
-          </>
-        )}
-      </div>
+            </form>
+          </div>
+          <div class="mt-8 [column-fill:_balance] sm:columns-2 sm:gap-6 lg:columns-3 lg:gap-8 px-5">
+            {loadingReviews || loadingOrders ? (
+              <Loader />
+            ) : (
+              <>
+                {finalData?.map((review) => (
+                  <div class="mb-8 sm:break-inside-avoid">
+                    <blockquote class="rounded-lg bg-gray-50 p-6 shadow-sm sm:p-8">
+                      <div class="flex items-center gap-4">
+                        <img
+                          alt=""
+                          src={avatar}
+                          class="size-14 rounded-full object-cover"
+                        />
+
+                        <div>
+                          <p class="mt-0.5 text-lg font-medium text-gray-900">
+                            {review?.order?.customerName}
+                          </p>
+                          <p class=" text-[13px] font-medium text-gray-900">
+                            {review?.email}
+                          </p>
+                          <strong class="rounded border border-green-500 bg-green-500 px-3 py-1 text-[12px] font-medium text-white">
+                            Order id: #IP-
+                            {review?.order?._id.slice(5, 10).toUpperCase()}
+                          </strong>
+                        </div>
+                      </div>
+
+                      <p class="mt-4 text-gray-700">{review?.review}</p>
+                      {review?.status == false ? (
+                        <div class="mt-5">
+                          <button
+                            onClick={() => {
+                              handleReviewStatus(review._id);
+                            }}
+                            class="bg-red-100 text-red-400
+                              text-[13px]   px-2 py-1  rounded-md "
+                          >
+                            Approve Review
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="mt-5">
+                          <span
+                            class="bg-green-100 text-green-400
+                              text-[13px]   px-2 py-1  rounded-md cursor-auto"
+                          >
+                            Approved
+                          </span>
+                        </div>
+                      )}
+                    </blockquote>
+                  </div>
+                ))}
+              </>
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 }

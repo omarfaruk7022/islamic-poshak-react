@@ -76,7 +76,9 @@ function App() {
             element={
               <RequireAuth>
                 <DashboardLayout>
+                  <RequireAdmin>
                     <AllUsers />
+                  </RequireAdmin>
                 </DashboardLayout>
               </RequireAuth>
             }
@@ -86,7 +88,9 @@ function App() {
             element={
               <RequireAuth>
                 <DashboardLayout>
+                  <RequireAdmin>
                     <AddProduct />
+                  </RequireAdmin>
                 </DashboardLayout>
               </RequireAuth>
             }
@@ -96,7 +100,9 @@ function App() {
             element={
               <RequireAuth>
                 <DashboardLayout>
+                  <RequireAdmin>
                     <AddGalleryImages />
+                  </RequireAdmin>
                 </DashboardLayout>
               </RequireAuth>
             }
@@ -106,7 +112,9 @@ function App() {
             element={
               <RequireAuth>
                 <DashboardLayout>
+                  <RequireAdmin>
                     <ManageProducts />
+                  </RequireAdmin>
                 </DashboardLayout>
               </RequireAuth>
             }
@@ -136,7 +144,9 @@ function App() {
             element={
               <RequireAuth>
                 <DashboardLayout>
-                  <AllOrders />
+                  <RequireAdmin>
+                    <AllOrders />
+                  </RequireAdmin>
                 </DashboardLayout>
               </RequireAuth>
             }
@@ -146,7 +156,9 @@ function App() {
             element={
               <RequireAuth>
                 <DashboardLayout>
-                  <AllReviews />
+                  <RequireAdmin>
+                    <AllReviews />
+                  </RequireAdmin>
                 </DashboardLayout>
               </RequireAuth>
             }

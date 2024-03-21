@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import auth from "../firebase.init";
 import swal from "sweetalert";
 
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 
 export default function Signup() {
   const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
   const history = useNavigate();
+
   let signInError;
 
   const handleSubmit = (e) => {
@@ -47,7 +48,7 @@ export default function Signup() {
             if (data) {
               createUserWithEmailAndPassword(email, password);
               swal("Yayy", "Sign Up Successfully Completed", "success");
-              history("/dashboard");
+              history("/");
             } else {
               swal("Error", "Sign Up Failed", "error");
             }

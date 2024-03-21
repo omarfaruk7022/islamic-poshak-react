@@ -5,14 +5,20 @@ import { getAuth, signInWithPhoneNumber } from "firebase/auth";
 
 import auth from "../firebase.init";
 import Loader from "../Components/Common/Loader";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export default function Login() {
-  const history = useNavigate();
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
   let signInError;
-
+  const navigate = useNavigate();
+  const location = useLocation();
+  let from = location.state?.from?.pathname || "/";
+  useEffect(() => {
+    if (user) {
+      navigate(from, { replace: true });
+    }
+  }, [navigate, from]);
   //   const [token] = useToken(user );
 
   const handleAdminSubmit = (e) => {
@@ -31,7 +37,7 @@ export default function Login() {
       return;
     } else {
       signInWithEmailAndPassword(email, password);
-      history("/");
+      
     }
   };
   const handleUserSubmit = (e) => {

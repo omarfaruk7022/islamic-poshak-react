@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import auth from "../../firebase.init";
 
-const useAdmin = (user) => {
-  const [admin, setAdmin] = useState(false);
+const useAdmin = () => {
+  const [admin, setAdmin] = useState("");
   const [adminLoading, setAdminLoading] = useState(true);
+  const [user, loading] = useAuthState(auth);
 
   useEffect(() => {
     const email = user?.email;
@@ -16,10 +19,9 @@ const useAdmin = (user) => {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log("data", data);
-
           setAdmin(data?.data[0]?.role);
           setAdminLoading(false);
+          console.log("admin", data?.data[0]?.role);
         });
     }
   }, [user]);

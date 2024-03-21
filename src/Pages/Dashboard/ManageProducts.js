@@ -32,9 +32,7 @@ export default function ManageProducts() {
   const refetch = () => {
     productsQuery.refetch();
   };
-  if (admin !== "admin" && admin !== undefined) {
-    navigate("/dashboard");
-  }
+
   const handleEdit = (id) => {
     setVisible(true);
     setSelectedItemId(id);
@@ -67,7 +65,9 @@ export default function ManageProducts() {
 
   return (
     <div>
-      {admin === "admin" && admin !== undefined ? (
+      {adminLoading ? (
+        <Loader />
+      ) : (
         <>
           <div className="overflow-x-auto p-5 ">
             <table className="min-w-full divide-y-2 divide-gray-100  text-sm overflow-y-scroll  ">
@@ -205,23 +205,6 @@ export default function ManageProducts() {
               ))}
             </table>
           </div>
-        </>
-      ) : (
-        <>
-          {admin !== "admin" &&
-          admin !== undefined &&
-          navigate("/dashboard") ? (
-            <div className="m-5">
-              <h2 className="text-red-500 font-bold text-center text-xl">
-                You Are Not Authenticated Redirecting to Dashboard
-              </h2>
-              <div className="flex justify-center items-center my-2">
-                <img src={cross} alt=""></img>
-              </div>
-            </div>
-          ) : (
-            <Loader />
-          )}
         </>
       )}
     </div>

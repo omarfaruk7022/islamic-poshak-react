@@ -15,6 +15,10 @@ export default function ProductsCard(product) {
   const formattedDate2 = format(date, "p");
   const handleAddToCart = (e) => {
     e.preventDefault();
+    if (!user) { 
+      swal("Oops", "You need to login first!", "error");
+      return;
+    }
     const data = {
       productId: _id,
       orderDate: formattedDate,
@@ -99,7 +103,7 @@ export default function ProductsCard(product) {
     <div class="w-full h-92 flex flex-col justify-between max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <Link to={`/productDetails/${_id}`}>
         <img
-          class=" rounded-t-lg h-44 w-full object-cover object-center"
+          class=" rounded-t-lg  w-full   object-cover h-[250px] "
           src={image}
           alt="product image"
         />

@@ -5,6 +5,7 @@ import auth from "../../firebase.init";
 import { Link, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import useAdmin from "../../Components/Shared/useAdmin";
+import Loader from "../../Components/Common/Loader";
 
 export default function AddGalleryImages() {
   const imgStorageKey = "7bd193c3ab5dcf0453572e262a763279";
@@ -64,9 +65,7 @@ export default function AddGalleryImages() {
     }
   };
 
-  if (admin !== "admin" && admin !== undefined) {
-    navigate("/dashboard");
-  }
+  
 
   const galleryQuery = useQuery({
     queryKey: ["gallery"],
@@ -101,41 +100,51 @@ export default function AddGalleryImages() {
       swal("Error", "Something went wrong", "error");
     }
   };
-  return (
-    <div className="">
-      <div className="my-2 mt-5 p-20 bg-slate-200 w-96 m-auto">
-        <form action="" onSubmit={handleImageUpload}>
-          <div className="mb-3">
-            <input type="file" className="form-control" id="image" />
-          </div>
-          <button
-            type="submit"
-            class="text-white w-full bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-[10px] md:text-sm px-3 py-2.5 mt-5 text-center  "
-          >
-            Submit
-          </button>
-        </form>
-      </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 p-3">
-        {gallery?.data?.map((image) => (
-          <div class="w-full h-92 flex flex-col justify-between max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-            <img
-              class=" rounded-t-lg h-full w-full object-cover object-center"
-              src={image?.image}
-              alt="product image"
-            />
 
-            <div class="px-2 md:px-3 pb-2 md:pb-3 mt-2">
+  console.log("gallery", admin);
+  return (
+    <div>
+      {adminLoading ? (
+        <>
+          <Loader />
+        </>
+      ) : (
+        <div className="">
+          <div className="my-2 mt-5 p-20 bg-slate-200 w-96 m-auto">
+            <form action="" onSubmit={handleImageUpload}>
+              <div className="mb-3">
+                <input type="file" className="form-control" id="image" />
+              </div>
               <button
-                onClick={() => handleDelete(image?._id)}
-                class="text-white w-full bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-[10px] md:text-sm px-3 py-2.5 mt-5 text-center  "
+                type="submit"
+                class="text-white w-full bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-[10px] md:text-sm px-3 py-2.5 mt-5 text-center  "
               >
-                Delete
+                Submit
               </button>
-            </div>
+            </form>
           </div>
-        ))}
-      </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 p-3">
+            {gallery?.data?.map((image) => (
+              <div class="w-full h-92 flex flex-col justify-between max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <img
+                  class=" rounded-t-lg h-full w-full object-cover object-center"
+                  src={image?.image}
+                  alt="product image"
+                />
+
+                <div class="px-2 md:px-3 pb-2 md:pb-3 mt-2">
+                  <button
+                    onClick={() => handleDelete(image?._id)}
+                    class="text-white w-full bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-[10px] md:text-sm px-3 py-2.5 mt-5 text-center  "
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

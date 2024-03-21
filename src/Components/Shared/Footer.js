@@ -11,7 +11,7 @@ export default function Footer() {
           <img
             src={footerImage}
             alt=""
-            className="absolute inset-0 m-auto h-72 w-72  lg:h-full lg:w-full object-cover"
+            className="absolute inset-0 m-auto h-60 w-60  lg:h-full  object-cover"
           />
         </div>
 

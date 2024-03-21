@@ -30,7 +30,7 @@ export default function Borka() {
         <h1>{error}</h1>
       ) : null}
 
-      <div className="grid grid-cols-2 gap-3  md:grid-cols-3 lg:grid-cols-6 px-5 lg:px-28 xl:px-36">
+      <div className="grid grid-cols-2 gap-3  md:grid-cols-3 lg:grid-cols-6 px-5 lg:px-28 xl:px-36 mt-5">
         {data?.data
           .filter((product) => product.category === "Borka")
 

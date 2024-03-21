@@ -47,15 +47,10 @@ export default function AllUsers() {
   };
 
   const isLoading = usersQuery.isLoading;
-  console.log("admin", admin);
-  if (admin !== "admin" && admin !== undefined) {
-    navigate("/dashboard");
-  }
 
   if (loading || isLoading) {
     return <Loader />;
   }
-  
 
   const handleAdmin = (id) => {
     fetch(`https://api.islamicposhak.com/api/users/${id}`, {
@@ -109,130 +104,140 @@ export default function AllUsers() {
       setFinalData(searchData);
     }
   };
- 
 
   return (
     <div>
-      <div className="overflow-x-auto  p-5">
-        <div className="flex justify-end my-3">
-          <form onChange={handleSearch}>
-            <div class="relative">
-              <label for="Search" class="sr-only">
-                {" "}
-                Search{" "}
-              </label>
+      {adminLoading ? (
+        <Loader />
+      ) : (
+        <>
+          <div className="overflow-x-auto  p-5">
+            <div className="flex justify-end my-3">
+              <form onChange={handleSearch}>
+                <div class="relative">
+                  <label for="Search" class="sr-only">
+                    {" "}
+                    Search{" "}
+                  </label>
 
-              <input
-                type="text"
-                id="Search"
-                placeholder="Search for..."
-                class="w-full rounded-md border-gray-200 py-2.5 pe-10 shadow-sm sm:text-sm"
-              />
+                  <input
+                    type="text"
+                    id="Search"
+                    placeholder="Search for..."
+                    class="w-full rounded-md border-gray-200 py-2.5 pe-10 shadow-sm sm:text-sm"
+                  />
 
-              <span class="absolute inset-y-0 end-0 grid w-10 place-content-center">
-                <button type="submit" class="text-gray-600 hover:text-gray-700">
-                  <span class="sr-only">Search</span>
+                  <span class="absolute inset-y-0 end-0 grid w-10 place-content-center">
+                    <button
+                      type="submit"
+                      class="text-gray-600 hover:text-gray-700"
+                    >
+                      <span class="sr-only">Search</span>
 
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="h-4 w-4"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                    />
-                  </svg>
-                </button>
-              </span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="h-4 w-4"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                        />
+                      </svg>
+                    </button>
+                  </span>
+                </div>
+              </form>
             </div>
-          </form>
-        </div>
-        <table className="min-w-full divide-y-2 divide-gray-100  text-sm">
-          <thead className="ltr:text-left rtl:text-right">
-            <tr>
-              <th className="whitespace-nowrap px-4 py-2 font-medium text-left text-gray-900 ">
-                Name
-              </th>
-              <th className="whitespace-nowrap px-4 py-2 font-medium text-left text-gray-900 ">
-                Email
-              </th>
-              <th className="whitespace-nowrap px-4 py-2 font-medium text-left text-gray-900 hite">
-                Role
-              </th>
-              {admin == "admin" && (
-                <>
-                  <th className="whitespace-nowrap px-4 py-2 font-medium text-center text-gray-900 ">
-                    Change Role
-                  </th>
-                </>
-              )}
-            </tr>
-          </thead>
-          {finalData?.map((user) => (
-            <>
-              <tbody className="divide-y divide-gray-200">
+            <table className="min-w-full divide-y-2 divide-gray-100  text-sm">
+              <thead className="ltr:text-left rtl:text-right">
                 <tr>
-                  <td className="whitespace-nowrap px-4 py-2 font-medium  text-gray-700 ">
-                    {user?.username}
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-700 ">
-                    {user?.email}
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-700 ">
-                    {user?.role === "admin" ? (
-                      <span className="text-red-500">Admin</span>
-                    ) : (
-                      <span className="text-green-500">user</span>
-                    )}
-                  </td>
-                  {userIsAdmin?._id !== user?._id && user?.role !== "admin" && (
+                  <th className="whitespace-nowrap px-4 py-2 font-medium text-left text-gray-900 ">
+                    Name
+                  </th>
+                  <th className="whitespace-nowrap px-4 py-2 font-medium text-left text-gray-900 ">
+                    Email
+                  </th>
+                  <th className="whitespace-nowrap px-4 py-2 font-medium text-left text-gray-900 hite">
+                    Role
+                  </th>
+                  {admin == "admin" && (
                     <>
-                      <td className="whitespace-nowrap px-4 py-2 text-center text-gray-700">
-                        <button
-                          onClick={() => handleAdmin(user?._id)}
-                          className="bg-green-500  text-white px-2 py-1 rounded-md"
-                        >
-                          Make Admin
-                        </button>
-                      </td>
-                    </>
-                  )}
-                  {userIsAdmin?._id === user?._id && (
-                    <>
-                      <td className="whitespace-nowrap px-4 py-2 text-center text-gray-700">
-                        <button className="bg-yellow-500 text-white text-[11px] px-2 py-1 rounded-md">
-                          You Can't Change Your Role
-                        </button>
-                      </td>
-                    </>
-                  )}
-                  {userIsAdmin?._id !== user?._id && user?.role == "admin" && (
-                    <>
-                      <td className="whitespace-nowrap px-4 py-2 text-center text-gray-700">
-                        <button
-                          onClick={() => handleRemoveAdmin(user?._id)}
-                          className="bg-red-500 text-white px-2 py-1 rounded-md"
-                        >
-                          Remove Admin
-                        </button>
-                      </td>
+                      <th className="whitespace-nowrap px-4 py-2 font-medium text-center text-gray-900 ">
+                        Change Role
+                      </th>
                     </>
                   )}
                 </tr>
-              </tbody>
-            </>
-          ))}
-        </table>
-      </div>
+              </thead>
+              {finalData?.map((user) => (
+                <>
+                  <tbody className="divide-y divide-gray-200">
+                    <tr>
+                      <td className="whitespace-nowrap px-4 py-2 font-medium  text-gray-700 ">
+                        {user?.username}
+                      </td>
+                      <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-700 ">
+                        {user?.email}
+                      </td>
+                      <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-700 ">
+                        {user?.role === "admin" ? (
+                          <span className="text-red-500">Admin</span>
+                        ) : (
+                          <span className="text-green-500">user</span>
+                        )}
+                      </td>
+                      {userIsAdmin?._id !== user?._id &&
+                        user?.role !== "admin" && (
+                          <>
+                            <td className="whitespace-nowrap px-4 py-2 text-center text-gray-700">
+                              <button
+                                onClick={() => handleAdmin(user?._id)}
+                                className="bg-green-500  text-white px-2 py-1 rounded-md"
+                              >
+                                Make Admin
+                              </button>
+                            </td>
+                          </>
+                        )}
+                      {userIsAdmin?._id === user?._id && (
+                        <>
+                          <td className="whitespace-nowrap px-4 py-2 text-center text-gray-700">
+                            <button className="bg-yellow-500 text-white text-[11px] px-2 py-1 rounded-md">
+                              You Can't Change Your Role
+                            </button>
+                          </td>
+                        </>
+                      )}
+                      {userIsAdmin?._id !== user?._id &&
+                        user?.role == "admin" && (
+                          <>
+                            <td className="whitespace-nowrap px-4 py-2 text-center text-gray-700">
+                              <button
+                                onClick={() => handleRemoveAdmin(user?._id)}
+                                className="bg-red-500 text-white px-2 py-1 rounded-md"
+                              >
+                                Remove Admin
+                              </button>
+                            </td>
+                          </>
+                        )}
+                    </tr>
+                  </tbody>
+                </>
+              ))}
+            </table>
+          </div>
 
-      <p className="text-red-500 font-bold text-sm text-center p-5">
-        Caution: No one has the right to remove anyone from here
-      </p>
+          <p className="text-red-500 font-bold text-sm text-center p-5">
+            Caution: No one has the right to remove anyone from here
+          </p>
+        </>
+      )}
     </div>
   );
 }

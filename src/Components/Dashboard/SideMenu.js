@@ -15,6 +15,7 @@ import { HiOutlineLogout, HiShoppingBag } from "react-icons/hi";
 import auth from "../../firebase.init";
 import { Link, useParams } from "react-router-dom";
 import useAdmin from "../Shared/useAdmin";
+import Loader from "../Common/Loader";
 
 export default function SideMenu() {
   const [user] = useAuthState(auth);
@@ -61,9 +62,9 @@ export default function SideMenu() {
   return (
     <>
       {adminLoading ? (
-        <div className="flex justify-center items-center h-screen">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
-        </div>
+        <>
+          <Loader />
+        </>
       ) : (
         <div className="hidden lg:block shadow-2xl px-6  w-[220px] ">
           <div className="flex h-screen flex-col justify-between overflow-y-auto ">
@@ -80,7 +81,7 @@ export default function SideMenu() {
                   } transition-all hover:bg-gray-200 `}
                 >
                   <MdSpaceDashboard className="text-[20px]" />
-                  <span className="text-sm font-medium">ড্যাশবোর্ড</span>
+                  <span className="text-sm font-medium">Dashboard</span>
                 </Link>
 
                 {admin == "admin" && (

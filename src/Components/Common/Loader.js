@@ -3,7 +3,7 @@ import { TailSpin } from "react-loader-spinner";
 export default function Loader() {
   return (
     <div>
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center mt-20">
         <TailSpin
           visible={true}
           height="80"

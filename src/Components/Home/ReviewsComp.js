@@ -46,6 +46,14 @@ export default function ReviewsComp({ from }) {
       setFinalData(searchData);
     }
   };
+  let hideEmail = function(email) {
+    return email.replace(/(.{2})(.*)(?=@)/,
+      function(gp1, gp2, gp3) { 
+        for(let i = 0; i < gp3.length; i++) { 
+          gp2+= "*"; 
+        } return gp2; 
+      });
+  };
 
   return (
     <div>
@@ -118,7 +126,7 @@ export default function ReviewsComp({ from }) {
                           Customer
                         </p>
                         <p class="mt-0.5 text-[13px] font-medium text-gray-900">
-                          {review?.email}
+                          {hideEmail(review?.email)}
                         </p>
                       </div>
                     </div>

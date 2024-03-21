@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import swal from "sweetalert";
 import cross from "../../assets/images/close.png";
@@ -27,9 +27,7 @@ export default function AddProduct() {
   const data = isUserAdminQuery.data;
   const isLoading = isUserAdminQuery.isLoading;
   const error = isUserAdminQuery.error;
-  if (admin !== "admin" && admin !== undefined) {
-    navigate("/dashboard");
-  }
+ 
   const imgStorageKey = "7bd193c3ab5dcf0453572e262a763279";
 
   const handleSubmit = (e) => {
@@ -110,23 +108,26 @@ export default function AddProduct() {
         }
       });
   };
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, [user]);
   if (error) {
     console.log(error);
   }
   if (loading || isLoading || data == undefined) {
     return <Loader />;
   }
-  if (data?.data[0]?.role !== "admin") {
-    navigate("/dashboard");
-  }
-  if (!user) {
-    navigate("/login");
-  }
+  
   console.log(loading, isLoading);
 
   return (
     <div>
-      {data?.data[0]?.role === "admin" ? (
+      {adminLoading || isLoading ? (
+        <Loader />
+      ) : (
         <>
           <div>
             <div className="p-1 lg:p-24">
@@ -297,23 +298,6 @@ export default function AddProduct() {
               </form>
             </div>
           </div>
-        </>
-      ) : (
-        <>
-          {data?.data[0]?.role !== "admin" &&
-          data !== undefined &&
-          navigate("/dashboard") ? (
-            <div className="m-5">
-              <h2 className="text-red-500 font-bold text-center text-xl">
-                You Are Not Authenticated Redirecting to Dashboard
-              </h2>
-              <div className="flex justify-center items-center my-2">
-                <img src={cross} alt=""></img>
-              </div>
-            </div>
-          ) : (
-            <Loader />
-          )}
         </>
       )}
     </div>
