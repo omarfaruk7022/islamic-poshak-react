@@ -8,7 +8,7 @@ export default function ThankYou() {
   const email = user?.email;
   const [userInfo, setUserInfo] = useState();
   const getUser = () => {
-    fetch(`https://api.islamicposhak.com/api/users/email/${email}`)
+    fetch(`http://localhost:5000/api/users/email/${email}`)
       .then((res) => res.json())
       .then((data) => {
         setUserInfo(data.data[0]);

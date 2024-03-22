@@ -120,7 +120,7 @@ export default function Footer() {
 
                   <li>
                     <a
-                      href="#"
+                      href="/all-products"
                       className="text-gray-700 transition hover:opacity-75"
                     >
                       {" "}
@@ -146,7 +146,7 @@ export default function Footer() {
 
                   <li>
                     <Link
-                      to="/galley"
+                      to="/gallery"
                       className="text-gray-700 transition hover:opacity-75"
                     >
                       {" "}

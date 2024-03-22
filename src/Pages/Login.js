@@ -6,6 +6,7 @@ import { getAuth, signInWithPhoneNumber } from "firebase/auth";
 import auth from "../firebase.init";
 import Loader from "../Components/Common/Loader";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 export default function Login() {
   const [signInWithEmailAndPassword, user, loading, error] =
@@ -37,7 +38,6 @@ export default function Login() {
       return;
     } else {
       signInWithEmailAndPassword(email, password);
-      
     }
   };
   const handleUserSubmit = (e) => {
@@ -75,6 +75,15 @@ export default function Login() {
 
   return (
     <div>
+      <Helmet>
+        <title>Login </title>
+        <meta
+          name="description"
+          content="
+          Welcome Back To Islamic poshak collection
+          "
+        />
+      </Helmet>
       <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-lg">
           <h1 className="text-center text-2xl font-bold text-green-500 sm:text-3xl">

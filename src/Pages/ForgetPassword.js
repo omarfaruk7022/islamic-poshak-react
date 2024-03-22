@@ -4,6 +4,7 @@ import swal from "sweetalert";
 import auth from "../firebase.init";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 export default function ForgetPassword() {
   const navigate = useNavigate();
@@ -17,18 +18,27 @@ export default function ForgetPassword() {
       swal("Oops", "Email Must Be Valid", "error");
       return;
     } else {
-      sendPasswordResetEmail(auth, email).then(() => {
-        swal("Success", "Password reset email sent", "success");
-        e.target.reset();
-        navigate("/login");
-      })
-      .catch((error) => {
-        swal("Oops", error.message, "error");
-      });
+      sendPasswordResetEmail(auth, email)
+        .then(() => {
+          swal("Success", "Password reset email sent", "success");
+          e.target.reset();
+          navigate("/login");
+        })
+        .catch((error) => {
+          swal("Oops", error.message, "error");
+        });
     }
   };
   return (
     <div className="flex justify-center">
+      <Helmet>
+        <title>Forget password</title>
+        <meta
+          name="description"
+          content="
+          Forget password page for islamicposhak.com. Reset your password here."
+        />
+      </Helmet>
       <div>
         <h2 className="text-3xl my-5">Forget password</h2>
         <form onSubmit={resetPassword}>

@@ -5,6 +5,7 @@ import swal from "sweetalert";
 import auth from "../firebase.init";
 import Navbar from "../Components/Shared/Navbar";
 import { Link, useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 export default function ViewCart() {
   const [user] = useAuthState(auth);
@@ -14,7 +15,7 @@ export default function ViewCart() {
   const usersData = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch(`https://api.islamicposhak.com/api/users/`, {
+      fetch(`http://localhost:5000/api/users/`, {
         headers: {
           authorization: `Bearer ${user?.accessToken}`,
           ContentType: "application/json",
@@ -28,7 +29,7 @@ export default function ViewCart() {
   const cartQuery = useQuery({
     queryKey: ["cart"],
     queryFn: () =>
-      fetch(`https://api.islamicposhak.com/api/cart/${email}`).then((res) =>
+      fetch(`http://localhost:5000/api/cart/${email}`).then((res) =>
         res.json()
       ),
   });
@@ -44,7 +45,7 @@ export default function ViewCart() {
   });
 
   const handleDelete = (id) => {
-    fetch(`https://api.islamicposhak.com/api/cart/${id}`, {
+    fetch(`http://localhost:5000/api/cart/${id}`, {
       method: "DELETE",
     }).then((res) => {
       if (res.ok) {
@@ -81,7 +82,7 @@ export default function ViewCart() {
     const quantity = cartProducts?.find(
       (product) => product?._id === id
     )?.quantity;
-    fetch(`https://api.islamicposhak.com/api/cart/${id}`, {
+    fetch(`http://localhost:5000/api/cart/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -97,7 +98,7 @@ export default function ViewCart() {
     const quantity = cartProducts?.find(
       (product) => product?._id === id
     )?.quantity;
-    fetch(`https://api.islamicposhak.com/api/cart/${id}`, {
+    fetch(`http://localhost:5000/api/cart/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -161,7 +162,7 @@ export default function ViewCart() {
       swal("Error!", "Delivery Address is required!", "error");
       return;
     }
-    fetch("https://api.islamicposhak.com/api/order", {
+    fetch("http://localhost:5000/api/order", {
       method: "POST",
       headers: {
         authorization: `Bearer ${user?.accessToken}`,
@@ -173,7 +174,7 @@ export default function ViewCart() {
         swal("Success!", "Product successfully ordered!", "success");
         navigate("/thankyou");
         // the carts all data will be deleted
-        fetch(`https://api.islamicposhak.com/api/cart/email/${email}`, {
+        fetch(`http://localhost:5000/api/cart/email/${email}`, {
           method: "DELETE",
         }).then((res) => {
           if (res.ok) {
@@ -222,6 +223,14 @@ export default function ViewCart() {
 
   return (
     <div>
+      <Helmet>
+        <title>Islamic Poshak Collection | আপনার কার্ট</title>
+        <meta
+          name="description"
+          content="
+        Islamic poshak collection is a online shop for islamic dress. We provide all types of islamic dresses"
+        />
+      </Helmet>
       <section>
         <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
           <div class="mx-auto max-w-3xl">
@@ -236,7 +245,7 @@ export default function ViewCart() {
                   আপনার কার্ট খালি
                 </h4>
                 <Link
-                  to={"/products"}
+                  to={"/all-products"}
                   className="text-blue-500 underline text-sm flex justify-end"
                 >
                   {/* Go to products */}

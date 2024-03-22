@@ -16,14 +16,12 @@ export default function AllReviews() {
   const reviewsQuery = useQuery({
     queryKey: ["reviews"],
     queryFn: () =>
-      fetch("https://api.islamicposhak.com/api/reviews").then((res) =>
-        res.json()
-      ),
+      fetch("http://localhost:5000/api/reviews").then((res) => res.json()),
   });
   const ordersQuery = useQuery({
     queryKey: ["orders"],
     queryFn: () =>
-      fetch("https://api.islamicposhak.com/api/order", {
+      fetch("http://localhost:5000/api/order", {
         headers: {
           authorization: `Bearer ${user?.accessToken}`,
           ContentType: "application/json",
@@ -65,16 +63,13 @@ export default function AllReviews() {
   }, [allReviews]);
 
   const handleReviewStatus = async (id) => {
-    const response = await fetch(
-      `https://api.islamicposhak.com/api/reviews/${id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ status: true }),
-      }
-    );
+    const response = await fetch(`http://localhost:5000/api/reviews/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ status: true }),
+    });
     const data = await response.json();
     refetch();
   };
@@ -96,7 +91,20 @@ export default function AllReviews() {
       setFinalData(searchData);
     }
   };
-  console.log("finalData", finalData);
+
+  const handleReviewDelete = async (id) => {
+    const response = await fetch(`http://localhost:5000/api/reviews/${id}`, {
+      method: "DELETE",
+      headers: {
+        authorization: `Bearer ${user?.accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+
+    refetch();
+  };
+
   return (
     <div>
       {adminLoading ? (
@@ -174,28 +182,41 @@ export default function AllReviews() {
                       </div>
 
                       <p class="mt-4 text-gray-700">{review?.review}</p>
-                      {review?.status == false ? (
-                        <div class="mt-5">
-                          <button
-                            onClick={() => {
-                              handleReviewStatus(review._id);
-                            }}
-                            class="bg-red-100 text-red-400
+                      <div className="flex justify-between items-center">
+                        {review?.status == false ? (
+                          <div class="mt-5">
+                            <button
+                              onClick={() => {
+                                handleReviewStatus(review._id);
+                              }}
+                              class="bg-red-100 text-red-400
                               text-[13px]   px-2 py-1  rounded-md "
-                          >
-                            Approve Review
-                          </button>
-                        </div>
-                      ) : (
+                            >
+                              Approve Review
+                            </button>
+                          </div>
+                        ) : (
+                          <div className="mt-5">
+                            <span
+                              class="bg-green-100 text-green-400
+                              text-[13px]   px-2 py-1  rounded-md cursor-auto"
+                            >
+                              Approved
+                            </span>
+                          </div>
+                        )}
                         <div className="mt-5">
                           <span
-                            class="bg-green-100 text-green-400
-                              text-[13px]   px-2 py-1  rounded-md cursor-auto"
+                            onClick={() => {
+                              handleReviewDelete(review._id);
+                            }}
+                            class="bg-red-100 text-red-400
+                              text-[13px]   px-2 py-1  rounded-md cursor-pointer"
                           >
-                            Approved
+                            Delete
                           </span>
                         </div>
-                      )}
+                      </div>
                     </blockquote>
                   </div>
                 ))}

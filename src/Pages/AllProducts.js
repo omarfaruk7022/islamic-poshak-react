@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import auth from "../firebase.init";
 import ProductsCard from "../Components/Common/ProductCard";
 import Loader from "../Components/Common/Loader";
+import { Helmet } from "react-helmet";
 
 // export async function getStaticProps() {
 //   const products = await loadProducts();
@@ -25,9 +26,7 @@ export default function AllProducts() {
   const { isLoading, error, data } = useQuery({
     queryKey: ["products"],
     queryFn: () =>
-      fetch("https://api.islamicposhak.com/api/product").then((res) =>
-        res.json()
-      ),
+      fetch("http://localhost:5000/api/product").then((res) => res.json()),
   });
 
   const allProducts = data?.data;
@@ -70,6 +69,14 @@ export default function AllProducts() {
   };
   return (
     <div>
+      <Helmet>
+        <title>Islamic Poshak Collection | Online Shop for Islamic Dress</title>
+        <meta
+          name="description"
+          content="
+        Islamic poshak collection is a online shop for islamic dress. We provide all types of islamic dresses"
+        />
+      </Helmet>
       <>
         <h4 className="text-3xl text-center pt-10">আমাদের সকল প্রোডাক্টস</h4>
         {/* <div className="grid grid-cols-2 gap-3  md:grid-cols-3 lg:grid-cols-6 px-0 lg:px-36">

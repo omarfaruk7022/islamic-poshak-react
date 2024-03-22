@@ -13,7 +13,7 @@ export default function Dashboard() {
   const ordersQuery = useQuery({
     queryKey: ["orders"],
     queryFn: () =>
-      fetch("https://api.islamicposhak.com/api/order", {
+      fetch("http://localhost:5000/api/order", {
         headers: {
           authorization: `Bearer ${user?.accessToken}`,
           ContentType: "application/json",
@@ -24,7 +24,7 @@ export default function Dashboard() {
   const usersQuery = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch("https://api.islamicposhak.com/api/users", {
+      fetch("http://localhost:5000/api/users", {
         headers: {
           authorization: `Bearer ${user?.accessToken}`,
           ContentType: "application/json",
@@ -47,7 +47,8 @@ export default function Dashboard() {
       <div>
         <div class="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-8 p-5">
           <div class="h-32 rounded-lg bg-gray-100">
-           <div  class="
+            <div
+              class="
               flex
               items-center
               justify-center
@@ -56,8 +57,8 @@ export default function Dashboard() {
               rounded-lg
               shadow-md"
             >
-             Upcoming...
-              </div>
+              Upcoming...
+            </div>
             {/* {users?.data?.length ? (
               <div
                 class="
@@ -85,7 +86,8 @@ export default function Dashboard() {
             )} */}
           </div>
           <div class="h-32 rounded-lg bg-white">
-          <div  class="
+            <div
+              class="
               flex
               items-center
               justify-center
@@ -94,8 +96,8 @@ export default function Dashboard() {
               rounded-lg
               shadow-md"
             >
-             Upcoming...
-              </div>
+              Upcoming...
+            </div>
             {/* {orders?.data?.length ? (
               <div
                 class="
@@ -125,7 +127,8 @@ export default function Dashboard() {
             )} */}
           </div>
           <div class="h-32 rounded-lg bg-gray-100">
-          <div  class="
+            <div
+              class="
               flex
               items-center
               justify-center
@@ -134,8 +137,8 @@ export default function Dashboard() {
               rounded-lg
               shadow-md"
             >
-             Upcoming...
-              </div>
+              Upcoming...
+            </div>
           </div>
         </div>
       </div>

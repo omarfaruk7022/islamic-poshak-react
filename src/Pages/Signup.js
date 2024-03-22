@@ -4,6 +4,7 @@ import auth from "../firebase.init";
 import swal from "sweetalert";
 
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 export default function Signup() {
   const [createUserWithEmailAndPassword, user, loading, error] =
@@ -36,7 +37,7 @@ export default function Signup() {
       if (error) {
         swal("Error", error.message, "error");
       } else {
-        fetch(`https://api.islamicposhak.com/api/users/email/${email}`, {
+        fetch(`http://localhost:5000/api/users/email/${email}`, {
           method: "PUT",
           headers: {
             "Content-type": "application/json",
@@ -59,6 +60,15 @@ export default function Signup() {
 
   return (
     <div>
+      <Helmet>
+        <title>Sign up</title>
+        <meta
+          name="description"
+          content="
+          Sign up page for Islamic Poshak 
+          "
+        />
+      </Helmet>
       <div>
         <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-lg">

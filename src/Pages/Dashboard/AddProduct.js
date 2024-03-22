@@ -19,15 +19,15 @@ export default function AddProduct() {
   const isUserAdminQuery = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch(`https://api.islamicposhak.com/api/users/email/${email}`).then(
-        (res) => res.json()
+      fetch(`http://localhost:5000/api/users/email/${email}`).then((res) =>
+        res.json()
       ),
   });
 
   const data = isUserAdminQuery.data;
   const isLoading = isUserAdminQuery.isLoading;
   const error = isUserAdminQuery.error;
- 
+
   const imgStorageKey = "7bd193c3ab5dcf0453572e262a763279";
 
   const handleSubmit = (e) => {
@@ -77,7 +77,7 @@ export default function AddProduct() {
             status &&
             addedBy
           ) {
-            fetch("https://api.islamicposhak.com/api/product", {
+            fetch("http://localhost:5000/api/product", {
               method: "POST",
               headers: {
                 authorization: `Bearer ${user?.accessToken}`,
@@ -120,7 +120,7 @@ export default function AddProduct() {
   if (loading || isLoading || data == undefined) {
     return <Loader />;
   }
-  
+
   console.log(loading, isLoading);
 
   return (

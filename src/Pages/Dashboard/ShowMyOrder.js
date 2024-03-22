@@ -6,9 +6,7 @@ export default function ShowMyOrder({ visible, setVisible, id }) {
   const ordersQuery = useQuery({
     queryKey: ["orders"],
     queryFn: () =>
-      fetch(`https://api.islamicposhak.com/api/order/${id}`).then((res) =>
-        res.json()
-      ),
+      fetch(`http://localhost:5000/api/order/${id}`).then((res) => res.json()),
   });
   const orders = ordersQuery.data;
   console.log(orders);

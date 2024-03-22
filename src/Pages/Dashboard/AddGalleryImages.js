@@ -35,7 +35,7 @@ export default function AddGalleryImages() {
             const image = result.data.url;
 
             if (image) {
-              fetch("https://api.islamicposhak.com/api/gallery", {
+              fetch("http://localhost:5000/api/gallery", {
                 method: "POST",
                 headers: {
                   authorization: `Bearer ${user?.accessToken}`,
@@ -65,12 +65,10 @@ export default function AddGalleryImages() {
     }
   };
 
-  
-
   const galleryQuery = useQuery({
     queryKey: ["gallery"],
     queryFn: () =>
-      fetch("https://api.islamicposhak.com/api/gallery", {
+      fetch("http://localhost:5000/api/gallery", {
         headers: {
           authorization: `Bearer ${user?.accessToken}`,
           ContentType: "application/json",
@@ -82,16 +80,13 @@ export default function AddGalleryImages() {
   const refetch = galleryQuery.refetch;
 
   const handleDelete = async (id) => {
-    const response = await fetch(
-      `https://api.islamicposhak.com/api/gallery/${id}`,
-      {
-        method: "DELETE",
-        headers: {
-          authorization: `Bearer ${user?.accessToken}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await fetch(`http://localhost:5000/api/gallery/${id}`, {
+      method: "DELETE",
+      headers: {
+        authorization: `Bearer ${user?.accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     const data = await response.json();
     if (data) {
       swal("Yayy", "Image Deleted Successfully", "success");

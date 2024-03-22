@@ -19,15 +19,15 @@ export default function MyOrders() {
   const [sortBy, setSortBy] = useState("all");
   const [finalData, setFinalData] = useState([]);
   const [orders, setOrders] = useState([]);
-  const [isLoading ,setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   //   const ordersQuery = useQuery({
   //     queryKey: ["orders"],
   //     queryFn: () =>
-  //       fetch("https://api.islamicposhak.com/api/cart").then((res) => res.json()),
+  //       fetch("http://localhost:5000/api/cart").then((res) => res.json()),
   //   });
 
   const getOrders = () => {
-    fetch(`https://api.islamicposhak.com/api/order/email/${email}`, {
+    fetch(`http://localhost:5000/api/order/email/${email}`, {
       headers: {
         authorization: `Bearer ${user?.accessToken}`,
         "Content-Type": "application/json",
@@ -43,11 +43,11 @@ export default function MyOrders() {
   useEffect(() => {
     getOrders();
   }, [email]);
-  console.log("finalData",orders);
+  console.log("finalData", orders);
   // const ordersQuery = useQuery({
   //   queryKey: ["orders"],
   //   queryFn: () =>
-  //     fetch(`https://api.islamicposhak.com/api/order/email/${email}`, {
+  //     fetch(`http://localhost:5000/api/order/email/${email}`, {
   //       headers: {
   //         authorization: `Bearer ${user?.accessToken}`,
   //         "Content-Type": "application/json",
@@ -72,28 +72,13 @@ export default function MyOrders() {
     }
   }, [sortBy]);
 
-  //   const userIsAdmin = isUserAdminQuery.data;
-  // const refetch = () => {
-  //   ordersQuery.refetch();
-  // };
-
-  // const isLoading = ordersQuery.isLoading;
-
-  //   if (userIsAdmin?.data[0]?.role !== "admin" && userIsAdmin !== undefined) {
-  //     router.push("/dashboard");
-  //   }
-
-  //   if (userIsAdmin?.data[0]?.role !== "admin") {
-  //     router.push("/dashboard");
-  //   }
-
-  if (loading ) {
+  if (loading) {
     return <Loader />;
   }
   const handleStatus = (e, id) => {
     e.preventDefault();
 
-    fetch(`https://api.islamicposhak.com/api/order/${id}`, {
+    fetch(`http://localhost:5000/api/order/${id}`, {
       method: "PATCH",
       headers: {
         authorization: `Bearer ${user?.accessToken}`,
@@ -115,7 +100,7 @@ export default function MyOrders() {
   //     dangerMode: true,
   //   }).then((willDelete) => {
   //     if (willDelete) {
-  //       fetch(`https://api.islamicposhak.com/api/order/${id}`, {
+  //       fetch(`http://localhost:5000/api/order/${id}`, {
   //         headers: {
   //           authorization: `Bearer ${user?.accessToken}`,
   //           "Content-Type": "application/json",
@@ -143,7 +128,7 @@ export default function MyOrders() {
       swal("Review is Empty", "Please write a review!", "error");
       return;
     }
-    // fetch(`https://api.islamicposhak.com/api/order/${id}`, {
+    // fetch(`http://localhost:5000/api/order/${id}`, {
     //   method: "PATCH",
     //   headers: {
     //     authorization: `Bearer ${user?.accessToken}`,
@@ -157,22 +142,19 @@ export default function MyOrders() {
     //   }),
     // });
     try {
-      const response = await fetch(
-        `https://api.islamicposhak.com/api/order/${id}`,
-        {
-          method: "PATCH",
-          headers: {
-            authorization: `Bearer ${user?.accessToken}`,
-            "Content-Type": "application/json",
+      const response = await fetch(`http://localhost:5000/api/order/${id}`, {
+        method: "PATCH",
+        headers: {
+          authorization: `Bearer ${user?.accessToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          review: {
+            status: false,
+            review: review,
           },
-          body: JSON.stringify({
-            review: {
-              status: false,
-              review: review,
-            },
-          }),
-        }
-      );
+        }),
+      });
 
       if (response.ok) {
         const raw = {
@@ -180,11 +162,13 @@ export default function MyOrders() {
           review: review,
           orderId: id,
           status: false,
+          date: new Date().toLocaleDateString(),
+          time: new Date().toLocaleTimeString(),
         };
         console.log(raw);
         try {
           const reviewResponse = await fetch(
-            `https://api.islamicposhak.com/api/reviews`,
+            `http://localhost:5000/api/reviews`,
             {
               method: "POST",
               headers: {
@@ -197,7 +181,6 @@ export default function MyOrders() {
           if (reviewResponse.ok) {
             swal("Review Added", "Your Review has been added!", "success");
             e.target.reset();
-   
           }
 
           const reviewResponseData = await reviewResponse.json();

@@ -15,7 +15,7 @@ export default function ProductsCard(product) {
   const formattedDate2 = format(date, "p");
   const handleAddToCart = (e) => {
     e.preventDefault();
-    if (!user) { 
+    if (!user) {
       swal("Oops", "You need to login first!", "error");
       return;
     }
@@ -43,7 +43,7 @@ export default function ProductsCard(product) {
     //   email: user?.email,
     // };
 
-    fetch("https://api.islamicposhak.com/api/cart", {
+    fetch("http://localhost:5000/api/cart", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

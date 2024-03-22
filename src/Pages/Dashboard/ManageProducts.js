@@ -22,9 +22,7 @@ export default function ManageProducts() {
     queryKey: ["products"],
 
     queryFn: () =>
-      fetch("https://api.islamicposhak.com/api/product").then((res) =>
-        res.json()
-      ),
+      fetch("http://localhost:5000/api/product").then((res) => res.json()),
   });
 
   const products = productsQuery.data;
@@ -47,7 +45,7 @@ export default function ManageProducts() {
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
-        fetch(`https://api.islamicposhak.com/api/product/${id}`, {
+        fetch(`http://localhost:5000/api/product/${id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())

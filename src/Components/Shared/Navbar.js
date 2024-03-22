@@ -12,6 +12,7 @@ import Cart from "../Home/Cart";
 import auth from "../../firebase.init";
 import MobileTopNav from "./MobileTopNav";
 import MobileSideMenu from "./MobileSideMenu";
+import avatar from "../../assets/images/avatar.jpg";
 
 export default function Navbar() {
   const [user] = useAuthState(auth);
@@ -29,8 +30,8 @@ export default function Navbar() {
   const usersQuery = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch(`https://api.islamicposhak.com/api/users/email/${email}`).then(
-        (res) => res.json()
+      fetch(`http://localhost:5000/api/users/email/${email}`).then((res) =>
+        res.json()
       ),
   });
   const userInfo = usersQuery.data?.data[0];
@@ -46,7 +47,7 @@ export default function Navbar() {
   const cartQuery = useQuery({
     queryKey: ["cart"],
     queryFn: () =>
-      fetch(`https://api.islamicposhak.com/api/cart/${email}`).then((res) =>
+      fetch(`http://localhost:5000/api/cart/${email}`).then((res) =>
         res.json()
       ),
   });
@@ -217,7 +218,7 @@ export default function Navbar() {
                       >
                         <img
                           alt="profile"
-                          src={userInfo?.profilePhoto}
+                          src={avatar}
                           class="h-10 w-10 rounded-full object-cover"
                         />
 

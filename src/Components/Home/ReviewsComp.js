@@ -12,9 +12,7 @@ export default function ReviewsComp({ from }) {
   const reviewsQuery = useQuery({
     queryKey: ["reviews"],
     queryFn: () =>
-      fetch("https://api.islamicposhak.com/api/reviews").then((res) =>
-        res.json()
-      ),
+      fetch("http://localhost:5000/api/reviews").then((res) => res.json()),
   });
 
   const reviews = reviewsQuery?.data;
@@ -46,13 +44,13 @@ export default function ReviewsComp({ from }) {
       setFinalData(searchData);
     }
   };
-  let hideEmail = function(email) {
-    return email.replace(/(.{2})(.*)(?=@)/,
-      function(gp1, gp2, gp3) { 
-        for(let i = 0; i < gp3.length; i++) { 
-          gp2+= "*"; 
-        } return gp2; 
-      });
+  let hideEmail = function (email) {
+    return email.replace(/(.{2})(.*)(?=@)/, function (gp1, gp2, gp3) {
+      for (let i = 0; i < gp3.length; i++) {
+        gp2 += "*";
+      }
+      return gp2;
+    });
   };
 
   return (
@@ -128,6 +126,13 @@ export default function ReviewsComp({ from }) {
                         <p class="mt-0.5 text-[13px] font-medium text-gray-900">
                           {hideEmail(review?.email)}
                         </p>
+                        <div class="flex items-center gap-1 text-gray-500">
+                          
+
+                          <p class="text-xs font-medium">
+                          {review?.time} - {review?.date} 
+                          </p>
+                        </div>
                       </div>
                     </div>
 

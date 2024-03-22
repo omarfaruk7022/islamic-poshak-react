@@ -11,7 +11,7 @@ const useAdmin = () => {
     const email = user?.email;
 
     if (email) {
-      fetch(`https://api.islamicposhak.com/api/users/email/${email}`, {
+      fetch(`http://localhost:5000/api/users/email/${email}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
