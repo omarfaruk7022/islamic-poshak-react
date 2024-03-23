@@ -6,10 +6,13 @@ import auth from "../firebase.init";
 import Navbar from "../Components/Shared/Navbar";
 import { Link, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import { TailSpin } from "react-loader-spinner";
 
 export default function ViewCart() {
   const [user] = useAuthState(auth);
   const navigate = useNavigate();
+  const [loadingData, setLoadingData] = useState(false);
+
   const email = user?.email;
 
   const usersData = useQuery({
@@ -43,16 +46,6 @@ export default function ViewCart() {
       refetch();
     }
   });
-
-  const handleDelete = (id) => {
-    fetch(`http://localhost:5000/api/cart/${id}`, {
-      method: "DELETE",
-    }).then((res) => {
-      if (res.ok) {
-        refetch();
-      }
-    });
-  };
 
   // const handleOrder = (e) => {
   //   e.preventDefault();
@@ -112,6 +105,7 @@ export default function ViewCart() {
   };
   const handleOrder = (e) => {
     e.preventDefault();
+    setLoadingData(true);
     let orderData = [];
     cartProducts?.map((product) => {
       orderData.push({
@@ -127,8 +121,8 @@ export default function ViewCart() {
         phone: isAdmin?.phone,
         customerName: isAdmin?.username,
         discount: product?.discount,
-        long: product?.long ? product?.long : e.target.long?.value,
-        body: product?.body ? product?.body : e.target.body?.value,
+        long: product?.long,
+        body: product?.body,
         review: {
           status: false,
           review: "",
@@ -136,19 +130,22 @@ export default function ViewCart() {
       });
     });
 
-    console.log("orderData", orderData);
     // Check quantity for each product
     for (const product of orderData) {
+      console.log("productDs", orderData);
       if (product.quantity <= 0) {
         swal("Error!", "Quantity must be greater than 0!", "error");
+        setLoadingData(false);
         return;
       }
-      if (product.long === "Select long") {
+      if (product.long === "Select long" || product.long === "") {
         swal("Error!", "Long is required!", "error");
+        setLoadingData(false);
         return;
       }
-      if (product.body === "Select body") {
+      if (product.body === "Select body" || product.body === "") {
         swal("Error!", "Body is required!", "error");
+        setLoadingData(false);
         return;
       }
     }
@@ -156,10 +153,12 @@ export default function ViewCart() {
     // Check if deliveryAddress is empty
     if (orderData.length === 0) {
       swal("Error!", "Cart is empty!", "error");
+      setLoadingData(false);
       return;
     }
     if (orderData[0].deliveryAddress === "") {
       swal("Error!", "Delivery Address is required!", "error");
+      setLoadingData(false);
       return;
     }
     fetch("http://localhost:5000/api/order", {
@@ -181,6 +180,7 @@ export default function ViewCart() {
             refetch();
           }
         });
+        setLoadingData(false);
       }
     });
   };
@@ -221,6 +221,16 @@ export default function ViewCart() {
     "48 Inch",
   ];
 
+  const handleDelete = (id) => {
+    fetch(`http://localhost:5000/api/cart/${id}`, {
+      method: "DELETE",
+    }).then((res) => {
+      if (res.ok) {
+        swal("Success!", "Product removed from cart!", "success");
+        refetch();
+      }
+    });
+  };
   return (
     <div>
       <Helmet>
@@ -333,7 +343,7 @@ export default function ViewCart() {
                             </div>
                           </dl>
                         </div> */}
-                          <div className="flex  gap-10">
+                          <div className="flex  gap-10 justify-end">
                             <div className="flex items-center rounded border border-gray-200">
                               <button
                                 type="button"
@@ -362,13 +372,11 @@ export default function ViewCart() {
                                 &#43;
                               </button>
                             </div>
-                            <div class="flex flex-1 justify-end items-center gap-2">
+                            {/* <div class="flex flex-1 justify-end items-center gap-2">
                               <>
                                 <button
                                   class="text-gray-600  transition hover:text-red-600 dark:hover:text-red-600"
-                                  onClick={() => {
-                                    handleDelete(product?._id);
-                                  }}
+                                  onClick={() => handleDelete(product?._id)}
                                 >
                                   <span class="sr-only">রিমোভ করুন</span>
 
@@ -388,7 +396,7 @@ export default function ViewCart() {
                                   </svg>
                                 </button>
                               </>
-                            </div>
+                            </div> */}
                           </div>
                         </div>
                       </li>
@@ -437,7 +445,7 @@ export default function ViewCart() {
                           className="block text-sm font-medium text-gray-700 "
                         >
                           {" "}
-                          Order notes{" "}
+                          অর্ডার নোটস{" "}
                         </label>
 
                         <textarea
@@ -445,17 +453,31 @@ export default function ViewCart() {
                           name="address"
                           className="mt-2 w-full rounded-lg border-gray-200 align-top shadow-sm sm:text-sm "
                           rows="4"
-                          placeholder="Enter any additional order notes..."
+                          placeholder="ডেলিভারী ঠিকানা এবং প্রোডাক্ট এর ব্যাপারে বিস্তারিত লিখুন..."
                         ></textarea>
                       </div>
 
                       <div>
-                        {" "}
-                        <input
-                          type="submit"
-                          value="অর্ডার কনফার্ম করুন"
-                          class="cursor-pointer px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-600 float-right mt-5"
-                        />
+                        {loadingData ? (
+                          <div className=" ">
+                            <TailSpin
+                              visible={true}
+                              height="40"
+                              width="40"
+                              color="#4fa94d"
+                              ariaLabel="tail-spin-loading"
+                              radius="1"
+                              wrapperStyle={{}}
+                              wrapperClass=""
+                            />
+                          </div>
+                        ) : (
+                          <input
+                            type="submit"
+                            value="অর্ডার কনফার্ম করুন"
+                            class="cursor-pointer px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-600 float-right mt-5"
+                          />
+                        )}
                       </div>
                     </div>
                   </fieldset>

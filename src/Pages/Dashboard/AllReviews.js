@@ -52,6 +52,8 @@ export default function AllReviews() {
     setAllReviews(reviewsWithOrders);
   }, [reviews, orders]);
 
+  console.log(allReviews);
+
   if (reviews?.data?.length < 0) {
     refetch();
   }
@@ -160,24 +162,49 @@ export default function AllReviews() {
                 {finalData?.map((review) => (
                   <div class="mb-8 sm:break-inside-avoid">
                     <blockquote class="rounded-lg bg-gray-50 p-6 shadow-sm sm:p-8">
-                      <div class="flex items-center gap-4">
-                        <img
-                          alt=""
-                          src={avatar}
-                          class="size-14 rounded-full object-cover"
-                        />
+                      <div>
+                        <p class="mt-0.5 text-lg font-medium text-gray-900">
+                          {review?.products[0]?.customerName}
+                        </p>
+                        <p class="mt-0.5 text-[13px] font-medium text-gray-900">
+                          {review?.email}
+                        </p>
+                        <div class="flex items-center gap-1 text-gray-500">
+                          <p class="text-xs font-medium">
+                            {review?.time} - {review?.date}
+                          </p>
+                        </div>
+                        <div className="flex flex-wrap">
+                          {review?.products[0]?.orders?.map((item) => (
+                            <div class="flex  gap-2 mt-4">
+                              <div class=" ">
+                                <div>
+                                  {" "}
+                                  <img
+                                    src={item?.image}
+                                    alt=""
+                                    class="h-20 w-20 object-cover rounded-lg"
+                                  />
+                                </div>
 
-                        <div>
-                          <p class="mt-0.5 text-lg font-medium text-gray-900">
-                            {review?.order?.customerName}
-                          </p>
-                          <p class=" text-[13px] font-medium text-gray-900">
-                            {review?.email}
-                          </p>
-                          <strong class="rounded border border-green-500 bg-green-500 px-3 py-1 text-[12px] font-medium text-white">
-                            Order id: #IP-
-                            {review?.order?._id.slice(5, 10).toUpperCase()}
-                          </strong>
+                                <div className="px-3">
+                                  <p>
+                                    <a href="#" class="hover:underline">
+                                      {item?.name}
+                                    </a>
+                                  </p>
+
+                                  <p class="text-sm font-medium">
+                                    Quantity: {item?.quantity}
+                                  </p>
+                                </div>
+                              </div>
+                              <div
+                                class="flex items
+                  -start gap-2"
+                              ></div>
+                            </div>
+                          ))}
                         </div>
                       </div>
 

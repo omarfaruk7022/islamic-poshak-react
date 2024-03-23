@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import swal from "sweetalert";
 import { getAuth, signInWithPhoneNumber } from "firebase/auth";
@@ -7,6 +7,7 @@ import auth from "../firebase.init";
 import Loader from "../Components/Common/Loader";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import { TailSpin } from "react-loader-spinner";
 
 export default function Login() {
   const [signInWithEmailAndPassword, user, loading, error] =
@@ -14,6 +15,7 @@ export default function Login() {
   let signInError;
   const navigate = useNavigate();
   const location = useLocation();
+  const [loadingData, setLoadingData] = useState(false);
   let from = location.state?.from?.pathname || "/";
   useEffect(() => {
     if (user) {
@@ -24,20 +26,25 @@ export default function Login() {
 
   const handleAdminSubmit = (e) => {
     e.preventDefault();
+    setLoadingData(true);
     const password = e.target.password.value;
     const email = e.target.email.value;
     if (!password || !email) {
       swal("Oops", "Email or Password Must Not Be Empty", "error");
+      setLoadingData(false);
       return;
     } else if (password.length < 6) {
       swal("Oops", "Password Must Be 6 Characters", "error");
+      setLoadingData(false);
       return;
     }
     if (!email.includes("@")) {
       swal("Oops", "Email Must Be Valid", "error");
+      setLoadingData(false);
       return;
     } else {
       signInWithEmailAndPassword(email, password);
+      setLoadingData(false);
     }
   };
   const handleUserSubmit = (e) => {
@@ -155,12 +162,27 @@ export default function Login() {
                 />
               </div>
             </div>
-            <div className="flex justify-between gap-4">
-              <input
-                type="submit"
-                value="Login"
-                className="block w-full rounded-lg bg-green-500 px-5 py-3 text-sm font-medium text-white cursor-pointer hover:bg-green-700"
-              />
+            <div>
+              {loadingData ? (
+                <div className="flex justify-center">
+                  <TailSpin
+                    visible={true}
+                    height="40"
+                    width="40"
+                    color="#4fa94d"
+                    ariaLabel="tail-spin-loading"
+                    radius="1"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                  />
+                </div>
+              ) : (
+                <input
+                  type="submit"
+                  value="Login"
+                  className="block w-full rounded-lg bg-green-500 px-5 py-3 text-sm font-medium text-white cursor-pointer hover:bg-green-700"
+                />
+              )}
 
               {/* <button
                 onClick={handleUserSubmit}

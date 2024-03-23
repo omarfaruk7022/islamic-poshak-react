@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
 import avatar from "../../assets/images/avatar.jpg";
+import { Link } from "react-router-dom";
 
 export default function ReviewsComp({ from }) {
   const [user, loading] = useAuthState(auth);
@@ -111,32 +112,56 @@ export default function ReviewsComp({ from }) {
             {finalData?.map((review) =>
               review?.status == true ? (
                 <div class="mb-8 sm:break-inside-avoid">
-                  <blockquote class="rounded-lg bg-gray-50 p-6 shadow-sm sm:p-8">
+                  <blockquote class="rounded-lg bg-gray-50 p-2 shadow-sm sm:p-8">
                     <div class="flex items-center gap-4">
-                      <img
-                        alt=""
-                        src={avatar}
-                        class="size-14 rounded-full object-cover"
-                      />
-
                       <div>
                         <p class="mt-0.5 text-lg font-medium text-gray-900">
-                          Customer
+                          {review?.products[0]?.customerName}
                         </p>
                         <p class="mt-0.5 text-[13px] font-medium text-gray-900">
                           {hideEmail(review?.email)}
                         </p>
                         <div class="flex items-center gap-1 text-gray-500">
-                          
-
                           <p class="text-xs font-medium">
-                          {review?.time} - {review?.date} 
+                            {review?.time} - {review?.date}
                           </p>
+                        </div>
+                        <div className="flex flex-wrap">
+                          {review?.products[0]?.orders?.map((item) => (
+                            <div class="flex  gap-2 mt-4">
+                              <div class=" ">
+                                <div>
+                                  {" "}
+                                  <img
+                                    src={item?.image}
+                                    alt=""
+                                    class="h-20 w-20 object-cover rounded-lg"
+                                  />
+                                </div>
+
+                                <div className="px-3">
+                                  <p>
+                                    <a href="#" class="hover:underline">
+                                      {item?.name}
+                                    </a>
+                                  </p>
+
+                                  <p class="text-sm font-medium">
+                                    Quantity: {item?.quantity}
+                                  </p>
+                                </div>
+                              </div>
+                              <div
+                                class="flex items
+                  -start gap-2"
+                              ></div>
+                            </div>
+                          ))}
                         </div>
                       </div>
                     </div>
 
-                    <p class="mt-4 text-gray-700">{review?.review}</p>
+                    <p class="mt-4 text-gray-700">Review: {review?.review}</p>
                   </blockquote>
                 </div>
               ) : (

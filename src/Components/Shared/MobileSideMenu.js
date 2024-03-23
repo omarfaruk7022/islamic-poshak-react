@@ -140,6 +140,22 @@ export default function MobileSideMenu({ visibleNav, setVisibleNav }) {
                             All orders{" "}
                           </span>
                         </Link>
+                        <Link
+                          onClick={() => {
+                            setActive(8);
+                            setVisibleNav(false);
+                          }}
+                          to="/dashboard/all-reviews"
+                          className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
+                            active == 8 ? "bg-gray-200" : ""
+                          } transition-all hover:bg-gray-200 `}
+                        >
+                          <GoCodeReview className="text-[20px]" />
+                          <span className="text-sm font-medium">
+                            {" "}
+                            All reviews{" "}
+                          </span>
+                        </Link>
                       </>
                     )}
                     <Link
@@ -154,19 +170,6 @@ export default function MobileSideMenu({ visibleNav, setVisibleNav }) {
                     >
                       <MdOutlineSpaceDashboard className="text-[20px]" />
                       <span className="text-sm font-medium"> My orders </span>
-                    </Link>
-                    <Link
-                      onClick={() => {
-                        setActive(8);
-                        setVisibleNav(false);
-                      }}
-                      to="/dashboard/all-reviews"
-                      className={`flex items-center gap-2 rounded-lg px-2 py-2 text-gray-900  ${
-                        active == 8 ? "bg-gray-200" : ""
-                      } transition-all hover:bg-gray-200 `}
-                    >
-                      <GoCodeReview className="text-[20px]" />
-                      <span className="text-sm font-medium"> All reviews </span>
                     </Link>
 
                     <Link

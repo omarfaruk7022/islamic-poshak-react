@@ -6,11 +6,14 @@ import swal from "sweetalert";
 import auth from "../firebase.init";
 import Loader from "../Components/Common/Loader";
 import { useNavigate, useParams } from "react-router-dom";
+import { TailSpin } from "react-loader-spinner";
 
 export default function ProductDetails() {
   const date = new Date();
   const formattedDate = format(date, "PP");
   const formattedDate2 = format(date, "p");
+  const [loadingData, setLoadingData] = useState(false);
+
   const navigate = useNavigate();
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { id } = useParams();
@@ -34,6 +37,7 @@ export default function ProductDetails() {
   console.log(product);
   const handleAddToCart = (e) => {
     e.preventDefault();
+    setLoadingData(true);
     const data = {
       productId: product?.data?._id,
       orderDate: formattedDate,
@@ -56,6 +60,16 @@ export default function ProductDetails() {
     //   image: product?.product?.image,
     //   email: user?.email,
     // };
+    if (
+      data?.long === undefined ||
+      data?.body === undefined ||
+      data?.long === "" ||
+      data?.body === ""
+    ) {
+      swal("Oops", "Please select a size!", "error");
+      setLoadingData(false);
+      return;
+    }
 
     fetch("http://localhost:5000/api/cart", {
       method: "POST",
@@ -67,6 +81,7 @@ export default function ProductDetails() {
       if (res.ok) {
         swal("Success!", "Product added to cart!", "success");
       }
+      setLoadingData(false);
       console.log(res);
     });
   };
@@ -262,11 +277,26 @@ export default function ProductDetails() {
                           </div>
                         </div>
                         <div class="mt-8 flex gap-4">
-                          <input
-                            type="submit"
-                            class="block rounded bg-green-600 px-5 py-3 text-xs font-medium text-white hover:bg-green-500 cursor-pointer transition-all"
-                            value="Add to Cart"
-                          />
+                          {loadingData ? (
+                            <div className="flex justify-center ">
+                              <TailSpin
+                                visible={true}
+                                height="40"
+                                width="40"
+                                color="#4fa94d"
+                                ariaLabel="tail-spin-loading"
+                                radius="1"
+                                wrapperStyle={{}}
+                                wrapperClass=""
+                              />
+                            </div>
+                          ) : (
+                            <input
+                              type="submit"
+                              class="block rounded bg-green-600 px-5 py-3 text-xs font-medium text-white hover:bg-green-500 cursor-pointer transition-all"
+                              value="Add to Cart"
+                            />
+                          )}
                         </div>
                       </fieldset>
                     </form>

@@ -1,20 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import auth from "../firebase.init";
 import swal from "sweetalert";
 
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import { TailSpin } from "react-loader-spinner";
 
 export default function Signup() {
   const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
   const history = useNavigate();
+  const [loadingData, setLoadingData] = useState(false);
 
   let signInError;
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoadingData(true);
     const email = e.target.email.value;
     const password = e.target.password.value;
     const phone = e.target.phone.value;
@@ -26,16 +29,36 @@ export default function Signup() {
       phone,
       username,
     };
-    if (!password || !email || !phone) {
+    if (!password || !email || phone === "" || !phone) {
       swal("Oops", "Email or Password Must Not Be Empty", "error");
-    } else if (password.length < 6) {
+      setLoadingData(false);
+      return;
+    }
+    if (phone == String) {
+      swal("Oops", "Phone Number Must Be Number", "error");
+      setLoadingData(false);
+      return;
+    }
+    if (password.length < 6) {
       swal("Oops", "Password Must Be 6 Characters", "error");
+      setLoadingData(false);
+      return;
     }
     if (!email.includes("@")) {
       swal("Oops", "Email Must Be Valid", "error");
+      setLoadingData(false);
+    } else if (phone.length < 10) {
+      swal("Oops", "Phone Number Must Be 10 Characters", "error");
+      setLoadingData(false);
+      return;
+    } else if (phone == "") {
+      swal("Oops", "Phone Number Must Not Be Empty", "error");
+      setLoadingData(false);
+      return;
     } else {
       if (error) {
         swal("Error", error.message, "error");
+        setLoadingData(false);
       } else {
         fetch(`http://localhost:5000/api/users/email/${email}`, {
           method: "PUT",
@@ -46,13 +69,15 @@ export default function Signup() {
         })
           .then((res) => res.json())
           .then((data) => {
-            if (data) {
+            console.log(data?.status);
+            if (data?.status == "success") {
               createUserWithEmailAndPassword(email, password);
               swal("Yayy", "Sign Up Successfully Completed", "success");
               history("/");
             } else {
               swal("Error", "Sign Up Failed", "error");
             }
+            setLoadingData(false);
           });
       }
     }
@@ -148,7 +173,12 @@ export default function Signup() {
                 <div className="relative">
                   <input
                     required
-                    type="text"
+                    validate={(value) => {
+                      if (value == "") {
+                        return "Phone Number Must Not Be Empty";
+                      }
+                    }}
+                    type="number"
                     name="phone"
                     className="w-full rounded-lg border-gray-200 text-black p-4 pe-12 text-sm shadow-sm  outline-none"
                     placeholder="Enter Phone number"
@@ -194,13 +224,27 @@ export default function Signup() {
                   </span>
                 </div>
               </div>
-
-              <button
-                type="submit"
-                className="block w-full rounded-lg bg-green-500 px-5 py-3 text-sm font-medium text-white"
-              >
-                Sign up
-              </button>
+              {loadingData ? (
+                <div className="flex justify-center">
+                  <TailSpin
+                    visible={true}
+                    height="40"
+                    width="40"
+                    color="#4fa94d"
+                    ariaLabel="tail-spin-loading"
+                    radius="1"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                  />
+                </div>
+              ) : (
+                <button
+                  type="submit"
+                  className="block w-full rounded-lg bg-green-500 px-5 py-3 text-sm font-medium text-white"
+                >
+                  Sign up
+                </button>
+              )}
 
               <p className="text-center text-sm text-gray-500">
                 You have Account ?

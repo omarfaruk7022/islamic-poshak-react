@@ -43,7 +43,7 @@ export default function MyOrders() {
   useEffect(() => {
     getOrders();
   }, [email]);
-  console.log("finalData", orders);
+
   // const ordersQuery = useQuery({
   //   queryKey: ["orders"],
   //   queryFn: () =>
@@ -164,6 +164,7 @@ export default function MyOrders() {
           status: false,
           date: new Date().toLocaleDateString(),
           time: new Date().toLocaleTimeString(),
+          products: orders?.data?.filter((order) => order._id == id)[0],
         };
         console.log(raw);
         try {
@@ -332,6 +333,13 @@ export default function MyOrders() {
                                 </p>
                                 <p class="text-sm font-medium">
                                   Quantity: {item?.quantity}
+                                </p>
+
+                                <p class="text-sm font-medium">
+                                  Size long: {item?.long}
+                                </p>
+                                <p class="text-sm font-medium">
+                                  Size body: {item?.body}
                                 </p>
                               </div>
                             </div>

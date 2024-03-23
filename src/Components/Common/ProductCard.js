@@ -1,20 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { useAuthState } from "react-firebase-hooks/auth";
 import { FaCartPlus } from "react-icons/fa";
 import swal from "sweetalert";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import auth from "../../firebase.init";
 import { format } from "date-fns";
+import { TailSpin } from "react-loader-spinner";
 
 export default function ProductsCard(product) {
   const { _id, name, image, price, description, discount } = product.product;
   const [user, loading] = useAuthState(auth);
+  const [loadingData, setLoadingData] = useState(false);
+  const navigate = useNavigate();
+
   const date = new Date();
   const formattedDate = format(date, "PP");
   const formattedDate2 = format(date, "p");
   const handleAddToCart = (e) => {
     e.preventDefault();
+    setLoadingData(true);
     if (!user) {
       swal("Oops", "You need to login first!", "error");
       return;
@@ -52,8 +57,10 @@ export default function ProductsCard(product) {
     }).then((res) => {
       if (res.ok) {
         swal("Success!", "Product added to cart!", "success");
+
         localStorage.setItem("cartData", JSON.stringify(cartData));
       }
+      setLoadingData(false);
       console.log(res);
     });
   };
@@ -180,12 +187,27 @@ export default function ProductsCard(product) {
           )}
         </div>
         <form onSubmit={handleAddToCart}>
-          <button
-            type="submit"
-            class="text-white w-full bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-[10px] md:text-sm px-3 py-2.5 mt-5 text-center  "
-          >
-            Add to cart
-          </button>
+          {loadingData ? (
+            <div className="flex justify-center mt-5">
+              <TailSpin
+                visible={true}
+                height="40"
+                width="40"
+                color="#4fa94d"
+                ariaLabel="tail-spin-loading"
+                radius="1"
+                wrapperStyle={{}}
+                wrapperClass=""
+              />
+            </div>
+          ) : (
+            <button
+              onClick={() => navigate(`/productDetails/${_id}`)}
+              class="text-white w-full bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-[10px] md:text-sm px-3 py-2.5 mt-5 text-center  "
+            >
+              See more
+            </button>
+          )}
         </form>
       </div>
     </div>
